@@ -1,16 +1,19 @@
-<?php
+<div class="container">
+    <?php
 
-/** @var yii\web\View $this */
+    /** @var yii\web\View $this */
 
-use yii\helpers\Html;
+    use yii\helpers\Html;
 
-$this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
+    $this->title = 'About';
+    $this->params['breadcrumbs'][] = $this->title;
+    ?>
 
-    <p>This is the About page. You may modify the following file to customize its content:</p>
+    <div class="site-about">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <code><?= __FILE__ ?></code>
+        <p>This is the About page. You may modify the following file to customize its content:</p>
+
+        <code><?= __FILE__ ?></code>
+    </div>
 </div>
