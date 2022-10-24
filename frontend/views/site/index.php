@@ -5,7 +5,7 @@
       <div class="u-layout-row">
         <div class="u-align-center-md u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-1">
           <div class="u-container-layout u-container-layout-1">
-            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo&nbsp;​evento </h1>
+            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento </h1>
             <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">25.09.2022</h3>
           </div>
         </div>
