@@ -129,10 +129,27 @@ class RbacController extends Controller
     //----------------------------- Add Permission --------------------------------//
 
         $auth->add($gestor);
-        $auth->addChild($gestor, $createEvento, $updateEvento, $deleteEvento, $createBebida, $createNoticia, $createRP, $updateBebida, $updateNoticia, $updateRP, $deleteBebida, $deleteNoticia, $deleteRP, $verDadosEvento, $adicionarFotografica, $deleteFotografica);
+        $auth->addChild($gestor, $createEvento);
+        $auth->addChild($gestor, $updateEvento);
+        $auth->addChild($gestor, $deleteEvento);
+        $auth->addChild($gestor, $createNoticia);
+        $auth->addChild($gestor, $deleteNoticia);
+        $auth->addChild($gestor, $updateNoticia);
+        $auth->addChild($gestor, $createBebida);
+        $auth->addChild($gestor, $updateBebida);
+        $auth->addChild($gestor, $deleteBebida);
+        $auth->addChild($gestor, $createRP);
+        $auth->addChild($gestor, $updateRP);
+        $auth->addChild($gestor, $deleteRP);
+        $auth->addChild($gestor, $verDadosEvento);
+        $auth->addChild($gestor, $adicionarFotografica);
+        $auth->addChild($gestor, $deleteFotografica);
 
         $auth->add($admin);
-        $auth->addChild($admin, $gestor, $createEmpregado, $updateEmpregado, $deleteEmpregado);
+        $auth->addChild($admin, $gestor);
+        $auth->addChild($admin, $createEmpregado);
+        $auth->addChild($admin, $updateEmpregado);
+        $auth->addChild($admin, $deleteEmpregado);
 
         $auth->add($rp);
         $auth->addChild($rp, $verdadosEstatisticosCodigo);
