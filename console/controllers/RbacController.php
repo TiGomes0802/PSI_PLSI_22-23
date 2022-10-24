@@ -107,7 +107,7 @@ class RbacController extends Controller
         $updateRP->description = 'Update RP';
         $auth->add($updateRP);
         //Delete
-        $deleteRP = $auth->createPermission('deleteEvento');
+        $deleteRP = $auth->createPermission('deleteRP');
         $deleteRP->description = 'Delete RP';
         $auth->add($deleteRP);
 
