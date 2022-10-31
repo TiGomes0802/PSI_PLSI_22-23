@@ -79,21 +79,20 @@ class UserprofileController extends Controller
             if ($modeluser->load($this->request->post()) && $modeluser->signup()) {
                 $user = User::find()->where(['email' => $modeluser->email])->one();
                 $modelprofile -> userid = $user->id;
-                //$modelrole -> user_id = $user->id;
 
                 if ($modelprofile->load($this->request->post()) && $modelprofile->save() && $modelrole->load($this->request->post())) {
                     $auth = \Yii::$app->authManager;
                     $authorRole = $auth->getRole($modelrole->item_name);
                     $auth->assign($authorRole, $user->id);
-                    //return $this->redirect(['view', 'id' => $modelprofile->id]);
                     return $this->redirect(['index']);
-                }
+                } 
             }
         } else {
             $modelprofile->loadDefaultValues();
             //$modeluser->loadDefaultValues();
             //$modelrole->loadDefaultValues();
         }
+
     
         return $this->render('create', [
             'modelprofile' => $modelprofile,

@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-text u-text-default u-text-1">Adicionar Empregado</h2>
 
-        <?= $this->render('form_add_empregado', [
+        <?= $this->render('_form', [
             'modelprofile' => $modelprofile,
             'modeluser' => $modeluser,
             'modelrole' => $modelrole,

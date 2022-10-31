@@ -22,7 +22,6 @@
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
-                    ['label' => 'Empregados', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['user/index']],
                     ['label' => 'Empregados2', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
                     [
                         'label' => 'Starter Pages',

@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('form_add_empregado', [
+    <?= $this->render('_form', [
         'modelprofile' => $modelprofile,
         'modeluser' => $modeluser,
         'modelrole' => $modelrole,
