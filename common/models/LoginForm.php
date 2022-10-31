@@ -69,7 +69,7 @@ class LoginForm extends Model
         
         foreach($roles as $role)
         {
-            if($role == 'admin' || $role == 'gestor')
+            if($role->name == 'admin' || $role->name == 'gestor')
             {
                 return true;
             }
