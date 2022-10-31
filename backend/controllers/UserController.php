@@ -9,6 +9,11 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 
+use common\models\Userprofile;
+use common\models\SignupForm;
+use common\models\User;
+use common\models\AuthAssignment;
+
 /**
  * User controller
  */
@@ -65,9 +70,41 @@ class UserController extends Controller
         return $this->render('index');
     }
 
+    //public function actionCreate()
+    //{
+    //    return $this->render('form_add_empregado');
+    //}
+    
     public function actionCreate()
     {
-        return $this->render('create');
-    }
+        $modelprofile = new Userprofile();
+        $modeluser = new SignupForm();
+        $modelrole = new AuthAssignment();
+
+        if ($this->request->isPost) {
+            if ($modeluser->load($this->request->post()) && $modeluser->signup()) {
+                $user = User::find()->where(['email' => $modeluser->email])->one();
+                $modelprofile -> userid = $user->id;
+                //$modelrole -> user_id = $user->id;
+
+                if ($modelprofile->load($this->request->post()) && $modelprofile->save() && $modelrole->load($this->request->post())) {
+                    $auth = \Yii::$app->authManager;
+                    $authorRole = $auth->getRole($modelrole->item_name);
+                    $auth->assign($authorRole, $user->id);
+                    //return $this->redirect(['view', 'id' => $modelprofile->id]);
+                    return $this->redirect(['index']);
+                }
+            }
+        } else {
+            $modelprofile->loadDefaultValues();
+            //$modeluser->loadDefaultValues();
+            //$modelrole->loadDefaultValues();
+        }
     
+        return $this->render('create', [
+            'modelprofile' => $modelprofile,
+            'modeluser' => $modeluser,
+            'modelrole' => $modelrole,
+        ]);
+    }
 }
