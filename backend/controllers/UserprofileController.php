@@ -39,7 +39,7 @@ class UserprofileController extends Controller
      * Lists all Userprofile models.
      *
      * @return string
-     */
+    */
     public function actionIndex()
     {
         $searchModel = new UserprofileSearch();
@@ -56,7 +56,7 @@ class UserprofileController extends Controller
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
-     */
+    */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -68,36 +68,21 @@ class UserprofileController extends Controller
      * Creates a new Userprofile model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
-     */
+    */
     public function actionCreate()
     {
-        $modelprofile = new Userprofile();
-        $modeluser = new SignupForm();
-        $modelrole = new AuthAssignment();
+        $model = new SignupForm();
 
         if ($this->request->isPost) {
-            if ($modeluser->load($this->request->post()) && $modeluser->signup()) {
-                $user = User::find()->where(['email' => $modeluser->email])->one();
-                $modelprofile -> userid = $user->id;
-
-                if ($modelprofile->load($this->request->post()) && $modelprofile->save() && $modelrole->load($this->request->post())) {
-                    $auth = \Yii::$app->authManager;
-                    $authorRole = $auth->getRole($modelrole->item_name);
-                    $auth->assign($authorRole, $user->id);
-                    return $this->redirect(['index']);
-                } 
+            if ($model->load($this->request->post()) && $model->signup()) {
+                return $this->redirect(['index']);
             }
         } else {
-            $modelprofile->loadDefaultValues();
-            //$modeluser->loadDefaultValues();
-            //$modelrole->loadDefaultValues();
+            //$model->loadDefaultValues();
         }
-
     
         return $this->render('create', [
-            'modelprofile' => $modelprofile,
-            'modeluser' => $modeluser,
-            'modelrole' => $modelrole,
+            'model' => $model,
         ]);
     }
 
@@ -107,26 +92,19 @@ class UserprofileController extends Controller
      * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
-     */
+    */
     public function actionUpdate($id)
     {
-        $modelprofile = $this->findModel($id);
-        $modeluser = User::findOne($modelprofile->userid);
-        $modelrole = AuthAssignment::findOne(['user_id' => $modelprofile->userid]);
+        $model = new SignupForm();
 
-        var_dump($modelprofile);
-        var_dump($modeluser->password_has);
-        var_dump($modelrole);
-        die;
+        $model = $model->updatedados($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
-            'modelprofile' => $modelprofile,
-            'modeluser' => $modeluser,
-            'modelrole' => $modelrole,
+            'model' => $model,
         ]);
     }
 

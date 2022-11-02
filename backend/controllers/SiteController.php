@@ -9,6 +9,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 
+use common\models\Userprofile;
+
 /**
  * Site controller
  */
