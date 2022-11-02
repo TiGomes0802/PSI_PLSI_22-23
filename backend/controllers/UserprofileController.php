@@ -99,7 +99,7 @@ class UserprofileController extends Controller
 
         $model = $model->updatedados($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->updateload($model, $id)) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -117,7 +117,13 @@ class UserprofileController extends Controller
      */
     public function actionDelete($id)
     {
+        $userprofile = $this->findModel($id);
+        $user = User::find()->where(['id' => $userprofile->userid])->one();
+        $Auth = AuthAssignment::find()->where(['user_id' => $user->id])->one();
+
         $this->findModel($id)->delete();
+        $Auth->delete();
+        $user->delete();
 
         return $this->redirect(['index']);
     }

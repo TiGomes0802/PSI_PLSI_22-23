@@ -15,26 +15,50 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="userprofile-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Funcionarios') ?></h1>
 
     <p>
         <?= Html::a('Create Userprofile', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
+    <?= 
+    GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nome',
-            'apelido',
-            'datanascimento',
-            'codigoRP',
-            'userid',
+            [
+                'label' => '',
+                'value' => function ($data) {
+                    return array_keys(Yii::$app->authManager->getRolesByUser($data->userid))[0];
+                },
+            ],
+            [
+                'label' => 'Nome',
+                'value' => function ($data) {
+                    return $data->nome .' '. $data->apelido;
+                },
+            ],
+            [
+                'label' => 'Username',
+                'value' => function ($data) {
+                    return $data->user->username;
+                },
+            ],
+            [
+                'label' => 'Email',
+                'value' => function ($data) {
+                    return $data->user->email;
+                },
+            ],
+            [
+                'label' => 'Data de Nascimento',
+                'format' => ['date', 'php:d-m-Y'],
+                'value' => function ($data) {
+                    return $data->datanascimento;
+                },
+            ],
+            
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {

@@ -85,13 +85,12 @@ class SignupForm extends Model
         $user->generateEmailVerificationToken();
         $user->save(false);
 
-        $userprofile->id = $user->getId();
         $userprofile->nome = $this->nome;
         $userprofile->apelido = $this->apelido;
         $userprofile->datanascimento = $this->datanascimento;
-        
-        $userprofile->userid = $this->userid;
-        
+
+        $userprofile->userid = $user->getId();
+
         $auth = \Yii::$app->authManager;
         $authorRole = $auth->getRole($this->role);
         $auth->assign($authorRole, $user->getId());
@@ -100,28 +99,48 @@ class SignupForm extends Model
             $userprofile->codigoRP = $this->username;
         }
 
-        return $user->save() && $userprofile->save() && $this->sendEmail($user);
+        return $user->save()  && $userprofile->save() && $this->sendEmail($user);
     }
 
     public function updatedados($id)
+    {   
+        $userprofile = Userprofile::find()->where(['id' => $id])->one();
+        $user = user::find()->where(['id' => $userprofile->userid])->one();
+        $model = $this;
+
+        $model->username = $user->username;
+        $model->email = $user->email;
+
+        $model->nome = $userprofile->nome;
+        $model->apelido = $userprofile->apelido;
+        $model->datanascimento = $userprofile->datanascimento;
+
+        return $model;
+    }
+
+    public function updateload($model, $id)
     {
-        
-        $user = new User();
         $userprofile = new Userprofile();
+        $user = new User();
 
-        $userprofile = Userprofile::findOne(['id' => $id]);
-        $user = user::findOne(['id' => $userprofile->userid]);
+        $userprofile = Userprofile::find()->where(['id' => $id])->one();
+        $user = user::find()->where(['id' => $userprofile->userid])->one();
 
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
+        $user->username = $model->username;
+        $user->email = $model->email;
 
-        $userprofile->id = $this;
-        $userprofile->nome = $this->nome;
-        $userprofile->apelido = $this->apelido;
-        $userprofile->datanascimento = $this->datanascimento;
+        if($model->password != ''){
+            $user->setPassword($model->password);
+            $user->removePasswordResetToken();
+            $user->generateAuthKey();
+        } else{
+            $user->auth_key = $user->auth_key;
+            $user->password_hash = $user->password_hash;
+        }
+
+        $userprofile->nome = $model->nome;
+        $userprofile->apelido = $model->apelido;
+        $userprofile->datanascimento = $model->datanascimento;
 
         return $user->save() && $userprofile->save();
     }

@@ -13,7 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="userprofile-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= array_keys(Yii::$app->authManager->getRolesByUser($model->userid))[0] ?></h1>
+
+    <br>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -29,12 +31,40 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'nome',
-            'apelido',
-            'datanascimento',
-            'codigoRP',
-            'userid',
+            [
+                'label' => 'Nome',
+                'value' => function ($data) {
+                    return $data->nome .' '. $data->apelido;;
+                },
+            ],
+            [
+                'label' => 'Username',
+                'value' => function ($data) {
+                    return $data->user->username;
+                },
+            ],
+            [
+                'label' => 'Email',
+                'value' => function ($data) {
+                    return $data->user->email;
+                },
+            ],
+            [
+                'label' => 'Data de Nascimento',
+                'format' => ['date', 'php:d-m-Y'],
+                'value' => function ($data) {
+                    return $data->datanascimento;
+                },
+            ],
+            [
+                'label' => 'codigo RP',
+                'value' => function ($data) {
+                    if($data->codigoRP != null){
+                        return $data->codigoRP;
+                    }
+                    return '--------------';
+                },
+            ],
         ],
     ]) ?>
 

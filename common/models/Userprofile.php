@@ -35,8 +35,8 @@ class Userprofile extends \yii\db\ActiveRecord
         return [
             [['nome', 'apelido', 'datanascimento'], 'required'],
             [['datanascimento'], 'safe'],
-            [['codigoRP', 'userid'], 'integer'],
-            [['nome', 'apelido'], 'string', 'max' => 25],
+            [['userid'], 'integer'],
+            [['nome', 'apelido','codigoRP'], 'string', 'max' => 25],
             [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
         ];
     }

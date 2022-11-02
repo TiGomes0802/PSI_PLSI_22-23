@@ -37893,14 +37893,12 @@ a.u-link.u-text-hover-grey-90:hover {
         .u-table-alt-custom-color-2 tr:nth-child(even)
         {
             color: #f73eea;
-            background-color: #332932;
         }
 
         .u-button-style.u-custom-color-2,
         .u-button-style.u-custom-color-2[class*="u-border-"]
         {
-            color: #ffffff !important;
-            background-color: #332932 !important;
+            color: #ffffff !important;  
         }
 
         .u-button-style.u-custom-color-2:hover,
