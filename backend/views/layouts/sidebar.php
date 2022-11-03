@@ -1,7 +1,7 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="" class="brand-link">
+    <a href="<?=\yii\helpers\Url::home()?>" class="brand-link">
         <img src="../web/img/EcstasyClubLogo.png" alt="Ecstasy Club Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Ecstasy Club</span>
     </a>
@@ -23,16 +23,17 @@
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
-                    ['label' => 'Empregados', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
-                    ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
-                    ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index']],
-                    ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['Bebidas/index']],
+                    ['label' => 'Empregados', 'icon' => 'fa fa-id-badge', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
+                    ['label' => 'Noticias', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
+                    ['label' => 'Eventos', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index']],
+                    ['label' => 'Bebidas', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
+                    ['label' => 'VIP', 'icon' => 'fa-thin fa-party-horn', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['VIP/index']],
                 ],   
             ]);
             if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'admin') {
                 echo \hail812\adminlte\widgets\Menu::widget([
                     'items' => [
-                        ['label' => 'Disco', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/index']],
+                        ['label' => 'Disco', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/index']],
                     ],
                 ]);
             }

@@ -74,12 +74,12 @@ class UserprofileController extends Controller
         $model = new SignupForm();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->signup()) {
+            if ($model->load($this->request->post()) && $model->createnewfuncionario()) {
                 return $this->redirect(['index']);
+            }else {
+                $model->loadDefaultValues();
             }
-        } else {
-            //$model->loadDefaultValues();
-        }
+        } 
     
         return $this->render('create', [
             'model' => $model,
@@ -99,8 +99,8 @@ class UserprofileController extends Controller
 
         $model = $model->updatedados($id);
 
-        if ($this->request->isPost && $model->updateload($model, $id)) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load($this->request->post()) && $this->request->isPost && $model->updateload($id)) {
+            return $this->redirect(['view', 'id' => $id]);
         }
 
         return $this->render('update', [

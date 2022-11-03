@@ -34,13 +34,16 @@ class SignupForm extends Model
     public function rules()
     {
         $date = new DateTime();
-        $date->sub(new DateInterval("P18Y"));
-        $max = $date->format('Y-m-d');
+        $date->sub(new DateInterval('P18Y'));
+        $max = $date->format('d-m-Y');
+
+        //var_dump($min);
+        //die;
 
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
             
             ['role', 'trim'],
@@ -50,14 +53,14 @@ class SignupForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este email já está a ser utilizado.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
             [['nome', 'apelido', 'datanascimento'], 'required'],
             [['datanascimento'], 'safe'],
-            ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
+            ['datanascimento', 'date', 'format' => 'php:d-m-Y', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             [['codigoRP', 'userid'], 'integer'],
             [['nome', 'apelido'], 'string', 'max' => 25],
             [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
@@ -69,7 +72,7 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup()
+    public function createnewfuncionario()
     {
         if (!$this->validate()) {
             return null;
@@ -118,7 +121,7 @@ class SignupForm extends Model
         return $model;
     }
 
-    public function updateload($model, $id)
+    public function updateload($id)
     {
         $userprofile = new Userprofile();
         $user = new User();
@@ -126,21 +129,21 @@ class SignupForm extends Model
         $userprofile = Userprofile::find()->where(['id' => $id])->one();
         $user = user::find()->where(['id' => $userprofile->userid])->one();
 
-        $user->username = $model->username;
-        $user->email = $model->email;
+        $user->username = $this->username;
+        $user->email = $this->email;
 
-        if($model->password != ''){
-            $user->setPassword($model->password);
-            $user->removePasswordResetToken();
+        if($this->password != ''){
+            $user->setPassword($this->password);
             $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
         } else{
             $user->auth_key = $user->auth_key;
             $user->password_hash = $user->password_hash;
         }
 
-        $userprofile->nome = $model->nome;
-        $userprofile->apelido = $model->apelido;
-        $userprofile->datanascimento = $model->datanascimento;
+        $userprofile->nome = $this->nome;
+        $userprofile->apelido = $this->apelido;
+        $userprofile->datanascimento = $this->datanascimento;
 
         return $user->save() && $userprofile->save();
     }
