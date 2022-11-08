@@ -8,6 +8,6 @@ Create table UserProfile(
     apelido varchar(25) not null,
     datanascimento date not null,
 	codigoRP int,
-    userid int,
+    userid int not null,
     FOREIGN KEY (userid) REFERENCES user(id)
 )Engine=InnoDB;
