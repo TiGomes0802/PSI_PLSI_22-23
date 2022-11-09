@@ -35,16 +35,19 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => 'navbar navbar-expand navbar-dark bg-dark fixed-top',
         ],
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Eventos', 'url' => ['/evento/index']],
+        ['label' => 'Galeria', 'url' => ['/galeria/contact']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+    }
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view']];
     }
 
     echo Nav::widget([
@@ -52,7 +55,12 @@ AppAsset::register($this);
         'items' => $menuItems,
     ]);
     if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
+        echo Html::beginForm(['/site/login'], 'post', ['class' => 'd-flex'])
+            . Html::submitButton(
+                'Login',
+                ['class' => 'btn btn-link logout text-decoration-none']
+            )
+            . Html::endForm();
     } else {
         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
             . Html::submitButton(
