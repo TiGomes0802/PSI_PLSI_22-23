@@ -3,13 +3,12 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\Userprofile;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
-
-use common\models\Userprofile;
 
 /**
  * Site controller
@@ -64,7 +63,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        #var_dump(Yii::$app->user->id);
+        #die;
+
+        $model = Userprofile::find()->where(['userid' => Yii::$app->user->id])->one();    
+        $grafico = (new yii\db\Query())->from('auth_assignment')->select(['item_name', 'COUNT(item_name) AS quantidade_item_name'])->groupBy('item_name')->all();
+
+        return $this->render('index', [
+            'model' => $model,
+            'grafico' => $grafico,
+        ]);
     }
 
     /**

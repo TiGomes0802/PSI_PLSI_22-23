@@ -22,11 +22,6 @@
         </div>
 
         <div class="u-form-group u-form-name u-label-top">
-          <label for="name-818d" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Password</label>
-          <?= $form->field($model, 'password')->input('password',['placeholder' => 'Password'])->label(false); ?>
-        </div>
-
-        <div class="u-form-group u-form-name u-label-top">
           <label for="email-3b9a" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Email</label>
           <?= $form->field($model, 'email')->input('email',['placeholder' => 'Email'])->label(false); ?>
         </div>

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= 
     GridView::widget([
-        'dataProvider' => $dataProvider,
+        'dataProvider' => $searchModel,
         'columns' => [
             [
                 'label' => '',
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
+                    return Url::toRoute([$action, 'id' => $model->userid]);
                  }
             ],
         ],

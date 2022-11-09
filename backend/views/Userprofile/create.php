@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <section class="u-align-center u-clearfix u-custom-color-2 u-section-1" id="sec-1a0b">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-default u-text-1">Adicionar Empregado</h2>
+        <h2 class="u-text u-text-default u-text-1">Adicionar empregado</h2>
 
         <?= $this->render('_form', [
             'model' => $model,

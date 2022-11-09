@@ -19,6 +19,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $passwordrepet;
     public $id;
     public $nome;
     public $apelido;
@@ -35,35 +36,25 @@ class SignupForm extends Model
     {
         $date = new DateTime();
         $date->sub(new DateInterval('P18Y'));
-        $max = $date->format('d-m-Y');
-
-        //var_dump($min);
-        //die;
+        $max = $date->format('Y-m-d');
 
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
+            [['username', 'email', 'role'], 'trim'],
+            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'role', 'password', 'passwordrepet'], 'required', 'message' => 'Este campo não pode ser vazio.'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-            
-            ['role', 'trim'],
-            ['role', 'required'],
+            [['username', 'email'], 'string', 'min' => 5, 'max' => 255],
 
-            ['email', 'trim'],
-            ['email', 'required'],
             ['email', 'email'],
-            ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este email já está a ser utilizado.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            [['password', 'passwordrepet'], 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['passwordrepet', 'compare', 'compareAttribute'=>'password', 'message' => 'As passwords não correspondem'],
 
-            [['nome', 'apelido', 'datanascimento'], 'required'],
             [['datanascimento'], 'safe'],
-            ['datanascimento', 'date', 'format' => 'php:d-m-Y', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
-            [['codigoRP', 'userid'], 'integer'],
-            [['nome', 'apelido'], 'string', 'max' => 25],
-            [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
+            ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
+            ['userid', 'integer'],
+            [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 5, 'max' => 25],
+            ['userid', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
         ];
     }
 
@@ -81,6 +72,13 @@ class SignupForm extends Model
         $user = new User();
         $userprofile = new Userprofile();
 
+        $userprofile->nome = $this->nome;
+        $userprofile->apelido = $this->apelido;
+        $userprofile->datanascimento = $this->datanascimento;
+        if($this->role == 'rp'){
+            $userprofile->codigoRP = $this->username;
+        }
+
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
@@ -88,27 +86,19 @@ class SignupForm extends Model
         $user->generateEmailVerificationToken();
         $user->save(false);
 
-        $userprofile->nome = $this->nome;
-        $userprofile->apelido = $this->apelido;
-        $userprofile->datanascimento = $this->datanascimento;
-
         $userprofile->userid = $user->getId();
 
         $auth = \Yii::$app->authManager;
         $authorRole = $auth->getRole($this->role);
         $auth->assign($authorRole, $user->getId());
 
-        if($this->role == 'rp'){
-            $userprofile->codigoRP = $this->username;
-        }
-
-        return $user->save()  && $userprofile->save() && $this->sendEmail($user);
+        return $user->save() && $userprofile->save() && $this->sendEmail($user);
     }
 
     public function updatedados($id)
     {   
-        $userprofile = Userprofile::find()->where(['id' => $id])->one();
-        $user = user::find()->where(['id' => $userprofile->userid])->one();
+        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+        $user = user::find()->where(['id' => $id])->one();
         $model = $this;
 
         $model->username = $user->username;
@@ -123,20 +113,21 @@ class SignupForm extends Model
 
     public function updateload($id)
     {
+
         $userprofile = new Userprofile();
         $user = new User();
 
-        $userprofile = Userprofile::find()->where(['id' => $id])->one();
-        $user = user::find()->where(['id' => $userprofile->userid])->one();
-
+        $user = user::find()->where(['id' => $id])->one();
+        $userprofile = Userprofile::find()->where(['userid' => $user->id])->one();
+        
         $user->username = $this->username;
         $user->email = $this->email;
 
-        if($this->password != ''){
+        if($this->password != null){
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            $user->generateEmailVerificationToken();
         } else{
+            $this->password = $user->password_hash;
             $user->auth_key = $user->auth_key;
             $user->password_hash = $user->password_hash;
         }
@@ -144,7 +135,7 @@ class SignupForm extends Model
         $userprofile->nome = $this->nome;
         $userprofile->apelido = $this->apelido;
         $userprofile->datanascimento = $this->datanascimento;
-
+        
         return $user->save() && $userprofile->save();
     }
 

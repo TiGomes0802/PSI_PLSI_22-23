@@ -1,5 +1,6 @@
-<div class="u-body u-xl-mode" data-lang="pt">
-<section class="u-clearfix u-image u-section-1" id="carousel_bd30" data-image-width="1620" data-image-height="1080">
+<
+  div class="u-body u-xl-mode" data-lang="pt">
+<section class="u-clearfix u-image u-section-1" id="carousel_bd30">
   <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
     <div class="u-layout">
       <div class="u-layout-row">
@@ -157,8 +158,8 @@
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
     <h2 class="u-custom-font u-text u-text-1" spellcheck="false">
       <span style="font-size: 3rem;">Tonight </span>
-      <span style="font-style: italic;">Special Party&nbsp; &nbsp; &nbsp;</span>
-      <span class="u-text-palette-5-base">Booking Available</span>
+      <span style="font-style: italic;">Special Party&nbsp; &nbsp; &nbsp; &nbsp;</span>
+      <p><span class="u-text-palette-5-base">&nbsp; VIP Disponiveis</span></p>
     </h2>
   </div>
 </section>

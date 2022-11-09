@@ -5,7 +5,8 @@ namespace backend\controllers;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use Yii;
+use yii\data\ActiveDataProvider;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
 use common\models\SignupForm;
@@ -42,12 +43,52 @@ class UserprofileController extends Controller
     */
     public function actionIndex()
     {
-        $searchModel = new UserprofileSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'admin') {
+            $model = Userprofile::find()
+            ->select('*')
+            ->leftJoin('user', 'user.id = userprofile.userid')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+            ->orwhere(['auth_assignment.item_name' => 'admin'])
+            ->orwhere(['auth_assignment.item_name' => 'gestor'])
+            ->orwhere(['auth_assignment.item_name' => 'rp'])
+            ->orderBy(['nome' => SORT_ASC,'apelido'=> SORT_ASC]);
+
+        }
+        if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'gestor') {
+            $model = Userprofile::find()
+            ->select('*')
+            ->leftJoin('user', 'user.id = userprofile.userid')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+            ->where(['auth_assignment.item_name' => 'rp'])
+            ->orderBy(['nome' => SORT_ASC,'apelido'=> SORT_ASC]);
+        }
+
+        $searchModel = new ActiveDataProvider([
+            'query' => $model,
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionIndexclientes()
+    {
+        if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'admin') {
+            $model = Userprofile::find()
+            ->select('*')
+            ->leftJoin('user', 'user.id = userprofile.userid')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+            ->orwhere(['auth_assignment.item_name' => 'cliente'])
+            ->orderBy(['nome' => SORT_ASC,'apelido'=> SORT_ASC]);
+        }
+
+        $searchModel = new ActiveDataProvider([
+            'query' => $model,
+        ]);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
         ]);
     }
 
@@ -59,8 +100,10 @@ class UserprofileController extends Controller
     */
     public function actionView($id)
     {
+        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $userprofile,
         ]);
     }
 
@@ -77,7 +120,7 @@ class UserprofileController extends Controller
             if ($model->load($this->request->post()) && $model->createnewfuncionario()) {
                 return $this->redirect(['index']);
             }else {
-                $model->loadDefaultValues();
+                #$model->loadDefaultValues();
             }
         } 
     
@@ -99,11 +142,31 @@ class UserprofileController extends Controller
 
         $model = $model->updatedados($id);
 
-        if ($model->load($this->request->post()) && $this->request->isPost && $model->updateload($id)) {
+        if ($model->load($this->request->post()) && $model->updateload($id)) {
             return $this->redirect(['view', 'id' => $id]);
         }
 
         return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionUpdate_password($id)
+    {
+        $model = new SignupForm();
+
+        $model = $model->updatedados($id);
+
+        if ($model->load($this->request->post()) && $model->updateload($id)) {
+            if(Yii::$app->user->getId() == $id){
+                return $this->redirect(['/site/login']);
+            }else{
+                return $this->redirect(['view', 'id' => $id]);
+                die;
+            }
+        }
+
+        return $this->render('update_password', [
             'model' => $model,
         ]);
     }
@@ -117,12 +180,12 @@ class UserprofileController extends Controller
      */
     public function actionDelete($id)
     {
-        $userprofile = $this->findModel($id);
-        $user = User::find()->where(['id' => $userprofile->userid])->one();
-        $Auth = AuthAssignment::find()->where(['user_id' => $user->id])->one();
-
-        $this->findModel($id)->delete();
-        $Auth->delete();
+        $user = User::find()->where(['id' => $id])->one();
+        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+        $auth = AuthAssignment::find()->where(['user_id' => $id])->one();
+        
+        $userprofile->delete();
+        $auth->delete();
         $user->delete();
 
         return $this->redirect(['index']);

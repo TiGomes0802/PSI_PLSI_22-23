@@ -14,26 +14,34 @@
                 <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="./index.php?r=userprofile%2Fupdate&id=2" class="d-block"><?php echo Yii::$app->user->identity->username ?></a>
+                <a href="./index.php?r=userprofile%2Fview&id=<?= Yii::$app->user->id ?>" class="d-block"><?= Yii::$app->user->identity->username ?></a>
             </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <?php
-            echo \hail812\adminlte\widgets\Menu::widget([
-                'items' => [
-                    ['label' => 'Empregados', 'icon' => 'fa fa-id-badge', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
-                    ['label' => 'Noticias', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
-                    ['label' => 'Eventos', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index']],
-                    ['label' => 'Bebidas', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
-                    ['label' => 'VIP', 'icon' => 'fa-thin fa-party-horn', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['VIP/index']],
-                ],   
-            ]);
+            if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'gestor') {
+                echo \hail812\adminlte\widgets\Menu::widget([
+                    'items' => [
+                        ['label' => "Rp's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
+                        ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
+                        ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index']],
+                        ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
+                        ['label' => 'VIP', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['VIP/index']],
+                    ],   
+                ]);
+            }
             if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'admin') {
                 echo \hail812\adminlte\widgets\Menu::widget([
                     'items' => [
-                        ['label' => 'Disco', 'icon' => 'far fa-newspaper', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/index']],
+                        ['label' => 'Empregados', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
+                        ['label' => 'Cliente', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/indexclientes']],
+                        ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
+                        ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index']],
+                        ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
+                        ['label' => 'VIP', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['VIP/index']],
+                        ['label' => 'Disco', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/index']],
                     ],
                 ]);
             }

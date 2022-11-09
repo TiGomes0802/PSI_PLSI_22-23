@@ -37,15 +37,15 @@ class Userprofile extends \yii\db\ActiveRecord
         
         $date = new DateTime();
         $date->sub(new DateInterval('P18Y'));
-        $max = $date->format('d-m-Y');
+        $max = $date->format('Y-m-d');
 
         return [
             [['nome', 'apelido', 'datanascimento'], 'required'],
             [['datanascimento'], 'safe'],
+            ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             [['userid'], 'integer'],
-            [['nome', 'apelido','codigoRP'], 'string', 'max' => 25],
+            [['nome', 'apelido', 'codigoRP'], 'string', 'max' => 25],
             [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
-            ['datanascimento', 'date', 'format' => 'php:d-m-Y', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
         ];
     }
 
