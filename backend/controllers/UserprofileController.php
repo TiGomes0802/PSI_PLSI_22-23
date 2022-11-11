@@ -65,6 +65,9 @@ class UserprofileController extends Controller
 
         $searchModel = new ActiveDataProvider([
             'query' => $model,
+            'pagination' => [
+                'pageSize' => 25,
+            ],
         ]);
 
         return $this->render('index', [
@@ -85,9 +88,12 @@ class UserprofileController extends Controller
 
         $searchModel = new ActiveDataProvider([
             'query' => $model,
+            'pagination' => [
+                'pageSize' => 25,
+            ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('indexclientes', [
             'searchModel' => $searchModel,
         ]);
     }

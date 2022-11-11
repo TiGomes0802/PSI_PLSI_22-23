@@ -37,6 +37,11 @@
         </div>
 
         <div class="u-form-group u-form-name u-label-top">
+          <label for="sexo" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Sexo</label>
+          <?= $form->field($model, 'sexo')->dropdownList(['masculino' => 'Masculino', 'femenino' => 'Femenino'],['prompt'=>'Seleciona o sexo'])->label(false); ?>
+        </div>
+
+        <div class="u-form-group u-form-name u-label-top">
           <label for="role" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Role</label>
           <?= $form->field($model, 'role')->dropdownList(['admin' => 'Admin', 'gestor' => 'Gestor de Eventos', 'rp' => 'RP'],['prompt'=>'Seleciona a Role'])->label(false); ?>
         </div>

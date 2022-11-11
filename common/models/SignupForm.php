@@ -26,6 +26,7 @@ class SignupForm extends Model
     public $datanascimento;
     public $codigoRP;
     public $userid;
+    public $sexo;
 
     public $role;
 
@@ -40,7 +41,7 @@ class SignupForm extends Model
 
         return [
             [['username', 'email', 'role'], 'trim'],
-            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'role', 'password', 'passwordrepet'], 'required', 'message' => 'Este campo não pode ser vazio.'],
+            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'role', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => 'Este campo não pode ser vazio.'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
             [['username', 'email'], 'string', 'min' => 5, 'max' => 255],
 
@@ -54,6 +55,7 @@ class SignupForm extends Model
             ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             ['userid', 'integer'],
             [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 5, 'max' => 25],
+            ['sexo', 'string', 'min' => 8, 'max' => 9],
             ['userid', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
         ];
     }
@@ -75,6 +77,7 @@ class SignupForm extends Model
         $userprofile->nome = $this->nome;
         $userprofile->apelido = $this->apelido;
         $userprofile->datanascimento = $this->datanascimento;
+        $userprofile->sexo = $this->sexo;
         if($this->role == 'rp'){
             $userprofile->codigoRP = $this->username;
         }
@@ -106,6 +109,7 @@ class SignupForm extends Model
 
         $model->nome = $userprofile->nome;
         $model->apelido = $userprofile->apelido;
+        $model->sexo = $userprofile->sexo;
         $model->datanascimento = $userprofile->datanascimento;
 
         return $model;
@@ -134,6 +138,7 @@ class SignupForm extends Model
 
         $userprofile->nome = $this->nome;
         $userprofile->apelido = $this->apelido;
+        $userprofile->sexo = $this->sexo;
         $userprofile->datanascimento = $this->datanascimento;
         
         return $user->save() && $userprofile->save();

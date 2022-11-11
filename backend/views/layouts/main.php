@@ -20,7 +20,6 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 <head>
     <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="./../web/css/form_add_empregado.css" media="screen">
-    <script src="./../web/js/graficos.js"></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,8 +28,6 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
     <title>Home</title>
     <?php $this->head() ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>google.charts.load('current', {'packages':['corechart']});</script>
 </head>
 <body class="hold-transition sidebar-mini">
 <?php $this->beginBody() ?>
@@ -56,6 +53,12 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 </div>
 
 <?php $this->endBody() ?>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>google.charts.load('current', {'packages':['corechart']});</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./../web/js/graficos.js"></script>
+
 </body>
 </html>
 <?php $this->endPage() ?>

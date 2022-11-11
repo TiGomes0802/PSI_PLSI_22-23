@@ -15,13 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="userprofile-index">
 
-    <h1><?= Html::encode('Funcionarios') ?></h1>
-
-    <p>
-        <?= Html::a('Create Userprofile', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+    <h1><?= Html::encode('Clientes') ?></h1>
 
     <?= 
     GridView::widget([

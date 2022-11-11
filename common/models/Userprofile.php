@@ -16,6 +16,7 @@ use DateInterval;
  * @property string $datanascimento
  * @property int|null $codigoRP
  * @property int|null $userid
+ * @property string $sexo
  *
  * @property User $user
  */
@@ -40,11 +41,12 @@ class Userprofile extends \yii\db\ActiveRecord
         $max = $date->format('Y-m-d');
 
         return [
-            [['nome', 'apelido', 'datanascimento'], 'required'],
+            [['nome', 'apelido', 'datanascimento', 'sexo'], 'required'],
             [['datanascimento'], 'safe'],
             ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             [['userid'], 'integer'],
             [['nome', 'apelido', 'codigoRP'], 'string', 'max' => 25],
+            ['sexo', 'string', 'max' => 9],
             [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
         ];
     }
@@ -61,6 +63,7 @@ class Userprofile extends \yii\db\ActiveRecord
             'datanascimento' => 'Datanascimento',
             'codigoRP' => 'Codigo Rp',
             'userid' => 'Userid',
+            'sexo' => 'Sexo',
         ];
     }
 
