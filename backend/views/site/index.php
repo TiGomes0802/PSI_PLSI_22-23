@@ -89,5 +89,22 @@ $this->params['breadcrumbs'] = [['label' => $this->title]];
                 </div>
             </div>
         </div>
+
+        <div class="col-12">
+            <div class="card card-olive">
+                <div class="card-header">
+                    <h3 class="card-title">Ano 2022</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+                    <div id="chart_div3" style=" height: 450px;"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
