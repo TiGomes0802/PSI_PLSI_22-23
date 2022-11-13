@@ -2,16 +2,18 @@
 
 namespace backend\controllers;
 
+use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use Yii;
-use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
 use common\models\SignupForm;
 use common\models\User;
 use common\models\AuthAssignment;
+
 
 /**
  * UserprofileController implements the CRUD actions for Userprofile model.
@@ -30,6 +32,21 @@ class UserprofileController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'update_password', 'delete'],
+                            'allow' => true,
+                            'roles' => ['gestor','admin'],
+                        ],
+                        [
+                            'actions' => ['indexclientes'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
                     ],
                 ],
             ]
