@@ -33,6 +33,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['gestor','admin'],
                     ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [
