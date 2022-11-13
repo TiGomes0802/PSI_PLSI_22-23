@@ -1,5 +1,4 @@
-<
-  div class="u-body u-xl-mode" data-lang="pt">
+<div class="u-body u-xl-mode" data-lang="pt">
 <section class="u-clearfix u-image u-section-1" id="carousel_bd30">
   <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
     <div class="u-layout">

@@ -18,6 +18,7 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <link rel="icon" type="image/x-icon" href=".././web/ico/EcstasyClubLogo.ico">
     <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="./../web/css/form_add_empregado.css" media="screen">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
