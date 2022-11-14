@@ -98,7 +98,7 @@ class SignupForm extends Model
         return $user->save() && $userprofile->save() && $this->sendEmail($user);
     }
 
-    public function updatedados($id)
+    public function loadingdados($id)
     {   
         $userprofile = Userprofile::find()->where(['userid' => $id])->one();
         $user = user::find()->where(['id' => $id])->one();

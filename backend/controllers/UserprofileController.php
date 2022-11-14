@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
-use common\models\SignupForm;
+use backend\models\SignupEmpregados;
 use common\models\User;
 use common\models\AuthAssignment;
 
@@ -137,7 +137,7 @@ class UserprofileController extends Controller
     */
     public function actionCreate()
     {
-        $model = new SignupForm();
+        $model = new SignupEmpregados();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->createnewfuncionario()) {
@@ -161,9 +161,9 @@ class UserprofileController extends Controller
     */
     public function actionUpdate($id)
     {
-        $model = new SignupForm();
+        $model = new SignupEmpregados();
 
-        $model = $model->updatedados($id);
+        $model = $model->loadingdados($id);
 
         if ($model->load($this->request->post()) && $model->updateload($id)) {
             return $this->redirect(['view', 'id' => $id]);
@@ -176,9 +176,9 @@ class UserprofileController extends Controller
 
     public function actionUpdate_password($id)
     {
-        $model = new SignupForm();
+        $model = new SignupEmpregados();
 
-        $model = $model->updatedados($id);
+        $model = $model->loadingdados($id);
 
         if ($model->load($this->request->post()) && $model->updateload($id)) {
             if(Yii::$app->user->getId() == $id){
