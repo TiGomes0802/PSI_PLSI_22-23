@@ -20,6 +20,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="./../web/css/index.css" media="screen">
+    
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i|Abril+Fatface:400">
     <?php $this->registerCsrfMetaTags() ?>
@@ -35,16 +36,19 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => 'navbar navbar-expand-md navbar-dark bg-dark',
         ],
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Eventos', 'url' => ['/evento/index']],
+        ['label' => 'Galeria', 'url' => ['/galeria/contact']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+    }
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view','id'=> Yii::$app->user->id]];
     }
 
     echo Nav::widget([
@@ -52,7 +56,12 @@ AppAsset::register($this);
         'items' => $menuItems,
     ]);
     if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
+        echo Html::beginForm(['/site/login'], 'post', ['class' => 'd-flex'])
+            . Html::submitButton(
+                'Login',
+                ['class' => 'btn btn-link logout text-decoration-none']
+            )
+            . Html::endForm();
     } else {
         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
             . Html::submitButton(
@@ -65,14 +74,12 @@ AppAsset::register($this);
     ?>
 </header>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
+<main role="main" class="flex-shrink-0"> 
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
-    </div>
 </main>
 
 <footer class="footer mt-auto py-3 text-muted">
