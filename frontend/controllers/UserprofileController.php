@@ -26,6 +26,13 @@ class UserprofileController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                 ],
+                'rules' => [
+                    [
+                        'actions' => ['view', 'update', 'update_password'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
             ]
         );
     }
