@@ -22,10 +22,10 @@ class SignupForm extends Model
     public $nome;
     public $apelido;
     public $datanascimento;
+    public $passwordrepet;
+    public $sexo;
     public $codigoRP;
     public $userid;
-
-    public $role;
 
     /**
      * {@inheritdoc}
@@ -34,32 +34,26 @@ class SignupForm extends Model
     {
         $date = new DateTime();
         $date->sub(new DateInterval('P18Y'));
-        $max = $date->format('d-m-Y');
+        $max = $date->format('Y-m-d');
 
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
+            [['username', 'email'], 'trim'],
+            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => 'Este campo não pode ser vazio.'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            [['username', 'email'], 'string', 'min' => 5, 'max' => 255],
 
-            ['role', 'trim'],
-            ['role', 'required'],
-
-            ['email', 'trim'],
-            ['email', 'required'],
             ['email', 'email'],
-            ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este email já está a ser utilizado.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            [['password', 'passwordrepet'], 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['passwordrepet', 'compare', 'compareAttribute'=>'password', 'message' => 'As passwords não correspondem'],
 
-            [['nome', 'apelido', 'datanascimento'], 'required'],
             [['datanascimento'], 'safe'],
-            ['datanascimento', 'date', 'format' => 'php:d-m-Y', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
-            [['codigoRP', 'userid'], 'integer'],
-            [['nome', 'apelido'], 'string', 'max' => 25],
-            [['userid'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
+            ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
+            ['userid', 'integer'],
+            [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 5, 'max' => 25],
+            ['sexo', 'string', 'min' => 8, 'max' => 9],
+            ['userid', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
         ];
     }
 
@@ -68,38 +62,39 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-    public function signup()
+
+    public function SignUp()
     {
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $userprofile = new Userprofile();
 
         $userprofile->nome = $this->nome;
         $userprofile->apelido = $this->apelido;
+        $userprofile->datanascimento = $this->datanascimento;
+        $userprofile->sexo = $this->sexo;
+
         $user->username = $this->username;
-        $user->setPassword($this->password);
         $user->email = $this->email;
-        $userprofile->datanascimento = $this ->datanascimento;
+        $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         $user->save(false);
 
-        $userprofile->userid = $user->getid();
+        $userprofile->userid = $user->getId();
 
         $auth = \Yii::$app->authManager;
+        $authorRole = $auth->getRole("cliente");
+        $auth->assign($authorRole, $user->getId());
 
-        $authManager = $auth->getRole("cliente");
-        $auth->assign($authorRole, $user->getid());
-
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        
-
-        return $user->save() && $this->sendEmail($user);
+        return $user->save() && $userprofile->save() && $this->sendEmail($user);
     }
+
+
+
 
     /**
      * Sends confirmation email to user

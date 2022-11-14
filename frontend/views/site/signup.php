@@ -13,7 +13,6 @@ use yii\bootstrap5\ActiveForm;
 
 <section class="u-align-center u-clearfix u-custom-color-2 u-section-1" id="sec-1a0b">
     <div class="u-clearfix u-sheet u-sheet-1">
-        
         <h2 class="u-text u-text-default u-text-1">Registar</h2>
 
         <div class="u-form u-form-1">    
@@ -40,8 +39,18 @@ use yii\bootstrap5\ActiveForm;
         </div>
 
         <div class="u-form-group u-form-name u-label-top">
+          <label for="name-818d" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Password</label>
+          <?= $form->field($model, 'passwordrepet')->input('password',['placeholder' => 'Password'])->label(false); ?>
+        </div>
+
+        <div class="u-form-group u-form-name u-label-top">
           <label for="email-3b9a" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Email</label>
           <?= $form->field($model, 'email')->input('email',['placeholder' => 'Email'])->label(false); ?>
+        </div>
+
+        <div class="u-form-group u-form-name u-label-top">
+          <label for="sexo" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Sexo</label>
+          <?= $form->field($model, 'sexo')->dropdownList(['masculino' => 'Masculino', 'femenino' => 'Femenino'],['prompt'=>'Seleciona o sexo'])->label(false); ?>
         </div>
 
         <div class="u-form-group u-form-name u-label-top">
