@@ -63,6 +63,21 @@ class LoginForm extends Model
         return false;
     }
 
+    public function verifycanbackend()
+    {
+        $roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+        
+        foreach($roles as $role)
+        {
+            if($role->name == 'admin' || $role->name == 'gestor')
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Finds user by [[username]]
      *
