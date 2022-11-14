@@ -68,6 +68,7 @@ class UserprofileController extends Controller
             ->orwhere(['auth_assignment.item_name' => 'admin'])
             ->orwhere(['auth_assignment.item_name' => 'gestor'])
             ->orwhere(['auth_assignment.item_name' => 'rp'])
+            ->orwhere(['auth_assignment.item_name' => 'seguranca'])
             ->orderBy(['nome' => SORT_ASC,'apelido'=> SORT_ASC]);
 
         }
