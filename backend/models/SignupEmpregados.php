@@ -1,11 +1,12 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use common\models\User;
 use common\models\Userprofile;
+use yii\web\IdentityInterface;
 
 use DateTime;
 use DateInterval;
@@ -13,19 +14,21 @@ use DateInterval;
 /**
  * Signup form
  */
-class SignupForm extends Model
+class SignupEmpregados extends Model
 {
     public $username;
     public $email;
     public $password;
+    public $passwordrepet;
     public $id;
     public $nome;
     public $apelido;
     public $datanascimento;
-    public $passwordrepet;
-    public $sexo;
     public $codigoRP;
     public $userid;
+    public $sexo;
+
+    public $role;
 
     /**
      * {@inheritdoc}
@@ -37,8 +40,8 @@ class SignupForm extends Model
         $max = $date->format('Y-m-d');
 
         return [
-            [['username', 'email'], 'trim'],
-            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => 'Este campo não pode ser vazio.'],
+            [['username', 'email', 'role'], 'trim'],
+            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'role', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => 'Este campo não pode ser vazio.'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
             [['username', 'email'], 'string', 'min' => 5, 'max' => 255],
 
@@ -62,13 +65,12 @@ class SignupForm extends Model
      *
      * @return bool whether the creating new account was successful and email was sent
      */
-
-    public function SignUp()
+    public function createnewfuncionario()
     {
         if (!$this->validate()) {
             return null;
         }
-
+        
         $user = new User();
         $userprofile = new Userprofile();
 
@@ -76,6 +78,9 @@ class SignupForm extends Model
         $userprofile->apelido = $this->apelido;
         $userprofile->datanascimento = $this->datanascimento;
         $userprofile->sexo = $this->sexo;
+        if($this->role == 'rp'){
+            $userprofile->codigoRP = $this->username;
+        }
 
         $user->username = $this->username;
         $user->email = $this->email;
@@ -87,14 +92,14 @@ class SignupForm extends Model
         $userprofile->userid = $user->getId();
 
         $auth = \Yii::$app->authManager;
-        $authorRole = $auth->getRole("cliente");
+        $authorRole = $auth->getRole($this->role);
         $auth->assign($authorRole, $user->getId());
 
         return $user->save() && $userprofile->save() && $this->sendEmail($user);
     }
 
     public function loadingdados($id)
-    {
+    {   
         $userprofile = Userprofile::find()->where(['userid' => $id])->one();
         $user = user::find()->where(['id' => $id])->one();
         $model = $this;
@@ -118,7 +123,7 @@ class SignupForm extends Model
 
         $user = user::find()->where(['id' => $id])->one();
         $userprofile = Userprofile::find()->where(['userid' => $user->id])->one();
-
+        
         $user->username = $this->username;
         $user->email = $this->email;
 
@@ -135,7 +140,7 @@ class SignupForm extends Model
         $userprofile->apelido = $this->apelido;
         $userprofile->sexo = $this->sexo;
         $userprofile->datanascimento = $this->datanascimento;
-
+        
         return $user->save() && $userprofile->save();
     }
 
@@ -157,5 +162,4 @@ class SignupForm extends Model
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
     }
-
 }

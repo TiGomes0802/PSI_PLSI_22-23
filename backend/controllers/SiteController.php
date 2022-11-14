@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\Userprofile;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -31,6 +32,11 @@ class SiteController extends Controller
                         'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['gestor','admin'],
+                    ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
             ],
@@ -62,7 +68,27 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = Userprofile::find()->where(['userid' => Yii::$app->user->id])->one();    
+        $grafico = (new yii\db\Query())
+        ->from('auth_assignment')
+        ->select(['item_name', 'COUNT(item_name) AS quantidade_item_name'])
+        ->groupBy('item_name')
+        ->all();
+
+        $grafico2 = (new yii\db\Query())->from('userprofile')
+        ->select(['sexo', 'COUNT(sexo) AS quantidade'])
+        ->leftJoin('user', 'user.id = userprofile.userid')
+        ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+        ->orwhere(['auth_assignment.item_name' => 'cliente'])
+        ->orderBy(['sexo'=>SORT_ASC])
+        ->groupBy('sexo')
+        ->all();
+
+        return $this->render('index', [
+            'model' => $model,
+            'grafico' => $grafico,
+            'grafico2' => $grafico2,
+        ]);
     }
 
     /**
@@ -100,5 +126,5 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
+    }   
 }

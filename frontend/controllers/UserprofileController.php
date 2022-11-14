@@ -2,13 +2,14 @@
 
 namespace frontend\controllers;
 
+use Yii;
+use frontend\models\SignupForm;
 use common\models\Userprofile;
-use app\models\UserprofileSearch;
+use common\models\UserprofileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use frontend\models\SignupForm;
-use Yii;
+use yii\filters\AccessControl;
 
 /**
  * UserprofileController implements the CRUD actions for Userprofile model.
@@ -26,11 +27,15 @@ class UserprofileController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                 ],
-                'rules' => [
-                    [
-                        'actions' => ['view', 'update', 'update_password'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['view', 'update', 'update_password'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
             ]

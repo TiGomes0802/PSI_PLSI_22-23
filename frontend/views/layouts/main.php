@@ -18,6 +18,7 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href=".././web/ico/EcstasyClubLogo.ico">
     <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="./../web/css/index.css" media="screen">
     
@@ -74,12 +75,13 @@ AppAsset::register($this);
     ?>
 </header>
 
-<main role="main" class="flex-shrink-0"> 
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+<main role="main" class="flex-shrink-0">
+    <?= Breadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    ]) ?>
+    <?= Alert::widget() ?>
+    <?= $content ?>
+
 </main>
 
 <footer class="footer mt-auto py-3 text-muted">
