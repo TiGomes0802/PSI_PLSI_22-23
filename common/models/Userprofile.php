@@ -3,10 +3,8 @@
 namespace common\models;
 
 use Yii;
-
 use DateTime;
 use DateInterval;
-
 /**
  * This is the model class for table "userprofile".
  *
@@ -14,7 +12,7 @@ use DateInterval;
  * @property string $nome
  * @property string $apelido
  * @property string $datanascimento
- * @property int|null $codigoRP
+ * @property string|null $codigoRP
  * @property int|null $userid
  * @property string $sexo
  *
@@ -35,7 +33,6 @@ class Userprofile extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        
         $date = new DateTime();
         $date->sub(new DateInterval('P18Y'));
         $max = $date->format('Y-m-d');

@@ -21,6 +21,7 @@ AppAsset::register($this);
     <link rel="icon" type="image/x-icon" href=".././web/ico/EcstasyClubLogo.ico">
     <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="./../web/css/index.css" media="screen">
+    
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i|Abril+Fatface:400">
     <?php $this->registerCsrfMetaTags() ?>
@@ -48,7 +49,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
     }
     if (!Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view']];
+        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view','id'=> Yii::$app->user->id]];
     }
 
     echo Nav::widget([
@@ -80,6 +81,7 @@ AppAsset::register($this);
     ]) ?>
     <?= Alert::widget() ?>
     <?= $content ?>
+
 </main>
 
 <footer class="footer mt-auto py-3 text-muted">
