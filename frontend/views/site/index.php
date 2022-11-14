@@ -158,7 +158,7 @@
     <h2 class="u-custom-font u-text u-text-1" spellcheck="false">
       <span style="font-size: 3rem;">Tonight </span>
       <span style="font-style: italic;">Special Party&nbsp; &nbsp; &nbsp; &nbsp;</span>
-      <p><span class="u-text-palette-5-base">&nbsp; VIP Disponiveis</span></p>
+      <p><span class="u-text-palette-5-base">&nbsp; VIP's Disponiveis</span></p>
     </h2>
   </div>
 </section>
