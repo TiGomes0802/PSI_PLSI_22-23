@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
+</head>
 <div class="u-body u-xl-mode" data-lang="pt">
 <section class="u-clearfix u-image u-section-1" id="carousel_bd30">
   <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
