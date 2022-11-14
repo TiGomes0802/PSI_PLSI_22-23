@@ -40,7 +40,7 @@ class SignupForm extends Model
             [['username', 'email'], 'trim'],
             [['nome', 'apelido', 'datanascimento', 'username', 'email', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => 'Este campo não pode ser vazio.'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
-            [['username', 'email'], 'string', 'min' => 5, 'max' => 255],
+            [['username', 'email'], 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este email já está a ser utilizado.'],
