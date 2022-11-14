@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
@@ -14,7 +14,7 @@ use DateInterval;
 /**
  * Signup form
  */
-class SignupForm extends Model
+class SignupEmpregados extends Model
 {
     public $username;
     public $email;
