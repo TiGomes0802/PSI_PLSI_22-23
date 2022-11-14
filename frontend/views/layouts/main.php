@@ -48,7 +48,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
     }
     if (!Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view']];
+        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view','id'=> Yii::$app->user->id]];
     }
 
     echo Nav::widget([

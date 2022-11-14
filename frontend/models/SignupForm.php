@@ -114,4 +114,53 @@ class SignupForm extends Model
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
     }
+
+
+    public function loadingdados($id)
+    {
+        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+        $user = user::find()->where(['id' => $id])->one();
+        $model = $this;
+
+        $model->username = $user->username;
+        $model->email = $user->email;
+
+        $model->nome = $userprofile->nome;
+        $model->apelido = $userprofile->apelido;
+        $model->sexo = $userprofile->sexo;
+        $model->datanascimento = $userprofile->datanascimento;
+
+        return $model;
+    }
+
+    public function updateload($id)
+    {
+
+        $userprofile = new Userprofile();
+        $user = new User();
+
+        $user = user::find()->where(['id' => $id])->one();
+        $userprofile = Userprofile::find()->where(['userid' => $user->id])->one();
+
+        $user->username = $this->username;
+        $user->email = $this->email;
+
+        if($this->password != null){
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+        } else{
+            $this->password = $user->password_hash;
+            $user->auth_key = $user->auth_key;
+            $user->password_hash = $user->password_hash;
+        }
+
+        $userprofile->nome = $this->nome;
+        $userprofile->apelido = $this->apelido;
+        $userprofile->sexo = $this->sexo;
+        $userprofile->datanascimento = $this->datanascimento;
+
+        return $user->save() && $userprofile->save();
+    }
+
+
 }
