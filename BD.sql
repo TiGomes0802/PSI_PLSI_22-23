@@ -62,6 +62,7 @@ create table pulseiras(
 )Engine=InnoDB;
 
 create table vip_pulseira(
+	id int not null primary key auto_increment,
     idvip int not null,
     foreign key (idvip) references vip(id),
     idpulseira int not null,
@@ -90,6 +91,7 @@ create table bebidas(
 )Engine=InnoDB;
 
 create table linha_fatura(
+	id int not null primary key auto_increment,
 	idbebida int not null,
     foreign key (idbebida) references bebidas(id),
     idfatura int not null,
