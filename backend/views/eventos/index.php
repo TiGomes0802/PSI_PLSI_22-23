@@ -19,6 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Eventos', ['create'], ['class' => 'btn btn-success']) ?>
+
+        <?= Html::a('Tipo eventos', ['tipoevento/index'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -34,10 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'descricao',
             'cartaz',
             'dataevento',
-            //'numbilhetesdisp',
-            //'preco',
-            //'idcriador',
-            //'idtipoevento',
+            'numbilhetesdisp',
+            'preco',
+            'idcriador',
+            'idtipoevento',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Eventos $model, $key, $index, $column) {

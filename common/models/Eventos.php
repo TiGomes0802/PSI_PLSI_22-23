@@ -3,7 +3,8 @@
 namespace common\models;
 
 use Yii;
-
+use yii\base\Model;
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "eventos".
  *
@@ -25,6 +26,11 @@ use Yii;
 class Eventos extends \yii\db\ActiveRecord
 {
     /**
+     * @var \yii\web\UploadedFile
+     */
+    public $imageFile;
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -38,7 +44,7 @@ class Eventos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
+            [['nome', 'descricao', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
             [['dataevento'], 'safe'],
             [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
             [['preco'], 'number'],
@@ -47,6 +53,7 @@ class Eventos extends \yii\db\ActiveRecord
             [['cartaz'], 'string', 'max' => 250],
             [['idcriador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
             [['idtipoevento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -60,6 +67,7 @@ class Eventos extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'descricao' => 'Descricao',
             'cartaz' => 'Cartaz',
+            'imageFile' => 'Product Image',
             'dataevento' => 'Dataevento',
             'numbilhetesdisp' => 'Numbilhetesdisp',
             'preco' => 'Preco',

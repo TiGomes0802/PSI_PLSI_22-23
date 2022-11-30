@@ -21,18 +21,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Tipoevento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'tipo',
             [
                 'class' => ActionColumn::className(),
+                'template' => '{update}',
                 'urlCreator' => function ($action, Tipoevento $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

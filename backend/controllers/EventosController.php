@@ -7,7 +7,8 @@ use common\models\EventosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\UploadedFile;
+use Yii;
 /**
  * EventosController implements the CRUD actions for Eventos model.
  */
@@ -47,12 +48,6 @@ class EventosController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Eventos model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,11 +55,6 @@ class EventosController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Eventos model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Eventos();
