@@ -31,7 +31,7 @@ Create table tipoevento(
 Create table eventos(
 	id int not null primary key auto_increment,
     nome varchar(25) not null,
-    descricao varchar(150) not null,
+    descricao varchar(750) not null,
     cartaz varchar(250) not null,
     dataevento datetime not null,
     numbilhetesdisp int not null,
