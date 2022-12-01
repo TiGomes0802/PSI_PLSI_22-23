@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\ckeditor\CKEditor;
 
 /** @var yii\web\View $this */
 /** @var common\models\Eventos $model */
@@ -18,7 +19,7 @@ use yii\widgets\ActiveForm;
 
         <div class="u-form-group u-form-name u-label-top">
           <label class="u-label u-spacing-0 u-text-custom-color-1 u-label">Descricao</label>
-          <?= $form->field($model, 'descricao')->input('text', ['placeholder' => 'Descricao'])->label(false); ?>
+          <?= $form->field($model, 'descricao')->widget(CKEditor::className(), ['options' => ['rows' => 6],'preset' => 'basic'])->label(false);?>
         </div>
 
         <div class="u-form-group u-form-name u-label-top">

@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Descricao',
+                'format' => 'html',
                 'value' => function ($data) {
                     return $data->descricao;
                 },

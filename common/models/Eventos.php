@@ -49,7 +49,7 @@ class Eventos extends \yii\db\ActiveRecord
             [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
             [['preco'], 'double'],
             [['nome'], 'string', 'max' => 25],
-            [['descricao'], 'string', 'max' => 150],
+            [['descricao'], 'string', 'max' => 750],
             [['cartaz'], 'string', 'max' => 250],
             [['idcriador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
             [['idtipoevento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
