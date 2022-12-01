@@ -4,11 +4,14 @@ namespace backend\controllers;
 
 use common\models\Eventos;
 use common\models\EventosSearch;
+use common\models\Userprofile;
+use common\models\UserprofileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\filters\VerbFilter;
 use Yii;
+
 /**
  * EventosController implements the CRUD actions for Eventos model.
  */
@@ -58,9 +61,28 @@ class EventosController extends Controller
     public function actionCreate()
     {
         $model = new Eventos();
+        
+        $user = Userprofile::find()->where(['userid' => Yii::$app->user->getId()])->one();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
+            
+            $model->idtipoevento = (int)$model->idtipoevento;
+            $model->idcriador = $user->id;
+
+            if ($model->save()) {
+                
+                $directoryName = 'cartaz/';
+                
+                if (!file_exists($directoryName)) {
+                    mkdir($directoryName, 0777, true);
+                }
+
+                $model->imageFile->saveAs($directoryName . $model->cartaz);
+                
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -83,8 +105,18 @@ class EventosController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+            $model->idtipoevento = (int)$model->idtipoevento;
+
+            if ($model->save()) {
+
+                $model->imageFile->saveAs('cartaz/' . $model->cartaz);
+                
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

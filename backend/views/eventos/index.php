@@ -29,17 +29,57 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nome',
-            'descricao',
-            'cartaz',
-            'dataevento',
-            'numbilhetesdisp',
-            'preco',
-            'idcriador',
-            'idtipoevento',
+            [
+                'label' => 'Nome',
+                'value' => function ($data) {
+                    return $data->nome;
+                },
+            ],
+            [
+                'label' => 'Descricao',
+                'value' => function ($data) {
+                    return $data->descricao;
+                },
+            ],
+            [
+                'format' => 'html',
+                'label' => 'Cartaz',
+                'value' => function ($data) {
+                    return Html::img('cartaz/' . $data->cartaz,
+                    ['width' => '80px','height' => '100px']);
+                },
+            ],
+            [
+                'label' => 'Data do evento',
+                'format' => ['date', 'd/m/Y h:m'],
+                'value' => function ($data) {
+                    return $data->dataevento;
+                },
+            ],
+            [
+                'label' => 'Bilhetes disponiveis',
+                'value' => function ($data) {
+                    return $data->numbilhetesdisp;
+                },
+            ],
+            [
+                'label' => 'Preço',
+                'value' => function ($data) {
+                    return $data->preco . '€';
+                },
+            ],
+            [
+                'label' => 'Criador',
+                'value' => function ($data) {
+                    return $data->idcriador0->nome;
+                },
+            ],
+            [
+                'label' => 'Tipo de evento',
+                'value' => function ($data) {
+                    return $data->idtipoevento0->tipo;
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Eventos $model, $key, $index, $column) {

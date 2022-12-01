@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
 
         <div class="u-form-group u-form-name u-label-top">
           <label for="date-f1bc" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Data do evento</label>
-          <?= $form->field($model, 'dataevento')->input('date')->label(false); ?>
+          <?= $form->field($model, 'dataevento')->input('datetime-local')->label(false); ?>
         </div>
 
         <div class="u-form-group u-form-name u-label-top">
@@ -45,7 +45,8 @@ use yii\widgets\ActiveForm;
           <label class="u-label u-spacing-0 u-text-custom-color-1 u-label">Tipo de evento</label>
           <?= $form ->field($model, 'idtipoevento')
                     ->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Tipoevento::find()
-                    ->asArray()->all(), 'id', 'tipo'))
+                    ->asArray()
+                    ->all(), 'id', 'tipo'))
                     ->label(false)?>
         </div>
         

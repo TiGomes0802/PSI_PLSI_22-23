@@ -44,10 +44,10 @@ class Eventos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'descricao', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
             [['dataevento'], 'safe'],
             [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
-            [['preco'], 'number'],
+            [['preco'], 'double'],
             [['nome'], 'string', 'max' => 25],
             [['descricao'], 'string', 'max' => 150],
             [['cartaz'], 'string', 'max' => 250],
