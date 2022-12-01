@@ -16,6 +16,11 @@ use Yii;
 class Galerias extends \yii\db\ActiveRecord
 {
     /**
+     * @var \yii\web\UploadedFile
+     */
+    public $imageFile;
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -33,6 +38,7 @@ class Galerias extends \yii\db\ActiveRecord
             [['idevento'], 'integer'],
             [['foto'], 'string', 'max' => 250],
             [['idevento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['idevento' => 'id']],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -45,6 +51,7 @@ class Galerias extends \yii\db\ActiveRecord
             'id' => 'ID',
             'foto' => 'Foto',
             'idevento' => 'Idevento',
+            'imageFile' => 'Product Image',
         ];
     }
 

@@ -23,8 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= 
-    GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $searchModel,
         'columns' => [
             [
@@ -64,7 +63,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->datanascimento;
                 },
             ],
-            
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {

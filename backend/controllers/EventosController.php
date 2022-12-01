@@ -2,15 +2,15 @@
 
 namespace backend\controllers;
 
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 use common\models\Eventos;
 use common\models\EventosSearch;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
-use yii\filters\VerbFilter;
-use Yii;
 
 /**
  * EventosController implements the CRUD actions for Eventos model.

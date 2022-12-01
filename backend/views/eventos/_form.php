@@ -10,7 +10,7 @@ use dosamigos\ckeditor\CKEditor;
 ?>
 
 <div class="u-form u-form-1">    
-      <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+      <?php $form = ActiveForm::begin(); ?>
 
         <div class="u-form-group u-form-name u-label-top">
           <label class="u-label u-spacing-0 u-text-custom-color-1 u-label">Nome</label>
