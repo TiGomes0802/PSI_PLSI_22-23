@@ -65,13 +65,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Preço',
                 'value' => function ($data) {
-                    return $data->preco . '€';
+                    return number_format( $data->preco, 2 ) . '€';
                 },
             ],
             [
                 'label' => 'Criador',
                 'value' => function ($data) {
-                    return $data->idcriador0->nome;
+                    return $data->idcriador0->nome . ' ' . $data->idcriador0->apelido;
                 },
             ],
             [
