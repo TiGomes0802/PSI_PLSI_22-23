@@ -77,64 +77,32 @@ class GaleriasController extends Controller
      */
     public function actionCreate($idevento)
     {
-        $model = new Galerias();
+        $modelfotos = new Galerias();
         $evento = Eventos::findOne(['id' => $idevento]);
-
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $model->idevento = $idevento;
-            $model->foto = date("Ymdhisv") . '.' . $model->imageFile->extension;
-
-            if ($model->save()) {
-
-                $directoryName = 'galeria/' . $model->idevento . '/';
-            
-                if (!file_exists($directoryName)) {
-                    mkdir($directoryName, 0777, true);
+        if ($this->request->isPost && $modelfotos->load($this->request->post())) {
+            $modelfotos->imageFile = UploadedFile::getInstances($modelfotos, 'imageFile');
+            $directoryName = 'galeria/' . $idevento . '/';
+            if (!file_exists($directoryName)) {
+                mkdir($directoryName, 0777, true);
+            }
+            foreach($modelfotos->imageFile as $image){
+                $model = new Galerias();
+                $model->idevento = (int)$idevento;
+                $model->foto = date("Ymdhis") . time().rand(10,999999999) . '.' . $image->extension;
+                if ($model->save()) {
+                    $image->saveAs($directoryName . $model->foto);
+                } else{
+                    return $this->render('create', [
+                        'model' => $model,
+                        'evento' => $evento,
+                    ]);
                 }
-
-                $model->imageFile->saveAs($directoryName . $model->foto);
-
-                return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
+            return $this->redirect(['index', 'idevento' => $idevento]);
         }
-
         return $this->render('create', [
-            'model' => $model,
+            'model' => $modelfotos,
             'evento' => $evento,
-        ]);
-    }
-
-    /**
-     * Updates an existing Galerias model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post())) {
-
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-    
-            if ($model->save()) {
-                
-                $directoryName = 'galeria/' . $model->idevento . '/';
-
-                $model->imageFile->saveAs($directoryName . $model->foto);
-                
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        }
-
-        return $this->render('update', [
-            'model' => $model,
         ]);
     }
 
@@ -148,6 +116,7 @@ class GaleriasController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        unlink('galeria/'. $model->idevento . '/' . $model->foto);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index', 'idevento' => $model->idevento]);

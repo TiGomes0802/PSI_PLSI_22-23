@@ -51,7 +51,7 @@ $this->title = '';
             ],
             [
                 'label' => 'Data do evento',
-                'format' => ['date', 'd/m/Y h:m'],
+                'format' => ['date', 'php:d/m/Y h:i'],
                 'value' => function ($data) {
                     return $data->dataevento;
                 },

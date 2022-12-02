@@ -6,14 +6,12 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Galerias $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Galerias', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="galerias-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Galeria ' . $model->idevento0->nome) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'idevento' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -29,9 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'foto',
-            'idevento',
+            [
+                'format' => 'html',
+                'label' => '',
+                'value' => function ($data) {
+                    return Html::img('galeria/' . $data->idevento . '/' . $data->foto,
+                    ['width' => '460px','height' => '570px', 'alt' => 'galeira/'.$data->idevento . '/' . $data->foto]);
+                },
+            ],
         ],
     ]) ?>
 

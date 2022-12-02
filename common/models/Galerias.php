@@ -38,7 +38,7 @@ class Galerias extends \yii\db\ActiveRecord
             [['idevento'], 'integer'],
             [['foto'], 'string', 'max' => 250],
             [['idevento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['idevento' => 'id']],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 50],
         ];
     }
 

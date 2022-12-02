@@ -112,8 +112,10 @@ class EventosController extends Controller
             $model->idtipoevento = (int)$model->idtipoevento;
 
             if ($model->save()) {
-
-                $model->imageFile->saveAs('cartaz/' . $model->cartaz);
+                
+                if($model->imageFile != null){
+                    $model->imageFile->saveAs('cartaz/' . $model->cartaz);
+                }
                 
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -133,8 +135,9 @@ class EventosController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
         $this->findModel($id)->delete();
-
+        unlink('cartaz/' . $model->cartaz);
         return $this->redirect(['index']);
     }
 
