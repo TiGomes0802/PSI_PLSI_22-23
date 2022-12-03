@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Disco;
+use common\models\Disco;
 
 /**
- * DiscoSearch represents the model behind the search form of `backend\models\Disco`.
+ * DiscoSearch represents the model behind the search form of `common\models\Disco`.
  */
 class DiscoSearch extends Disco
 {

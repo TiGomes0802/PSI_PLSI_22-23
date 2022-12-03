@@ -25,6 +25,11 @@ use Yii;
 class Eventos extends \yii\db\ActiveRecord
 {
     /**
+     * @var \yii\web\UploadedFile
+     */
+    public $imageFile;
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -37,16 +42,21 @@ class Eventos extends \yii\db\ActiveRecord
      */
     public function rules()
     {
+        $disco = Disco::find()->where(['id' => 1])->one();
+
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
-            [['dataevento'], 'safe'],
+            ['dataevento', 'safe'],
+            ['dataevento', 'date'],
             [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
-            [['preco'], 'number'],
-            [['nome'], 'string', 'max' => 25],
-            [['descricao'], 'string', 'max' => 150],
-            [['cartaz'], 'string', 'max' => 250],
-            [['idcriador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
-            [['idtipoevento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
+            ['numbilhetesdisp', 'integer', 'max' => $disco->lotacao],
+            ['preco', 'double'],
+            ['nome', 'string', 'max' => 25],
+            ['descricao', 'string', 'max' => 750],
+            ['cartaz', 'string', 'max' => 250],
+            ['idcriador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
+            ['idtipoevento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
+            ['imageFile', 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -60,6 +70,7 @@ class Eventos extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'descricao' => 'Descricao',
             'cartaz' => 'Cartaz',
+            'imageFile' => 'Product Image',
             'dataevento' => 'Dataevento',
             'numbilhetesdisp' => 'Numbilhetesdisp',
             'preco' => 'Preco',

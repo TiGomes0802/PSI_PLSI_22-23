@@ -9,6 +9,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\Userprofile;
+use common\models\Disco;
+use common\models\DiscoSearch;
 use common\models\UserprofileSearch;
 use backend\models\SignupEmpregados;
 use common\models\User;
