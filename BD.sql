@@ -45,7 +45,7 @@ Create table eventos(
 create table vip(
 	id int not null primary key auto_increment,
     npessoas int not null,
-    descricao varchar(250) not null,
+    descricao varchar(750) not null,
     nbebidas int not null,
     preco float not null
 )Engine=InnoDB;
@@ -73,7 +73,7 @@ create table noticias(
 	id int not null primary key auto_increment,
     titulo varchar(25) not null,
     datanoticia datetime not null,
-    descricao varchar(250) not null,
+    descricao varchar(750) not null,
     idcriador int not null,
     foreign key (idcriador) references userprofile(id)
 )Engine=InnoDB;
