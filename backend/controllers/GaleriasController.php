@@ -33,7 +33,7 @@ class GaleriasController extends Controller
                     ],
                 ],
                 'access' => [
-                    'class' => AccessControl::class,
+                    'class' => AccessControl::class(),
                     'rules' => [
                         [
                             'actions' => ['index', 'view', 'create', 'delete'],
@@ -46,21 +46,25 @@ class GaleriasController extends Controller
         );
     }
 
-    /**
-     * Lists all Galerias models.
-     *
-     * @return string
-     */
+
     public function actionIndex($idevento)
     {
-        $model = Galerias::find()->where(['idevento' => $idevento]);
-        $evento = Eventos::findOne(['id' => $idevento]);
-        $searchModel = new ActiveDataProvider([
-            'query' => $model,
-            'pagination' => [
-                'pageSize' => 25,
-            ],
-        ]);
+        if (\Yii::$app->user->can('viewGaleria')) {
+
+            $model = Galerias::find()->where(['idevento' => $idevento]);
+            $evento = Eventos::findOne(['id' => $idevento]);
+            $searchModel = new ActiveDataProvider([
+                'query' => $model,
+                'pagination' => [
+                    'pageSize' => 25,
+                ],
+            ]);
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -68,78 +72,82 @@ class GaleriasController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Galerias model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('viewGaleria')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
-    /**
-     * Creates a new Galerias model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
+
     public function actionCreate($idevento)
     {
-        $modelfotos = new Galerias();
-        $evento = Eventos::findOne(['id' => $idevento]);
-        if ($this->request->isPost && $modelfotos->load($this->request->post())) {
-            $modelfotos->imageFile = UploadedFile::getInstances($modelfotos, 'imageFile');
-            $directoryName = 'galeria/' . $idevento . '/';
-            if (!file_exists($directoryName)) {
-                mkdir($directoryName, 0777, true);
-            }
-            foreach($modelfotos->imageFile as $image){
-                $model = new Galerias();
-                $model->idevento = (int)$idevento;
-                $model->foto = date("Ymdhis") . time().rand(10,999999999) . '.' . $image->extension;
-                if ($model->save()) {
-                    $image->saveAs($directoryName . $model->foto);
-                } else{
-                    return $this->render('create', [
-                        'model' => $model,
-                        'evento' => $evento,
-                    ]);
+
+        if (\Yii::$app->user->can('createGaleria')) {
+
+            $modelfotos = new Galerias();
+            $evento = Eventos::findOne(['id' => $idevento]);
+            if ($this->request->isPost && $modelfotos->load($this->request->post())) {
+                $modelfotos->imageFile = UploadedFile::getInstances($modelfotos, 'imageFile');
+                $directoryName = 'galeria/' . $idevento . '/';
+                if (!file_exists($directoryName)) {
+                    mkdir($directoryName, 0777, true);
                 }
+                foreach($modelfotos->imageFile as $image){
+                    $model = new Galerias();
+                    $model->idevento = (int)$idevento;
+                    $model->foto = date("Ymdhis") . time().rand(10,999999999) . '.' . $image->extension;
+                    if ($model->save()) {
+                        $image->saveAs($directoryName . $model->foto);
+                    } else{
+                        return $this->render('create', [
+                            'model' => $model,
+                            'evento' => $evento,
+                        ]);
+                    }
+                }
+                return $this->redirect(['index', 'idevento' => $idevento]);
             }
-            return $this->redirect(['index', 'idevento' => $idevento]);
+            return $this->render('create', [
+                'model' => $modelfotos,
+                'evento' => $evento,
+            ]);
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
         }
-        return $this->render('create', [
-            'model' => $modelfotos,
-            'evento' => $evento,
-        ]);
     }
 
-    /**
-     * Deletes an existing Galerias model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        unlink('galeria/'. $model->idevento . '/' . $model->foto);
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('createGaleria')) {
 
-        return $this->redirect(['index', 'idevento' => $model->idevento]);
+            $model = $this->findModel($id);
+            unlink('galeria/'. $model->idevento . '/' . $model->foto);
+            $this->findModel($id)->delete();
+
+            return $this->redirect(['index', 'idevento' => $model->idevento]);
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
-    /**
-     * Finds the Galerias model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Galerias the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     protected function findModel($id)
     {
         if (($model = Galerias::findOne(['id' => $id])) !== null) {

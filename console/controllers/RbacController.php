@@ -80,17 +80,17 @@ class RbacController extends Controller
 
         //Add Adicionar fotografias permission
             //View
-                $viewFotografica = $auth->createPermission('viewFotografica');
-                $viewFotografica->description = 'View fotografia';
-                $auth->add($viewFotografica);
+                $viewGaleria = $auth->createPermission('viewGaleria');
+                $viewGaleria->description = 'View fotografia';
+                $auth->add($viewGaleria);
             //Create
-                $adicionarFotografica = $auth->createPermission('adicionarFotografica');
-                $adicionarFotografica->description = 'Adicionar fotografia';
-                $auth->add($adicionarFotografica);
+                $adicionarGaleria = $auth->createPermission('adicionarGaleria');
+                $adicionarGaleria->description = 'Adicionar fotografia';
+                $auth->add($adicionarGaleria);
             //Delete
-                $deleteFotografica = $auth->createPermission('deleteFotografica');
-                $deleteFotografica->description = 'Delete a fotografia';
-                $auth->add($deleteFotografica);
+                $deleteGaleria = $auth->createPermission('deleteGaleria');
+                $deleteGaleria->description = 'Delete a fotografia';
+                $auth->add($deleteGaleria);
 
 
         //Add Noticia permission
@@ -168,9 +168,9 @@ class RbacController extends Controller
         $auth->addChild($gestor, $updateRP);
         $auth->addChild($gestor, $deleteRP);
         $auth->addChild($gestor, $verDadosEvento);
-        $auth->addChild($gestor, $viewFotografica);
-        $auth->addChild($gestor, $adicionarFotografica);
-        $auth->addChild($gestor, $deleteFotografica);
+        $auth->addChild($gestor, $viewGaleria);
+        $auth->addChild($gestor, $adicionarGaleria);
+        $auth->addChild($gestor, $deleteGaleria);
 
         $auth->add($admin);
         $auth->addChild($admin, $gestor);

@@ -46,113 +46,136 @@ class EventosController extends Controller
         );
     }
 
-    /**
-     * Lists all Eventos models.
-     *
-     * @return string
-     */
+
     public function actionIndex()
     {
-        if (\Yii::$app->user->can('createPost')) {
-            
-        }
-        $searchModel = new EventosSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (\Yii::$app->user->can('viewEvento')) {
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new EventosSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
+    
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
+
 
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('viewEvento')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+            
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
+
 
     public function actionCreate()
     {
-        $model = new Eventos();
+        if (\Yii::$app->user->can('createEvento')) {
+
+            $model = new Eventos();
         
-        $user = Userprofile::find()->where(['userid' => Yii::$app->user->getId()])->one();
+            $user = Userprofile::find()->where(['userid' => Yii::$app->user->getId()])->one();
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($this->request->isPost && $model->load($this->request->post())) {
 
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
-            $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
-            
-            $model->idtipoevento = (int)$model->idtipoevento;
-            $model->idcriador = $user->id;
-
-            if ($model->save()) {
+                $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
                 
-                $directoryName = 'cartaz/';
-                
-                if (!file_exists($directoryName)) {
-                    mkdir($directoryName, 0777, true);
+                $model->idtipoevento = (int)$model->idtipoevento;
+                $model->idcriador = $user->id;
+
+                if ($model->save()) {
+                    
+                    $directoryName = 'cartaz/';
+                    
+                    if (!file_exists($directoryName)) {
+                        mkdir($directoryName, 0777, true);
+                    }
+
+                    $model->imageFile->saveAs($directoryName . $model->cartaz);
+                    
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }
-
-                $model->imageFile->saveAs($directoryName . $model->cartaz);
-                
-                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
-    /**
-     * Updates an existing Eventos model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('updateEvento')) {
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model = $this->findModel($id);
 
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($this->request->isPost && $model->load($this->request->post())) {
 
-            $model->idtipoevento = (int)$model->idtipoevento;
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
-            if ($model->save()) {
-                
-                if($model->imageFile != null){
-                    $model->imageFile->saveAs('cartaz/' . $model->cartaz);
+                $model->idtipoevento = (int)$model->idtipoevento;
+
+                if ($model->save()) {
+                    
+                    if($model->imageFile != null){
+                        $model->imageFile->saveAs('cartaz/' . $model->cartaz);
+                    }
+                    
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }
-                
-                return $this->redirect(['view', 'id' => $model->id]);
             }
-        }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }  
     }
 
-    /**
-     * Deletes an existing Eventos model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $this->findModel($id)->delete();
-        unlink('cartaz/' . $model->cartaz);
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('deleteEvento')) {
+
+            $model = $this->findModel($id);
+            $this->findModel($id)->delete();
+            unlink('cartaz/' . $model->cartaz);
+            return $this->redirect(['index']);
+        
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }  
     }
 
     /**
