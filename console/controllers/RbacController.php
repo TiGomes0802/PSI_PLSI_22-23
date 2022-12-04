@@ -34,7 +34,11 @@ class RbacController extends Controller
                 $auth->add($comprarPulseira);
 
 
-        //Add gestão dos empregados permission
+        //Gestão dos empregados permission
+            //View
+                $viewEmpregado = $auth->viewPermission('viewEmpregado');
+                $viewEmpregado->description = 'View a Empregado';
+                $auth->add($viewEmpregado);
             //Create
                 $createEmpregado = $auth->createPermission('createEmpregado');
                 $createEmpregado->description = 'Create a Empregado';
@@ -49,7 +53,11 @@ class RbacController extends Controller
                 $auth->add($deleteEmpregado);
 
 
-        //Add Evento permission
+        //Evento permission
+            //View
+                $viewEvento = $auth->viewPermission('viewEvento');
+                $viewEvento->description = 'View a evento';
+                $auth->add($viewEvento);
             //Create
                 $createEvento = $auth->createPermission('createEvento');
                 $createEvento->description = 'Create a evento';
@@ -71,6 +79,10 @@ class RbacController extends Controller
 
 
         //Add Adicionar fotografias permission
+            //View
+                $viewFotografica = $auth->createPermission('viewFotografica');
+                $viewFotografica->description = 'View fotografia';
+                $auth->add($viewFotografica);
             //Create
                 $adicionarFotografica = $auth->createPermission('adicionarFotografica');
                 $adicionarFotografica->description = 'Adicionar fotografia';
@@ -82,6 +94,10 @@ class RbacController extends Controller
 
 
         //Add Noticia permission
+            //View
+                $viewNoticia = $auth->viewPermission('viewNoticia');
+                $viewNoticia->description = 'View Noticia';
+                $auth->add($viewNoticia);
             //Create
                 $createNoticia = $auth->createPermission('createNoticia');
                 $createNoticia->description = 'Create Noticia';
@@ -96,6 +112,10 @@ class RbacController extends Controller
                 $auth->add($deleteNoticia);
 
         //Add GestaoRp´s permission
+            //View
+                $viewRP = $auth->viewPermission('viewRP');
+                $viewRP->description = 'View RP';
+                $auth->add($viewRP);
             //Create
                 $createRP = $auth->createPermission('createRP');
                 $createRP->description = 'Create RP';
@@ -111,6 +131,10 @@ class RbacController extends Controller
 
 
         //Add Bebida permission
+            //View
+                $viewBebida = $auth->viewPermission('viewBebida');
+                $viewBebida->description = 'View Bebida';
+                $auth->add($viewBebida);
             //Create
                 $createBebida = $auth->createPermission('createBebida');
                 $createBebida->description = 'Create Bebida';
@@ -127,24 +151,30 @@ class RbacController extends Controller
     //----------------------------- Add Permission --------------------------------//
 
         $auth->add($gestor);
+        $auth->addChild($gestor, $viewEvento);
         $auth->addChild($gestor, $createEvento);
         $auth->addChild($gestor, $updateEvento);
         $auth->addChild($gestor, $deleteEvento);
+        $auth->addChild($gestor, $viewNoticia);
         $auth->addChild($gestor, $createNoticia);
         $auth->addChild($gestor, $deleteNoticia);
         $auth->addChild($gestor, $updateNoticia);
+        $auth->addChild($gestor, $viewBebida);
         $auth->addChild($gestor, $createBebida);
         $auth->addChild($gestor, $updateBebida);
         $auth->addChild($gestor, $deleteBebida);
+        $auth->addChild($gestor, $viewRP);
         $auth->addChild($gestor, $createRP);
         $auth->addChild($gestor, $updateRP);
         $auth->addChild($gestor, $deleteRP);
         $auth->addChild($gestor, $verDadosEvento);
+        $auth->addChild($gestor, $viewFotografica);
         $auth->addChild($gestor, $adicionarFotografica);
         $auth->addChild($gestor, $deleteFotografica);
 
         $auth->add($admin);
         $auth->addChild($admin, $gestor);
+        $auth->addChild($admin, $viewEmpregado);
         $auth->addChild($admin, $createEmpregado);
         $auth->addChild($admin, $updateEmpregado);
         $auth->addChild($admin, $deleteEmpregado);

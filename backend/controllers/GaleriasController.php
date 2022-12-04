@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -29,6 +30,16 @@ class GaleriasController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'delete'],
+                            'allow' => true,
+                            'roles' => ['gestor','admin'],
+                        ],
                     ],
                 ],
             ]

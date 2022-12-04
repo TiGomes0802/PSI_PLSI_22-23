@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -31,6 +32,16 @@ class EventosController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['gestor','admin'],
+                        ],
+                    ],
+                ],
             ]
         );
     }
@@ -42,6 +53,9 @@ class EventosController extends Controller
      */
     public function actionIndex()
     {
+        if (\Yii::$app->user->can('createPost')) {
+            
+        }
         $searchModel = new EventosSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
