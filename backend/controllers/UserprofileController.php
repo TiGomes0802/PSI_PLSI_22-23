@@ -35,7 +35,7 @@ class UserprofileController extends Controller
                     ],
                 ],
                 'access' => [
-                    'class' => AccessControl::class(),
+                    'class' => AccessControl::class,
                     'rules' => [
                         [
                             'actions' => ['index', 'view', 'create', 'update', 'update_password', 'delete'],

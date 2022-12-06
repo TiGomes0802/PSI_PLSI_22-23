@@ -33,7 +33,7 @@ class GaleriasController extends Controller
                     ],
                 ],
                 'access' => [
-                    'class' => AccessControl::class(),
+                    'class' => AccessControl::class,
                     'rules' => [
                         [
                             'actions' => ['index', 'view', 'create', 'delete'],
@@ -61,9 +61,7 @@ class GaleriasController extends Controller
             ]);
 
         }else{
-            return $this->render('/site/logout', [
-                'model' => $this->findModel($id),
-            ]);
+            return \Yii::$app->user->logout();
         }
 
         return $this->render('index', [
@@ -82,9 +80,7 @@ class GaleriasController extends Controller
             ]);
 
         }else{
-            return $this->render('/site/logout', [
-                'model' => $this->findModel($id),
-            ]);
+            return \Yii::$app->user->logout;
         }
     }
 
@@ -92,7 +88,7 @@ class GaleriasController extends Controller
     public function actionCreate($idevento)
     {
 
-        if (\Yii::$app->user->can('createGaleria')) {
+        if (\Yii::$app->user->can('adicionarGaleria')) {
 
             $modelfotos = new Galerias();
             $evento = Eventos::findOne(['id' => $idevento]);
@@ -123,16 +119,14 @@ class GaleriasController extends Controller
             ]);
 
         }else{
-            return $this->render('/site/logout', [
-                'model' => $this->findModel($id),
-            ]);
+            return $this->redirect(['/site/logout']);
         }
     }
 
 
     public function actionDelete($id)
     {
-        if (\Yii::$app->user->can('createGaleria')) {
+        if (\Yii::$app->user->can('deleteGaleria')) {
 
             $model = $this->findModel($id);
             unlink('galeria/'. $model->idevento . '/' . $model->foto);
@@ -141,9 +135,7 @@ class GaleriasController extends Controller
             return $this->redirect(['index', 'idevento' => $model->idevento]);
 
         }else{
-            return $this->render('/site/logout', [
-                'model' => $this->findModel($id),
-            ]);
+            return $this->redirect(['/site/logout']);
         }
     }
 
