@@ -36,7 +36,7 @@ class RbacController extends Controller
 
         //Gestão dos empregados permission
             //View
-                $viewEmpregado = $auth->viewPermission('viewEmpregado');
+                $viewEmpregado = $auth->createPermission('viewEmpregado');
                 $viewEmpregado->description = 'View a Empregado';
                 $auth->add($viewEmpregado);
             //Create
@@ -55,7 +55,7 @@ class RbacController extends Controller
 
         //Evento permission
             //View
-                $viewEvento = $auth->viewPermission('viewEvento');
+                $viewEvento = $auth->createPermission('viewEvento');
                 $viewEvento->description = 'View a evento';
                 $auth->add($viewEvento);
             //Create
@@ -95,7 +95,7 @@ class RbacController extends Controller
 
         //Add Noticia permission
             //View
-                $viewNoticia = $auth->viewPermission('viewNoticia');
+                $viewNoticia = $auth->createPermission('viewNoticia');
                 $viewNoticia->description = 'View Noticia';
                 $auth->add($viewNoticia);
             //Create
@@ -113,7 +113,7 @@ class RbacController extends Controller
 
         //Add GestaoRp´s permission
             //View
-                $viewRP = $auth->viewPermission('viewRP');
+                $viewRP = $auth->createPermission('viewRP');
                 $viewRP->description = 'View RP';
                 $auth->add($viewRP);
             //Create
@@ -132,7 +132,7 @@ class RbacController extends Controller
 
         //Add Bebida permission
             //View
-                $viewBebida = $auth->viewPermission('viewBebida');
+                $viewBebida = $auth->createPermission('viewBebida');
                 $viewBebida->description = 'View Bebida';
                 $auth->add($viewBebida);
             //Create
