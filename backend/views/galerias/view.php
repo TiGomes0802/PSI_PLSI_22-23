@@ -14,7 +14,6 @@ $this->title = '';
     <h1><?= Html::encode('Galeria ' . $model->idevento0->nome) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'idevento' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

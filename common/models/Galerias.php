@@ -34,7 +34,7 @@ class Galerias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['foto', 'idevento'], 'required'],
+            [['foto', 'idevento'], 'required', 'message' => '{attribute} não pode estar vazio'],
             [['idevento'], 'integer'],
             [['foto'], 'string', 'max' => 250],
             [['idevento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['idevento' => 'id']],

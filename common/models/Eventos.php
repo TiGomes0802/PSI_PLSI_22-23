@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use DateTime;
 use yii\base\Model;
 use yii\web\UploadedFile;
 /**
@@ -29,6 +30,7 @@ class Eventos extends \yii\db\ActiveRecord
      * @var \yii\web\UploadedFile
      */
     public $imageFile;
+    public $imageFileUpdate;
 
     /**
      * {@inheritdoc}
@@ -43,17 +45,21 @@ class Eventos extends \yii\db\ActiveRecord
      */
     public function rules()
     {
+        $date = new DateTime();
+        $min = $date->format('Y-m-d h:i');
+
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
-            [['dataevento'], 'safe'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
+            ['dataevento', 'safe'],
+            ['dataevento', 'datetime', 'format' => 'php:Y-m-d h:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
             [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
-            [['preco'], 'double'],
-            [['nome'], 'string', 'max' => 25],
-            [['descricao'], 'string', 'max' => 750],
-            [['cartaz'], 'string', 'max' => 250],
-            [['idcriador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
-            [['idtipoevento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            ['preco', 'double'],
+            ['nome', 'string', 'max' => 25],
+            ['descricao', 'string', 'max' => 750],
+            ['cartaz', 'string', 'max' => 250],
+            ['idcriador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
+            ['idtipoevento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
+            [['imageFile','imageFileUpdate'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -68,6 +74,7 @@ class Eventos extends \yii\db\ActiveRecord
             'descricao' => 'Descricao',
             'cartaz' => 'Cartaz',
             'imageFile' => 'Product Image',
+            'imageFileUpdate' => 'Product Image',
             'dataevento' => 'Dataevento',
             'numbilhetesdisp' => 'Numbilhetesdisp',
             'preco' => 'Preco',

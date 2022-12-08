@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-text u-text-default u-text-1">Update Evento</h2>
 
-        <?= $this->render('_form', [
+        <?= $this->render('_formUpdate', [
             'model' => $model,
         ]) ?>
 

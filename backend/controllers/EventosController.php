@@ -94,11 +94,18 @@ class EventosController extends Controller
             if ($this->request->isPost && $model->load($this->request->post())) {
 
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
-                $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
+                
+                if($model->imageFile != null){
+                    $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
+                }
                 
                 $model->idtipoevento = (int)$model->idtipoevento;
                 $model->idcriador = $user->id;
+                
+                $input = strtotime($model->dataevento);
+                $newdatetime = date('Y-m-d h:i',$input);
+
+                $model->dataevento = $newdatetime;
 
                 if ($model->save()) {
                     
@@ -136,14 +143,20 @@ class EventosController extends Controller
 
             if ($this->request->isPost && $model->load($this->request->post())) {
 
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                $input = strtotime($model->dataevento);
+                $newdatetime = date('Y-m-d h:i',$input);
+                $model->dataevento = $newdatetime;
+
+                $model->imageFileUpdate = UploadedFile::getInstance($model, 'imageFileUpdate');
+                
+                $model->imageFile = 'nada.png';
 
                 $model->idtipoevento = (int)$model->idtipoevento;
 
                 if ($model->save()) {
                     
-                    if($model->imageFile != null){
-                        $model->imageFile->saveAs('cartaz/' . $model->cartaz);
+                    if($model->imageFileUpdate != null){
+                        $model->imageFileUpdate->saveAs('cartaz/' . $model->cartaz);
                     }
                     
                     return $this->redirect(['view', 'id' => $model->id]);

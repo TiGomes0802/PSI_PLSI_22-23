@@ -28,7 +28,8 @@ class Tipoevento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo'], 'string', 'max' => 25],
+            ['tipo', 'required', 'message' => '{attribute} não pode estar vazio'],
+            ['tipo', 'string', 'max' => 25],
         ];
     }
 
