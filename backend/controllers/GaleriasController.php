@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use Yii;
+use yii\helpers\Html;
+use yii\helpers\Url;    
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -60,14 +63,15 @@ class GaleriasController extends Controller
                 ],
             ]);
 
-        }else{
-            return \Yii::$app->user->logout();
-        }
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'evento' => $evento,
+            ]);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'evento' => $evento,
-        ]);
+        }else{
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
+        }
     }
 
 
@@ -80,7 +84,8 @@ class GaleriasController extends Controller
             ]);
 
         }else{
-            return \Yii::$app->user->logout;
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
         }
     }
 
@@ -119,7 +124,8 @@ class GaleriasController extends Controller
             ]);
 
         }else{
-            return $this->redirect(['/site/logout']);
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
         }
     }
 
@@ -135,7 +141,8 @@ class GaleriasController extends Controller
             return $this->redirect(['index', 'idevento' => $model->idevento]);
 
         }else{
-            return $this->redirect(['/site/logout']);
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
         }
     }
 

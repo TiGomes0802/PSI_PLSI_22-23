@@ -168,10 +168,9 @@ class EventosController extends Controller
             ]);
 
         }else{
-            return $this->render('/site/logout', [
-                'model' => $this->findModel($id),
-            ]);
-        }  
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
+        }
     }
 
 
@@ -185,10 +184,9 @@ class EventosController extends Controller
             return $this->redirect(['index']);
         
         }else{
-            return $this->render('/site/logout', [
-                'model' => $this->findModel($id),
-            ]);
-        }  
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
+        }
     }
 
     /**
