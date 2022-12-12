@@ -54,7 +54,7 @@ class GaleriasController extends Controller
     {
         if (\Yii::$app->user->can('viewGaleria')) {
 
-            $model = Galerias::find()->where(['idevento' => $idevento]);
+            $model = Galerias::find()->where(['id_evento' => $idevento]);
             $evento = Eventos::findOne(['id' => $idevento]);
             $searchModel = new ActiveDataProvider([
                 'query' => $model,
@@ -105,7 +105,7 @@ class GaleriasController extends Controller
                 }
                 foreach($modelfotos->imageFile as $image){
                     $model = new Galerias();
-                    $model->idevento = (int)$idevento;
+                    $model->id_evento = (int)$idevento;
                     $model->foto = date("Ymdhis") . time().rand(10,999999999) . '.' . $image->extension;
                     if ($model->save()) {
                         $image->saveAs($directoryName . $model->foto);
@@ -116,7 +116,7 @@ class GaleriasController extends Controller
                         ]);
                     }
                 }
-                return $this->redirect(['index', 'idevento' => $idevento]);
+                return $this->redirect(['index', 'id_evento' => $idevento]);
             }
             return $this->render('create', [
                 'model' => $modelfotos,
@@ -135,10 +135,10 @@ class GaleriasController extends Controller
         if (\Yii::$app->user->can('deleteGaleria')) {
 
             $model = $this->findModel($id);
-            unlink('galeria/'. $model->idevento . '/' . $model->foto);
+            unlink('galeria/'. $model->id_evento . '/' . $model->foto);
             $this->findModel($id)->delete();
 
-            return $this->redirect(['index', 'idevento' => $model->idevento]);
+            return $this->redirect(['index', 'idevento' => $model->id_evento]);
 
         }else{
             Yii::$app->user->logout();

@@ -11,7 +11,7 @@ $this->title = '';
 ?>
 <div class="galerias-view">
 
-    <h1><?= Html::encode('Galeria ' . $model->idevento0->nome) ?></h1>
+    <h1><?= Html::encode('Galeria ' . $model->evento->nome) ?></h1>
 
     <p>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -30,8 +30,8 @@ $this->title = '';
                 'format' => 'html',
                 'label' => '',
                 'value' => function ($data) {
-                    return Html::img('galeria/' . $data->idevento . '/' . $data->foto,
-                    ['width' => '460px','height' => '570px', 'alt' => 'galeira/'.$data->idevento . '/' . $data->foto]);
+                    return Html::img('galeria/' . $data->id_evento . '/' . $data->foto,
+                    ['width' => '460px','height' => '570px', 'alt' => 'galeira/'.$data->id_evento . '/' . $data->foto]);
                 },
             ],
         ],

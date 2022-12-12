@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '',
                 'value' => function ($data) {
-                    return array_keys(Yii::$app->authManager->getRolesByUser($data->userid))[0];
+                    return array_keys(Yii::$app->authManager->getRolesByUser($data->user_id))[0];
                 },
             ],
             [
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->userid]);
+                    return Url::toRoute([$action, 'id' => $model->user_id]);
                  }
             ],
         ],

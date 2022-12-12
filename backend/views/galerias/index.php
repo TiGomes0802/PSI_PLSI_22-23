@@ -17,7 +17,7 @@ $this->title = '';
     <h1><?= Html::encode('Galeria do ' . $evento->nome) ?></h1>
 
     <p>
-        <?= Html::a('Adicionar foto', ['create', 'idevento' => $evento->id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar foto', ['create', 'id_evento' => $evento->id], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,8 +27,8 @@ $this->title = '';
                 'format' => 'html',
                 'label' => 'Foto',
                 'value' => function ($data) {
-                    return Html::img('galeria/' . $data->idevento . '/' . $data->foto,
-                    ['width' => '260px','height' => '350px', 'alt' => 'galeira/'.$data->idevento . '/' . $data->foto]);
+                    return Html::img('galeria/' . $data->id_evento . '/' . $data->foto,
+                    ['width' => '260px','height' => '350px', 'alt' => 'galeira/'.$data->id_evento . '/' . $data->foto]);
                 },
             ],
             [

@@ -72,13 +72,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Criador',
                 'value' => function ($data) {
-                    return $data->idcriador0->nome . ' ' . $data->idcriador0->apelido;
+                    return $data->criador->nome . ' ' . $data->criador->apelido;
                 },
             ],
             [
                 'label' => 'Tipo de evento',
                 'value' => function ($data) {
-                    return $data->idtipoevento0->tipo;
+                    return $data->tipoEvento->tipo;
                 },
             ],
             [

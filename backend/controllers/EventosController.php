@@ -99,8 +99,8 @@ class EventosController extends Controller
                     $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
                 }
                 
-                $model->idtipoevento = (int)$model->idtipoevento;
-                $model->idcriador = $user->id;
+                $model->id_tipo_evento = (int)$model->id_tipo_evento;
+                $model->id_criador = $user->id;
                 
                 $input = strtotime($model->dataevento);
                 $newdatetime = date('Y-m-d h:i',$input);
@@ -151,7 +151,7 @@ class EventosController extends Controller
                 
                 $model->imageFile = 'nada.png';
 
-                $model->idtipoevento = (int)$model->idtipoevento;
+                $model->id_tipo_evento = (int)$model->id_tipo_evento;
 
                 if ($model->save()) {
                     
