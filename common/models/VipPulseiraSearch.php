@@ -17,7 +17,7 @@ class VipPulseiraSearch extends VipPulseira
     public function rules()
     {
         return [
-            [['id', 'idvip', 'idpulseira'], 'integer'],
+            [['id', 'id_vip', 'idpulseira'], 'integer'],
         ];
     }
 
@@ -58,7 +58,7 @@ class VipPulseiraSearch extends VipPulseira
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'idvip' => $this->idvip,
+            'id_vip' => $this->id_vip,
             'idpulseira' => $this->idpulseira,
         ]);
 
