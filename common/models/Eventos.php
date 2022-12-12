@@ -16,13 +16,14 @@ use yii\web\UploadedFile;
  * @property string $dataevento
  * @property int $numbilhetesdisp
  * @property float $preco
- * @property int $idcriador
- * @property int $idtipoevento
+ * @property string $estado
+ * @property int $id_criador
+ * @property int $id_tipo_evento
  *
+ * @property Userprofile $criador
  * @property Galerias[] $galerias
- * @property Userprofile $idcriador0
- * @property Tipoevento $idtipoevento0
  * @property Pulseiras[] $pulseiras
+ * @property Tipoevento $tipoEvento
  */
 class Eventos extends \yii\db\ActiveRecord
 {
@@ -49,16 +50,16 @@ class Eventos extends \yii\db\ActiveRecord
         $min = $date->format('Y-m-d h:i');
 
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
             ['dataevento', 'datetime', 'format' => 'php:Y-m-d h:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
-            [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
+            [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
             ['preco', 'double'],
             ['nome', 'string', 'max' => 25],
             ['descricao', 'string', 'max' => 750],
             ['cartaz', 'string', 'max' => 250],
-            ['idcriador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
-            ['idtipoevento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
+            ['id_criador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
+            ['id_tipo_evento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['id_tipo_evento' => 'id']],
             [['imageFile','imageFileUpdate'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
@@ -78,8 +79,9 @@ class Eventos extends \yii\db\ActiveRecord
             'dataevento' => 'Dataevento',
             'numbilhetesdisp' => 'Numbilhetesdisp',
             'preco' => 'Preco',
-            'idcriador' => 'Idcriador',
-            'idtipoevento' => 'Idtipoevento',
+            'estado' => 'Estado',
+            'id_criador' => 'Id Criador',
+            'id_tipo_evento' => 'Id Tipo Evento',
         ];
     }
 
@@ -94,23 +96,23 @@ class Eventos extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Idcriador0]].
+     * Gets query for [[id_criador0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdcriador0()
+    public function getid_criador0()
     {
-        return $this->hasOne(Userprofile::class, ['id' => 'idcriador']);
+        return $this->hasOne(Userprofile::class, ['id' => 'id_criador']);
     }
 
     /**
-     * Gets query for [[Idtipoevento0]].
+     * Gets query for [[id_tipo_evento0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdtipoevento0()
+    public function getid_tipo_evento0()
     {
-        return $this->hasOne(Tipoevento::class, ['id' => 'idtipoevento']);
+        return $this->hasOne(Tipoevento::class, ['id' => 'id_tipo_evento']);
     }
 
     /**

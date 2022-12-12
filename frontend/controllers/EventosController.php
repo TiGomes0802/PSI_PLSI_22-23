@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace frontend\controllers;
 
 use common\models\Eventos;
 use common\models\EventosSearch;

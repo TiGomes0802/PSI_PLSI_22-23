@@ -68,7 +68,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = Userprofile::find()->where(['userid' => Yii::$app->user->id])->one();    
+        $model = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();    
         $grafico = (new yii\db\Query())
         ->from('auth_assignment')
         ->select(['item_name', 'COUNT(item_name) AS quantidade_item_name'])
@@ -77,7 +77,7 @@ class SiteController extends Controller
 
         $grafico2 = (new yii\db\Query())->from('userprofile')
         ->select(['sexo', 'COUNT(sexo) AS quantidade'])
-        ->leftJoin('user', 'user.id = userprofile.userid')
+        ->leftJoin('user', 'user.id = userprofile.user_id')
         ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
         ->orwhere(['auth_assignment.item_name' => 'cliente'])
         ->orderBy(['sexo'=>SORT_ASC])
