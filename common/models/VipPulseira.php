@@ -8,11 +8,11 @@ use Yii;
  * This is the model class for table "vip_pulseira".
  *
  * @property int $id
- * @property int $idvip
- * @property int $idpulseira
+ * @property int $id_vip
+ * @property int $id_pulseira
  *
- * @property Pulseiras $idpulseira0
- * @property Vip $idvip0
+ * @property Pulseiras $pulseira
+ * @property Vip $vip
  */
 class VipPulseira extends \yii\db\ActiveRecord
 {
