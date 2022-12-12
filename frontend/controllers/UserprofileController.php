@@ -50,7 +50,7 @@ class UserprofileController extends Controller
      */
     public function actionView($id)
     {
-        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+        $userprofile = Userprofile::find()->where(['user_id' => $id])->one();
 
         return $this->render('view', [
             'model' => $userprofile,

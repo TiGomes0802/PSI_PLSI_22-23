@@ -8,11 +8,11 @@ use Yii;
  * This is the model class for table "linha_fatura".
  *
  * @property int $id
- * @property int $idbebida
- * @property int $idfatura
+ * @property int $id_bebida
+ * @property int $id_fatura
  *
- * @property Bebidas $idbebida0
- * @property Faturas $idfatura0
+ * @property Bebidas $bebida
+ * @property Faturas $fatura
  */
 class LinhaFatura extends \yii\db\ActiveRecord
 {
@@ -30,10 +30,10 @@ class LinhaFatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idbebida', 'idfatura'], 'required'],
-            [['idbebida', 'idfatura'], 'integer'],
-            [['idbebida'], 'exist', 'skipOnError' => true, 'targetClass' => Bebidas::class, 'targetAttribute' => ['idbebida' => 'id']],
-            [['idfatura'], 'exist', 'skipOnError' => true, 'targetClass' => Faturas::class, 'targetAttribute' => ['idfatura' => 'id']],
+            [['id_bebida', 'id_fatura'], 'required'],
+            [['id_bebida', 'id_fatura'], 'integer'],
+            [['id_bebida'], 'exist', 'skipOnError' => true, 'targetClass' => Bebidas::class, 'targetAttribute' => ['id_bebida' => 'id']],
+            [['id_fatura'], 'exist', 'skipOnError' => true, 'targetClass' => Faturas::class, 'targetAttribute' => ['id_fatura' => 'id']],
         ];
     }
 
@@ -44,28 +44,28 @@ class LinhaFatura extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idbebida' => 'Idbebida',
-            'idfatura' => 'Idfatura',
+            'id_bebida' => 'Id Bebida',
+            'id_fatura' => 'Id Fatura',
         ];
     }
 
     /**
-     * Gets query for [[Idbebida0]].
+     * Gets query for [[Bebida]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdbebida0()
+    public function getBebida()
     {
-        return $this->hasOne(Bebidas::class, ['id' => 'idbebida']);
+        return $this->hasOne(Bebidas::class, ['id' => 'id_bebida']);
     }
 
     /**
-     * Gets query for [[Idfatura0]].
+     * Gets query for [[Fatura]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdfatura0()
+    public function getFatura()
     {
-        return $this->hasOne(Faturas::class, ['id' => 'idfatura']);
+        return $this->hasOne(Faturas::class, ['id' => 'id_fatura']);
     }
 }

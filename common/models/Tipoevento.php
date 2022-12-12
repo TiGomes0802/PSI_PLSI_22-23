@@ -50,6 +50,6 @@ class Tipoevento extends \yii\db\ActiveRecord
      */
     public function getEventos()
     {
-        return $this->hasMany(Eventos::class, ['idtipoevento' => 'id']);
+        return $this->hasMany(Eventos::class, ['id_tipo_evento' => 'id']);
     }
 }

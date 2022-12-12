@@ -14,13 +14,14 @@ use Yii;
  * @property string $dataevento
  * @property int $numbilhetesdisp
  * @property float $preco
- * @property int $idcriador
- * @property int $idtipoevento
+ * @property string $estado
+ * @property int $id_criador
+ * @property int $id_tipo_evento
  *
+ * @property Userprofile $criador
  * @property Galerias[] $galerias
- * @property Userprofile $idcriador0
- * @property Tipoevento $idtipoevento0
  * @property Pulseiras[] $pulseiras
+ * @property Tipoevento $tipoEvento
  */
 class Eventos extends \yii\db\ActiveRecord
 {
@@ -38,15 +39,15 @@ class Eventos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento'], 'required'],
             [['dataevento'], 'safe'],
-            [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
+            [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
             [['preco'], 'number'],
-            [['nome'], 'string', 'max' => 25],
-            [['descricao'], 'string', 'max' => 150],
+            [['nome', 'estado'], 'string', 'max' => 25],
+            [['descricao'], 'string', 'max' => 750],
             [['cartaz'], 'string', 'max' => 250],
-            [['idcriador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
-            [['idtipoevento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
+            [['id_criador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
+            [['id_tipo_evento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['id_tipo_evento' => 'id']],
         ];
     }
 
@@ -63,9 +64,20 @@ class Eventos extends \yii\db\ActiveRecord
             'dataevento' => 'Dataevento',
             'numbilhetesdisp' => 'Numbilhetesdisp',
             'preco' => 'Preco',
-            'idcriador' => 'Idcriador',
-            'idtipoevento' => 'Idtipoevento',
+            'estado' => 'Estado',
+            'id_criador' => 'Id Criador',
+            'id_tipo_evento' => 'Id Tipo Evento',
         ];
+    }
+
+    /**
+     * Gets query for [[Criador]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCriador()
+    {
+        return $this->hasOne(Userprofile::class, ['id' => 'id_criador']);
     }
 
     /**
@@ -75,27 +87,7 @@ class Eventos extends \yii\db\ActiveRecord
      */
     public function getGalerias()
     {
-        return $this->hasMany(Galerias::class, ['idevento' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Idcriador0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdcriador0()
-    {
-        return $this->hasOne(Userprofile::class, ['id' => 'idcriador']);
-    }
-
-    /**
-     * Gets query for [[Idtipoevento0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdtipoevento0()
-    {
-        return $this->hasOne(Tipoevento::class, ['id' => 'idtipoevento']);
+        return $this->hasMany(Galerias::class, ['id_evento' => 'id']);
     }
 
     /**
@@ -105,6 +97,16 @@ class Eventos extends \yii\db\ActiveRecord
      */
     public function getPulseiras()
     {
-        return $this->hasMany(Pulseiras::class, ['idevento' => 'id']);
+        return $this->hasMany(Pulseiras::class, ['id_evento' => 'id']);
+    }
+
+    /**
+     * Gets query for [[TipoEvento]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTipoEvento()
+    {
+        return $this->hasOne(Tipoevento::class, ['id' => 'id_tipo_evento']);
     }
 }

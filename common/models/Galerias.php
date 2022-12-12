@@ -9,9 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $foto
- * @property int $idevento
+ * @property int $id_evento
  *
- * @property Eventos $idevento0
+ * @property Eventos $evento
  */
 class Galerias extends \yii\db\ActiveRecord
 {
@@ -29,10 +29,10 @@ class Galerias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['foto', 'idevento'], 'required'],
-            [['idevento'], 'integer'],
+            [['foto', 'id_evento'], 'required'],
+            [['id_evento'], 'integer'],
             [['foto'], 'string', 'max' => 250],
-            [['idevento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['idevento' => 'id']],
+            [['id_evento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['id_evento' => 'id']],
         ];
     }
 
@@ -44,17 +44,17 @@ class Galerias extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'foto' => 'Foto',
-            'idevento' => 'Idevento',
+            'id_evento' => 'Id Evento',
         ];
     }
 
     /**
-     * Gets query for [[Idevento0]].
+     * Gets query for [[Evento]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdevento0()
+    public function getEvento()
     {
-        return $this->hasOne(Eventos::class, ['id' => 'idevento']);
+        return $this->hasOne(Eventos::class, ['id' => 'id_evento']);
     }
 }
