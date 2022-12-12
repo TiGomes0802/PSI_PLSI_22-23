@@ -9,10 +9,11 @@ use Yii;
  *
  * @property int $id
  * @property string $datahora_compra
- * @property int $idpulseira
+ * @property float $preco
+ * @property int $id_pulseira
  *
- * @property Pulseiras $idpulseira0
  * @property LinhaFatura[] $linhaFaturas
+ * @property Pulseiras $pulseira
  */
 class Faturas extends \yii\db\ActiveRecord
 {
@@ -30,10 +31,11 @@ class Faturas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['datahora_compra', 'idpulseira'], 'required'],
+            [['datahora_compra', 'preco', 'id_pulseira'], 'required'],
             [['datahora_compra'], 'safe'],
-            [['idpulseira'], 'integer'],
-            [['idpulseira'], 'exist', 'skipOnError' => true, 'targetClass' => Pulseiras::class, 'targetAttribute' => ['idpulseira' => 'id']],
+            [['preco'], 'number'],
+            [['id_pulseira'], 'integer'],
+            [['id_pulseira'], 'exist', 'skipOnError' => true, 'targetClass' => Pulseiras::class, 'targetAttribute' => ['id_pulseira' => 'id']],
         ];
     }
 
@@ -45,18 +47,9 @@ class Faturas extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'datahora_compra' => 'Datahora Compra',
-            'idpulseira' => 'Idpulseira',
+            'preco' => 'Preco',
+            'id_pulseira' => 'Id Pulseira',
         ];
-    }
-
-    /**
-     * Gets query for [[Idpulseira0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdpulseira0()
-    {
-        return $this->hasOne(Pulseiras::class, ['id' => 'idpulseira']);
     }
 
     /**
@@ -66,6 +59,16 @@ class Faturas extends \yii\db\ActiveRecord
      */
     public function getLinhaFaturas()
     {
-        return $this->hasMany(LinhaFatura::class, ['idfatura' => 'id']);
+        return $this->hasMany(LinhaFatura::class, ['id_fatura' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Pulseira]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPulseira()
+    {
+        return $this->hasOne(Pulseiras::class, ['id' => 'id_pulseira']);
     }
 }

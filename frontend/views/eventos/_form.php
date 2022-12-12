@@ -24,9 +24,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'preco')->textInput() ?>
 
-    <?= $form->field($model, 'idcriador')->textInput() ?>
+    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'idtipoevento')->textInput() ?>
+    <?= $form->field($model, 'id_criador')->textInput() ?>
+
+    <?= $form->field($model, 'id_tipo_evento')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

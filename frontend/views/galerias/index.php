@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'foto',
-            'idevento',
+            'id_evento',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Galerias $model, $key, $index, $column) {

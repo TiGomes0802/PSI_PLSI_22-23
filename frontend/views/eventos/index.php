@@ -36,8 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataevento',
             //'numbilhetesdisp',
             //'preco',
-            //'idcriador',
-            //'idtipoevento',
+            //'estado',
+            //'id_criador',
+            //'id_tipo_evento',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Eventos $model, $key, $index, $column) {
