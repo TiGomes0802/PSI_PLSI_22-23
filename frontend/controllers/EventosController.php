@@ -38,12 +38,10 @@ class EventosController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new EventosSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $eventos = Eventos::find()->all();
+        
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'eventos' => $eventos,
         ]);
     }
 
