@@ -13,37 +13,20 @@
         <div class="u-expanded-width-lg u-expanded-width-xl u-layout-grid u-list u-list-1">
           <div class="u-repeater u-repeater-1">
             
-            <a href="https://link.com">
-              <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('./assets/front-view-man-holding-vinyl-disk-his-face-music-store-mock-up_23-2148690557.jpg');">
-                <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
-                  <h3 class="u-text u-text-default-xl u-text-2">Nome do evento</h3>
-                </div>
-              </div>
-            </a>
+            <?php foreach ($galerias as $galeira) {     ?>
 
-            <a href="https://link.com">
-              <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');">
-                <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
-                  <h3 class="u-text u-text-default-xl u-text-2">Nome do evento</h3>
-                </div>
-              </div>
-            </a>
 
-            <a href="https://link.com">
-              <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');">
-                <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
-                  <h3 class="u-text u-text-default-xl u-text-2">Nome do evento</h3>
-                </div>
-              </div>
-            </a>
+                <a href="">
+                    <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('./assets/front-view-man-holding-vinyl-disk-his-face-music-store-mock-up_23-2148690557.jpg');">
+                        <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
+                            <h3 class="u-text u-text-default-xl u-text-2"><?= $galeira->nome ?></h3>
+                        </div>
+                    </div>
+                </a>
 
-            <a href="https://link.com">
-              <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');">
-                <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
-                  <h3 class="u-text u-text-default-xl u-text-2">Nome do evento</h3>
-                </div>
-              </div>
-            </a>
+            <?php } ?>
+
+            
 
           </div>
         </div>

@@ -38,13 +38,14 @@ class GaleriasController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new GaleriasSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $galerias = Galerias::find()->all(); 
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'galerias' => $galerias,
         ]);
+
+        var_dump($galeiras);
+        die;
     }
 
     /**
