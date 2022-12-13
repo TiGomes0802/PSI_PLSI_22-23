@@ -89,7 +89,7 @@ class EventosController extends Controller
 
             $model = new Eventos();
         
-            $user = Userprofile::find()->where(['userid' => Yii::$app->user->getId()])->one();
+            $user = Userprofile::find()->where(['user_id' => Yii::$app->user->getId()])->one();
 
             if ($this->request->isPost && $model->load($this->request->post())) {
 
@@ -106,6 +106,7 @@ class EventosController extends Controller
                 $newdatetime = date('Y-m-d h:i',$input);
 
                 $model->dataevento = $newdatetime;
+                $model->estado = "ativo";
 
                 if ($model->save()) {
                     

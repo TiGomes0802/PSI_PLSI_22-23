@@ -44,7 +44,7 @@ use dosamigos\ckeditor\CKEditor;
 
         <div class="u-form-group u-form-name u-label-top">
           <label class="u-label u-spacing-0 u-text-custom-color-1 u-label">Tipo de evento</label>
-          <?= $form ->field($model, 'idtipoevento')
+          <?= $form ->field($model, 'id_tipo_evento')
                     ->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Tipoevento::find()
                     ->asArray()
                     ->all(), 'id', 'tipo'))
