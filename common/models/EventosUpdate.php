@@ -82,46 +82,6 @@ class EventosUpdate extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Criador]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCriador()
-    {
-        return $this->hasOne(Userprofile::class, ['id' => 'id_criador']);
-    }
-
-    /**
-     * Gets query for [[Galerias]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGalerias()
-    {
-        return $this->hasMany(Galerias::class, ['id_evento' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Pulseiras]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPulseiras()
-    {
-        return $this->hasMany(Pulseiras::class, ['id_evento' => 'id']);
-    }
-
-    /**
-     * Gets query for [[TipoEvento]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTipoEvento()
-    {
-        return $this->hasOne(Tipoevento::class, ['id' => 'id_tipo_evento']);
-    }
-
     public function UpdateEstadoEvento()
     {
         $eventos = Eventosupdate::find()->where(['estado' => 'ativo'])->all();

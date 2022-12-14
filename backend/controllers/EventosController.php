@@ -164,7 +164,7 @@ class EventosController extends Controller
             if($model->estado == 'ativo'){
                 if ($this->request->isPost && $model->load($this->request->post())) {
 
-                    $input = strtotime($model->dataeventoCreate);
+                    $input = strtotime($model->dataevento);
                     $newdatetime = date('Y-m-d h:i',$input);
                     $model->dataevento = $newdatetime;
 
@@ -205,7 +205,7 @@ class EventosController extends Controller
             $model = $this->findModel($id);
             $this->findModel($id)->delete();
             unlink('cartaz/' . $model->cartaz);
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'estado' => $model->estado]);
         
         }else{
             Yii::$app->user->logout();
