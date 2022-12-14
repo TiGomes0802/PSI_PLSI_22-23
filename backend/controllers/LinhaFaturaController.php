@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\LinhaFatura;
-use common\models\LinhaFaturaSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\LinhaFatura;
+use common\models\LinhaFaturaSearch;
+use common\models\EventosUpdate;
 
 /**
  * LinhaFaturaController implements the CRUD actions for LinhaFatura model.
@@ -18,6 +19,9 @@ class LinhaFaturaController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

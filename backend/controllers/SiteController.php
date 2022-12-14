@@ -2,13 +2,14 @@
 
 namespace backend\controllers;
 
-use common\models\LoginForm;
-use common\models\Userprofile;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use common\models\LoginForm;
+use common\models\Userprofile;
+use common\models\EventosUpdate;
 
 /**
  * Site controller
@@ -20,6 +21,9 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return [
             'access' => [
                 'class' => AccessControl::class,
@@ -70,19 +74,20 @@ class SiteController extends Controller
     {
         $model = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();    
         $grafico = (new yii\db\Query())
-        ->from('auth_assignment')
-        ->select(['item_name', 'COUNT(item_name) AS quantidade_item_name'])
-        ->groupBy('item_name')
-        ->all();
+            ->from('auth_assignment')
+            ->select(['item_name', 'COUNT(item_name) AS quantidade_item_name'])
+            ->groupBy('item_name')
+            ->all();
 
-        $grafico2 = (new yii\db\Query())->from('userprofile')
-        ->select(['sexo', 'COUNT(sexo) AS quantidade'])
-        ->leftJoin('user', 'user.id = userprofile.user_id')
-        ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
-        ->orwhere(['auth_assignment.item_name' => 'cliente'])
-        ->orderBy(['sexo'=>SORT_ASC])
-        ->groupBy('sexo')
-        ->all();
+        $grafico2 = (new yii\db\Query())
+            ->from('userprofile')
+            ->select(['sexo', 'COUNT(sexo) AS quantidade'])
+            ->leftJoin('user', 'user.id = userprofile.user_id')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+            ->orwhere(['auth_assignment.item_name' => 'cliente'])
+            ->orderBy(['sexo'=>SORT_ASC])
+            ->groupBy('sexo')
+            ->all();
 
         return $this->render('index', [
             'model' => $model,

@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\Faturas;
-use common\models\FaturasSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Faturas;
+use common\models\FaturasSearch;
+use common\models\EventosUpdate;
 
 /**
  * FaturasController implements the CRUD actions for Faturas model.
@@ -18,6 +19,9 @@ class FaturasController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

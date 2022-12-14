@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -10,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use common\models\Eventos;
 use common\models\EventosSearch;
+use common\models\EventosUpdate;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
 
@@ -23,6 +25,9 @@ class EventosController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -47,17 +52,31 @@ class EventosController extends Controller
     }
 
 
-    public function actionIndex()
+    public function actionIndex($estado)
     {
         if (\Yii::$app->user->can('viewEvento')) {
 
-            $searchModel = new EventosSearch();
-            $dataProvider = $searchModel->search($this->request->queryParams);
-    
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            $model = Eventos::find()->where(['estado' => $estado]);
+            
+            $searchModel = new ActiveDataProvider([
+                'query' => $model,
+                'pagination' => [
+                    'pageSize' => 25,
+                ],
             ]);
+
+            if($estado == "ativo"){
+                return $this->render('index', [
+                    'searchModel' => $searchModel,
+                ]);
+            }else {
+                if($estado == "desativo" or $estado == "cancelado") {
+                    return $this->render('indexDesaCanc', [
+                        'searchModel' => $searchModel,
+                    ]);
+                }
+            }
+                
 
         }else{
             return $this->render('/site/logout', [
@@ -129,7 +148,7 @@ class EventosController extends Controller
             ]);
 
         }else{
-            return $this->render('/site/logout', [
+            return $this->rende('/site/logout', [
                 'model' => $this->findModel($id),
             ]);
         }
@@ -141,32 +160,36 @@ class EventosController extends Controller
         if (\Yii::$app->user->can('updateEvento')) {
 
             $model = $this->findModel($id);
+            
+            if($model->estado == 'ativo'){
+                if ($this->request->isPost && $model->load($this->request->post())) {
 
-            if ($this->request->isPost && $model->load($this->request->post())) {
+                    $input = strtotime($model->dataeventoCreate);
+                    $newdatetime = date('Y-m-d h:i',$input);
+                    $model->dataevento = $newdatetime;
 
-                $input = strtotime($model->dataevento);
-                $newdatetime = date('Y-m-d h:i',$input);
-                $model->dataevento = $newdatetime;
-
-                $model->imageFileUpdate = UploadedFile::getInstance($model, 'imageFileUpdate');
-                
-                $model->imageFile = 'nada.png';
-
-                $model->id_tipo_evento = (int)$model->id_tipo_evento;
-
-                if ($model->save()) {
+                    $model->imageFileUpdate = UploadedFile::getInstance($model, 'imageFileUpdate');
                     
-                    if($model->imageFileUpdate != null){
-                        $model->imageFileUpdate->saveAs('cartaz/' . $model->cartaz);
+                    $model->imageFile = 'nada.png';
+
+                    $model->id_tipo_evento = (int)$model->id_tipo_evento;
+
+                    if ($model->save()) {
+                        
+                        if($model->imageFileUpdate != null){
+                            $model->imageFileUpdate->saveAs('cartaz/' . $model->cartaz);
+                        }
+                        
+                        return $this->redirect(['view', 'id' => $model->id]);
                     }
-                    
-                    return $this->redirect(['view', 'id' => $model->id]);
                 }
-            }
 
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }else{
+                return $this->redirect(['index', 'estado' => 'ativo']);
+            }  
 
         }else{
             Yii::$app->user->logout();

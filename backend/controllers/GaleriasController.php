@@ -15,6 +15,7 @@ use common\models\Galerias;
 use common\models\GaleriasSearch;
 use common\models\Eventos;
 use common\models\EventosSearch;
+use common\models\EventosUpdate;
 
 /**
  * GaleriasController implements the CRUD actions for Galerias model.
@@ -26,6 +27,9 @@ class GaleriasController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -50,23 +54,31 @@ class GaleriasController extends Controller
     }
 
 
-    public function actionIndex($idevento)
+    public function actionIndex($id_evento)
     {
         if (\Yii::$app->user->can('viewGaleria')) {
+      
+            $evento = Eventos::findOne(['id' => $id_evento]);
 
-            $model = Galerias::find()->where(['id_evento' => $idevento]);
-            $evento = Eventos::findOne(['id' => $idevento]);
-            $searchModel = new ActiveDataProvider([
-                'query' => $model,
-                'pagination' => [
-                    'pageSize' => 25,
-                ],
-            ]);
+            if($evento->estado == 'desativo'){
 
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'evento' => $evento,
-            ]);
+                $model = Galerias::find()->where(['id_evento' => $id_evento]);
+
+                $searchModel = new ActiveDataProvider([
+                    'query' => $model,
+                    'pagination' => [
+                        'pageSize' => 25,
+                    ],
+                ]);
+
+                return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'evento' => $evento,
+                ]);
+
+            }else{
+                return $this->redirect(['eventos/index', 'estado' => 'ativo']);
+            }  
 
         }else{
             Yii::$app->user->logout();
@@ -90,22 +102,22 @@ class GaleriasController extends Controller
     }
 
 
-    public function actionCreate($idevento)
+    public function actionCreate($id_evento)
     {
 
         if (\Yii::$app->user->can('adicionarGaleria')) {
 
             $modelfotos = new Galerias();
-            $evento = Eventos::findOne(['id' => $idevento]);
+            $evento = Eventos::findOne(['id' => $id_evento]);
             if ($this->request->isPost && $modelfotos->load($this->request->post())) {
                 $modelfotos->imageFile = UploadedFile::getInstances($modelfotos, 'imageFile');
-                $directoryName = 'galeria/' . $idevento . '/';
+                $directoryName = 'galeria/' . $id_evento . '/';
                 if (!file_exists($directoryName)) {
                     mkdir($directoryName, 0777, true);
                 }
                 foreach($modelfotos->imageFile as $image){
                     $model = new Galerias();
-                    $model->id_evento = (int)$idevento;
+                    $model->id_evento = (int)$id_evento;
                     $model->foto = date("Ymdhis") . time().rand(10,999999999) . '.' . $image->extension;
                     if ($model->save()) {
                         $image->saveAs($directoryName . $model->foto);
@@ -116,7 +128,7 @@ class GaleriasController extends Controller
                         ]);
                     }
                 }
-                return $this->redirect(['index', 'id_evento' => $idevento]);
+                return $this->redirect(['index', 'id_evento' => $id_evento]);
             }
             return $this->render('create', [
                 'model' => $modelfotos,
@@ -138,7 +150,7 @@ class GaleriasController extends Controller
             unlink('galeria/'. $model->id_evento . '/' . $model->foto);
             $this->findModel($id)->delete();
 
-            return $this->redirect(['index', 'idevento' => $model->id_evento]);
+            return $this->redirect(['index', 'id_evento' => $model->id_evento]);
 
         }else{
             Yii::$app->user->logout();

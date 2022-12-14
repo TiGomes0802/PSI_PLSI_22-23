@@ -10,8 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\UserprofileSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Userprofiles';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="userprofile-index">
 

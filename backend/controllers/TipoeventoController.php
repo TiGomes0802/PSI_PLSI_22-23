@@ -2,16 +2,20 @@
 
 namespace backend\controllers;
 
-use common\models\Tipoevento;
-use common\models\TipoeventoSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Tipoevento;
+use common\models\TipoeventoSearch;
+use common\models\EventosUpdate;
 
 class TipoeventoController extends Controller
 {
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

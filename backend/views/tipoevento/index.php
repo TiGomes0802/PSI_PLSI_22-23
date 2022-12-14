@@ -23,9 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            'tipo',
+            [
+                'label' => 'Tipos de eventos',
+                'value' => function ($data) {
+                    return $data->tipo;
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'template' => '{update}',

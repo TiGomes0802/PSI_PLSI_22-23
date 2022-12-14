@@ -6,13 +6,14 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use common\models\AuthAssignment;
+use common\models\EventosUpdate;
+use common\models\User;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
 use backend\models\SignupEmpregados;
-use common\models\User;
-use common\models\AuthAssignment;
 
 
 /**
@@ -25,6 +26,9 @@ class UserprofileController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

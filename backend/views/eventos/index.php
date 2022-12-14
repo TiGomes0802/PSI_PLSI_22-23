@@ -10,24 +10,24 @@ use yii\grid\GridView;
 /** @var common\models\EventosSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Eventos';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="eventos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Eventos') ?></h1>
 
     <p>
+        <?= Html::a('Eventos Ativos', ['index', 'estado' => 'ativo'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Eventos Desativos', ['index', 'estado' => 'desativo'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Eventos Cancelados', ['index', 'estado' => 'cancelado'], ['class' => 'btn btn-info']) ?>
+    </p>   
+    <p>
         <?= Html::a('Create Eventos', ['create'], ['class' => 'btn btn-success']) ?>
-
         <?= Html::a('Tipo eventos', ['tipoevento/index'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'dataProvider' => $searchModel,
         'columns' => [
             [
                 'label' => 'Nome',
@@ -36,18 +36,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'label' => 'Descricao',
-                'format' => 'html',
-                'value' => function ($data) {
-                    return $data->descricao;
-                },
-            ],
-            [
                 'format' => 'html',
                 'label' => 'Cartaz',
                 'value' => function ($data) {
                     return Html::img('cartaz/' . $data->cartaz,
                     ['width' => '80px','height' => '100px']);
+                },
+            ],
+            [
+                'label' => 'Descricao',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return $data->descricao;
                 },
             ],
             [
