@@ -17,8 +17,8 @@ class EventosSearch extends Eventos
     public function rules()
     {
         return [
-            [['id', 'numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
-            [['nome', 'descricao', 'cartaz', 'dataevento'], 'safe'],
+            [['id', 'numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'estado'], 'safe'],
             [['preco'], 'number'],
         ];
     }
@@ -63,13 +63,15 @@ class EventosSearch extends Eventos
             'dataevento' => $this->dataevento,
             'numbilhetesdisp' => $this->numbilhetesdisp,
             'preco' => $this->preco,
-            'idcriador' => $this->idcriador,
-            'idtipoevento' => $this->idtipoevento,
+            'estado' => $this->estado,
+            'id_criador' => $this->id_criador,
+            'id_tipo_evento' => $this->id_tipo_evento,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao])
-            ->andFilterWhere(['like', 'cartaz', $this->cartaz]);
+            ->andFilterWhere(['like', 'cartaz', $this->cartaz])
+            ->andFilterWhere(['like', 'estado', $this->estado]);
 
         return $dataProvider;
     }

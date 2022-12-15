@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\Pulseiras;
-use common\models\PulseirasSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Pulseiras;
+use common\models\PulseirasSearch;
+use common\models\EventosUpdate;
 
 /**
  * PulseirasController implements the CRUD actions for Pulseiras model.
@@ -18,6 +19,9 @@ class PulseirasController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

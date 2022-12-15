@@ -10,8 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\UserprofileSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Userprofiles';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="userprofile-index">
 
@@ -23,14 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= 
-    GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $searchModel,
         'columns' => [
             [
                 'label' => '',
                 'value' => function ($data) {
-                    return array_keys(Yii::$app->authManager->getRolesByUser($data->userid))[0];
+                    return array_keys(Yii::$app->authManager->getRolesByUser($data->user_id))[0];
                 },
             ],
             [
@@ -64,11 +62,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->datanascimento;
                 },
             ],
-            
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->userid]);
+                    return Url::toRoute([$action, 'id' => $model->user_id]);
                  }
             ],
         ],

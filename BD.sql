@@ -1,3 +1,5 @@
+drop database EcstasyClub;
+
 Create database EcstasyClub;
 
 use EcstasyClub;
@@ -19,8 +21,8 @@ Create table userProfile(
 	datanascimento date not null,
 	codigoRP varchar(25),
 	sexo varchar(9),
-	userid int not null,
-    FOREIGN KEY (userid) REFERENCES user(id)
+	user_id int not null,
+    FOREIGN KEY (user_id) REFERENCES user(id)
 )Engine=InnoDB;
 
 Create table tipoevento(
@@ -31,21 +33,22 @@ Create table tipoevento(
 Create table eventos(
 	id int not null primary key auto_increment,
     nome varchar(25) not null,
-    descricao varchar(150) not null,
+    descricao varchar(750) not null,
     cartaz varchar(250) not null,
     dataevento datetime not null,
     numbilhetesdisp int not null,
     preco float not null,
-    idcriador int not null,
-    idtipoevento int not null,
-    foreign key (idcriador) references userprofile(id),
-    foreign key (idtipoevento) references Tipoevento(id)
+    estado varchar(25) not null,
+    id_criador int not null,
+    id_tipo_evento int not null,
+    foreign key (id_criador) references userprofile(id),
+    foreign key (id_tipo_evento) references Tipoevento(id)
 )Engine=InnoDB;
 
 create table vip(
 	id int not null primary key auto_increment,
     npessoas int not null,
-    descricao varchar(250) not null,
+    descricao varchar(750) not null,
     nbebidas int not null,
     preco float not null
 )Engine=InnoDB;
@@ -55,34 +58,35 @@ create table pulseiras(
     estado varchar(25) not null,
     tipo varchar(25) not null,
     codigorp int not null,
-	idevento int not null,
-    idcliente int not null,
-    foreign key (idevento) references eventos(id),
-    foreign key (idcliente) references userprofile(id)
+	id_evento int not null,
+    id_cliente int not null,
+    foreign key (id_evento) references eventos(id),
+    foreign key (id_cliente) references userprofile(id)
 )Engine=InnoDB;
 
 create table vip_pulseira(
 	id int not null primary key auto_increment,
-    idvip int not null,
-    foreign key (idvip) references vip(id),
-    idpulseira int not null,
-    foreign key (idpulseira) references pulseiras(id)
+    id_vip int not null,
+    foreign key (id_vip) references vip(id),
+    id_pulseira int not null,
+    foreign key (id_pulseira) references pulseiras(id)
 )Engine=InnoDB;
 
 create table noticias(
 	id int not null primary key auto_increment,
     titulo varchar(25) not null,
     datanoticia datetime not null,
-    descricao varchar(250) not null,
-    idcriador int not null,
-    foreign key (idcriador) references userprofile(id)
+    descricao varchar(750) not null,
+    id_criador int not null,
+    foreign key (id_criador) references userprofile(id)
 )Engine=InnoDB;
 
 create table faturas(
 	id int not null primary key auto_increment,
     datahora_compra datetime not null,
-    idpulseira int not null,
-    foreign key (idpulseira) references pulseiras(id)
+    preco float not null,
+    id_pulseira int not null,
+    foreign key (id_pulseira) references pulseiras(id)
 )Engine=InnoDB;
 
 create table bebidas(
@@ -92,15 +96,15 @@ create table bebidas(
 
 create table linha_fatura(
 	id int not null primary key auto_increment,
-	idbebida int not null,
-    foreign key (idbebida) references bebidas(id),
-    idfatura int not null,
-    foreign key (idfatura) references faturas(id)
+	id_bebida int not null,
+    foreign key (id_bebida) references bebidas(id),
+    id_fatura int not null,
+    foreign key (id_fatura) references faturas(id)
 )Engine=InnoDB;
 
 create table galerias(
 	id int not null primary key auto_increment,
     foto varchar(250) not null,
-    idevento int not null,
-    foreign key (idevento) references eventos(id)
+    id_evento int not null,
+    foreign key (id_evento) references eventos(id)
 )Engine=InnoDB;

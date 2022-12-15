@@ -17,7 +17,7 @@ class NoticiasSearch extends Noticias
     public function rules()
     {
         return [
-            [['id', 'idcriador'], 'integer'],
+            [['id', 'id_criador'], 'integer'],
             [['titulo', 'datanoticia', 'descricao'], 'safe'],
         ];
     }
@@ -60,7 +60,7 @@ class NoticiasSearch extends Noticias
         $query->andFilterWhere([
             'id' => $this->id,
             'datanoticia' => $this->datanoticia,
-            'idcriador' => $this->idcriador,
+            'id_criador' => $this->id_criador,
         ]);
 
         $query->andFilterWhere(['like', 'titulo', $this->titulo])

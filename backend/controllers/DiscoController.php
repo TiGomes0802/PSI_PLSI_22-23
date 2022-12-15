@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use backend\models\Disco;
-use backend\models\DiscoSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use backend\models\Disco;
+use backend\models\DiscoSearch;
+use common\models\EventosUpdate;
 
 /**
  * DiscoController implements the CRUD actions for Disco model.
@@ -18,6 +19,9 @@ class DiscoController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

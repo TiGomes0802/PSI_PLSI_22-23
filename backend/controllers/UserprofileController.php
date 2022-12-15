@@ -6,13 +6,14 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use common\models\AuthAssignment;
+use common\models\EventosUpdate;
+use common\models\User;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
 use backend\models\SignupEmpregados;
-use common\models\User;
-use common\models\AuthAssignment;
 
 
 /**
@@ -25,6 +26,9 @@ class UserprofileController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -63,7 +67,7 @@ class UserprofileController extends Controller
         if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'admin') {
             $model = Userprofile::find()
             ->select('*')
-            ->leftJoin('user', 'user.id = userprofile.userid')
+            ->leftJoin('user', 'user.id = userprofile.user_id')
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
             ->orwhere(['auth_assignment.item_name' => 'admin'])
             ->orwhere(['auth_assignment.item_name' => 'gestor'])
@@ -75,7 +79,7 @@ class UserprofileController extends Controller
         if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'gestor') {
             $model = Userprofile::find()
             ->select('*')
-            ->leftJoin('user', 'user.id = userprofile.userid')
+            ->leftJoin('user', 'user.id = userprofile.user_id')
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
             ->where(['auth_assignment.item_name' => 'rp'])
             ->orderBy(['nome' => SORT_ASC,'apelido'=> SORT_ASC]);
@@ -98,7 +102,7 @@ class UserprofileController extends Controller
         if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()))[0] == 'admin') {
             $model = Userprofile::find()
             ->select('*')
-            ->leftJoin('user', 'user.id = userprofile.userid')
+            ->leftJoin('user', 'user.id = userprofile.user_id')
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
             ->orwhere(['auth_assignment.item_name' => 'cliente'])
             ->orderBy(['nome' => SORT_ASC,'apelido'=> SORT_ASC]);
@@ -124,7 +128,7 @@ class UserprofileController extends Controller
     */
     public function actionView($id)
     {
-        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+        $userprofile = Userprofile::find()->where(['user_id' => $id])->one();
 
         return $this->render('view', [
             'model' => $userprofile,
@@ -205,7 +209,7 @@ class UserprofileController extends Controller
     public function actionDelete($id)
     {
         $user = User::find()->where(['id' => $id])->one();
-        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+        $userprofile = Userprofile::find()->where(['user_id' => $id])->one();
         $auth = AuthAssignment::find()->where(['user_id' => $id])->one();
         
         $userprofile->delete();
