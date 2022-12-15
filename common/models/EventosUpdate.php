@@ -52,7 +52,7 @@ class EventosUpdate extends \yii\db\ActiveRecord
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
-            ['dataevento', 'datetime', 'format' => 'php:Y-m-d h:i'],
+            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i'],
             [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
             ['preco', 'double'],
             [['nome', 'estado'], 'string', 'max' => 25],

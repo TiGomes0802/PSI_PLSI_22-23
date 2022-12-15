@@ -52,7 +52,7 @@ class Eventos extends \yii\db\ActiveRecord
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
-            ['dataevento', 'datetime', 'format' => 'php:Y-m-d h:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
+            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
             [['id_criador', 'id_tipo_evento'], 'integer'],
             ['numbilhetesdisp', 'integer', 'min' => 0],
             ['preco', 'double'],

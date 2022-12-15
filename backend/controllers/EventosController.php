@@ -122,7 +122,7 @@ class EventosController extends Controller
                 $model->id_criador = $user->id;
                 
                 $input = strtotime($model->dataevento);
-                $newdatetime = date('Y-m-d h:i',$input);
+                $newdatetime = date('Y-m-d H:i',$input);
 
                 $model->dataevento = $newdatetime;
                 $model->estado = "ativo";
@@ -165,7 +165,7 @@ class EventosController extends Controller
                 if ($this->request->isPost && $model->load($this->request->post())) {
 
                     $input = strtotime($model->dataevento);
-                    $newdatetime = date('Y-m-d h:i',$input);
+                    $newdatetime = date('Y-m-d H:i',$input);
                     $model->dataevento = $newdatetime;
 
                     $model->imageFileUpdate = UploadedFile::getInstance($model, 'imageFileUpdate');
