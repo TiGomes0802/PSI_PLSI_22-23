@@ -11,12 +11,12 @@ use Yii;
  * @property string $estado
  * @property string $tipo
  * @property int $codigorp
- * @property int $idevento
- * @property int $idcliente
+ * @property int $id_evento
+ * @property int $id_cliente
  *
+ * @property Userprofile $cliente
+ * @property Eventos $evento
  * @property Faturas[] $faturas
- * @property Userprofile $idcliente0
- * @property Eventos $idevento0
  * @property VipPulseira[] $vipPulseiras
  */
 class Pulseiras extends \yii\db\ActiveRecord
@@ -35,11 +35,11 @@ class Pulseiras extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado', 'tipo', 'codigorp', 'idevento', 'idcliente'], 'required'],
-            [['codigorp', 'idevento', 'idcliente'], 'integer'],
+            [['estado', 'tipo', 'codigorp', 'id_evento', 'id_cliente'], 'required'],
+            [['codigorp', 'id_evento', 'id_cliente'], 'integer'],
             [['estado', 'tipo'], 'string', 'max' => 25],
-            [['idevento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['idevento' => 'id']],
-            [['idcliente'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcliente' => 'id']],
+            [['id_evento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['id_evento' => 'id']],
+            [['id_cliente'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_cliente' => 'id']],
         ];
     }
 
@@ -53,9 +53,29 @@ class Pulseiras extends \yii\db\ActiveRecord
             'estado' => 'Estado',
             'tipo' => 'Tipo',
             'codigorp' => 'Codigorp',
-            'idevento' => 'Idevento',
-            'idcliente' => 'Idcliente',
+            'id_evento' => 'Id Evento',
+            'id_cliente' => 'Id Cliente',
         ];
+    }
+
+    /**
+     * Gets query for [[Cliente]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCliente()
+    {
+        return $this->hasOne(Userprofile::class, ['id' => 'id_cliente']);
+    }
+
+    /**
+     * Gets query for [[Evento]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEvento()
+    {
+        return $this->hasOne(Eventos::class, ['id' => 'id_evento']);
     }
 
     /**
@@ -65,27 +85,7 @@ class Pulseiras extends \yii\db\ActiveRecord
      */
     public function getFaturas()
     {
-        return $this->hasMany(Faturas::class, ['idpulseira' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Idcliente0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdcliente0()
-    {
-        return $this->hasOne(Userprofile::class, ['id' => 'idcliente']);
-    }
-
-    /**
-     * Gets query for [[Idevento0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdevento0()
-    {
-        return $this->hasOne(Eventos::class, ['id' => 'idevento']);
+        return $this->hasMany(Faturas::class, ['id_pulseira' => 'id']);
     }
 
     /**
@@ -95,6 +95,6 @@ class Pulseiras extends \yii\db\ActiveRecord
      */
     public function getVipPulseiras()
     {
-        return $this->hasMany(VipPulseira::class, ['idpulseira' => 'id']);
+        return $this->hasMany(VipPulseira::class, ['id_pulseira' => 'id']);
     }
 }

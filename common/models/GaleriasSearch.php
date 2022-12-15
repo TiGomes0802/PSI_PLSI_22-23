@@ -17,7 +17,7 @@ class GaleriasSearch extends Galerias
     public function rules()
     {
         return [
-            [['id', 'idevento'], 'integer'],
+            [['id', 'id_evento'], 'integer'],
             [['foto'], 'safe'],
         ];
     }
@@ -59,7 +59,7 @@ class GaleriasSearch extends Galerias
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'idevento' => $this->idevento,
+            'id_evento' => $this->id_evento,
         ]);
 
         $query->andFilterWhere(['like', 'foto', $this->foto]);

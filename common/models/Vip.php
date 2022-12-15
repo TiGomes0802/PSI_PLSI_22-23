@@ -34,7 +34,7 @@ class Vip extends \yii\db\ActiveRecord
             [['npessoas', 'descricao', 'nbebidas', 'preco'], 'required'],
             [['npessoas', 'nbebidas'], 'integer'],
             [['preco'], 'number'],
-            [['descricao'], 'string', 'max' => 250],
+            [['descricao'], 'string', 'max' => 750],
         ];
     }
 
@@ -59,6 +59,6 @@ class Vip extends \yii\db\ActiveRecord
      */
     public function getVipPulseiras()
     {
-        return $this->hasMany(VipPulseira::class, ['idvip' => 'id']);
+        return $this->hasMany(VipPulseira::class, ['id_vip' => 'id']);
     }
 }

@@ -17,7 +17,8 @@ class FaturasSearch extends Faturas
     public function rules()
     {
         return [
-            [['id', 'idpulseira'], 'integer'],
+            [['id', 'id_pulseira'], 'integer'],
+            [['preco'], 'number'],
             [['datahora_compra'], 'safe'],
         ];
     }
@@ -59,8 +60,9 @@ class FaturasSearch extends Faturas
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'preco' => $this->preco,
             'datahora_compra' => $this->datahora_compra,
-            'idpulseira' => $this->idpulseira,
+            'id_pulseira' => $this->id_pulseira,
         ]);
 
         return $dataProvider;

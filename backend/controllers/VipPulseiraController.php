@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\VipPulseira;
-use common\models\VipPulseiraSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\EventosUpdate;
+use common\models\VipPulseira;
+use common\models\VipPulseiraSearch;
 
 /**
  * VipPulseiraController implements the CRUD actions for VipPulseira model.
@@ -18,6 +19,9 @@ class VipPulseiraController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

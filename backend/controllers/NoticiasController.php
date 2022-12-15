@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\Noticias;
-use common\models\NoticiasSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Noticias;
+use common\models\NoticiasSearch;
+use common\models\EventosUpdate;
 
 /**
  * NoticiasController implements the CRUD actions for Noticias model.
@@ -18,6 +19,9 @@ class NoticiasController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

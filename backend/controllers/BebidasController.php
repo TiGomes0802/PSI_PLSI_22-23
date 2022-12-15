@@ -2,11 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\Bebidas;
-use common\models\BebidasSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Bebidas;
+use common\models\BebidasSearch;
+use common\models\EventosUpdate;
 
 /**
  * BebidasController implements the CRUD actions for Bebidas model.
@@ -18,6 +19,9 @@ class BebidasController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [

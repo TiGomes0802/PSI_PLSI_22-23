@@ -7,18 +7,16 @@ use yii\widgets\DetailView;
 /** @var app\models\Userprofile $model */
 
 $this->title = $model->nome . ' ' . $model->apelido;
-$this->params['breadcrumbs'][] = ['label' => 'Userprofiles', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="userprofile-view">
 
-    <h2><?= array_keys(Yii::$app->authManager->getRolesByUser($model->userid))[0] ?></h2>
+    <h2><?= array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] ?></h2>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->userid], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Update password', ['update_password', 'id' => $model->userid], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->userid], [
+        <?= Html::a('Update', ['update', 'id' => $model->user_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update password', ['update_password', 'id' => $model->user_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->user_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
