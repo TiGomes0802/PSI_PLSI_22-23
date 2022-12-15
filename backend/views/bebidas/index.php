@@ -10,27 +10,25 @@ use yii\grid\GridView;
 /** @var common\models\BebidasSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Bebidas';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="bebidas-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Bebidas') ?></h1>
 
     <p>
         <?= Html::a('Create Bebidas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nome',
+            [
+                'label' => 'Bebidas',
+                'value' => function ($data) {
+                    return $data->nome;
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Bebidas $model, $key, $index, $column) {

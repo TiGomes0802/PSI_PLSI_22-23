@@ -87,7 +87,13 @@ class EventosUpdate extends \yii\db\ActiveRecord
         $eventos = Eventosupdate::find()->where(['estado' => 'ativo'])->all();
 
         foreach($eventos as $evento){
-            if($evento->dataevento < date('Y-m-d 06:00')){
+            if(date('Y-m-d 06:00:00') < date('Y-m-d H:m:s')){
+                $date = date('Y-m-d H:m:s');
+            } else{
+                $date = date('Y-m-d H:m:s', strtotime(date('Y-m-d H:m:s') . " - 1 day"));
+            }
+
+            if($evento->dataevento < $date){
                 $eventoupdate = new Eventosupdate();
                 $eventoupdate = Eventosupdate::find()->where(['id' => $evento->id])->one();
                 $date = strtotime($evento->dataevento);
