@@ -54,7 +54,7 @@ class SignupEmpregados extends Model
             [['datanascimento'], 'safe'],
             ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             ['user_id', 'integer'],
-            [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 5, 'max' => 25],
+            [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 2, 'max' => 25],
             ['sexo', 'string', 'min' => 8, 'max' => 9],
             ['user_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];

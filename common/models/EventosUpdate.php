@@ -52,7 +52,7 @@ class EventosUpdate extends \yii\db\ActiveRecord
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
-            ['dataevento', 'datetime', 'format' => 'php:Y-m-d h:i'],
+            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i'],
             [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
             ['preco', 'double'],
             [['nome', 'estado'], 'string', 'max' => 25],
@@ -87,7 +87,13 @@ class EventosUpdate extends \yii\db\ActiveRecord
         $eventos = Eventosupdate::find()->where(['estado' => 'ativo'])->all();
 
         foreach($eventos as $evento){
-            if($evento->dataevento < date('Y-m-d 06:00')){
+            if(date('Y-m-d 06:00:00') < date('Y-m-d H:m:s')){
+                $date = date('Y-m-d H:m:s');
+            } else{
+                $date = date('Y-m-d H:m:s', strtotime(date('Y-m-d H:m:s') . " - 1 day"));
+            }
+
+            if($evento->dataevento < $date){
                 $eventoupdate = new Eventosupdate();
                 $eventoupdate = Eventosupdate::find()->where(['id' => $evento->id])->one();
                 $date = strtotime($evento->dataevento);
