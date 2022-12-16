@@ -65,14 +65,14 @@ class EventosTest extends \Codeception\Test\Unit
         $this->assertFalse($Evento->validate(['preco']));
 
 
-        $Evento->idcriador = null;
-        $this->assertFalse($Evento->validate(['idcriador']));
+        $Evento->id_criador = null;
+        $this->assertFalse($Evento->validate(['id_criador']));
 
-        $Evento->idcriador = 'teste';
-        $this->assertFalse($Evento->validate(['idcriador']));
+        $Evento->id_criador = 'teste';
+        $this->assertFalse($Evento->validate(['id_criador']));
 
-        $Evento->idcriador = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
-        $this->assertFalse($Evento->validate(['idcriador']));
+        $Evento->id_criador = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+        $this->assertFalse($Evento->validate(['id_criador']));
 
 
         $Evento->idtipoevento = null;
@@ -109,8 +109,8 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->preco = 23.12;
         $this->assertTrue($Evento->validate(['preco']));
 
-        $Evento->idcriador = 1;
-        $this->assertTrue($Evento->validate(['idcriador']));
+        $Evento->id_criador = 1;
+        $this->assertTrue($Evento->validate(['id_criador']));
 
         $Evento->idtipoevento = 1;
         $this->assertTrue($Evento->validate(['idtipoevento']));
@@ -131,7 +131,7 @@ class EventosTest extends \Codeception\Test\Unit
         $dataevento = $date;
         $numbilhetesdisp = 500;
         $preco = 12.32;
-        $idcriador = 1;
+        $id_criador = 1;
         $idtipoevento = 1;
 
         $Evento->nome = $nome;
@@ -140,10 +140,10 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->dataevento = $dataevento;
         $Evento->numbilhetesdisp = $numbilhetesdisp;
         $Evento->preco = $preco;
-        $Evento->idcriador = $idcriador;
+        $Evento->id_criador = $id_criador;
         $Evento->idtipoevento = $idtipoevento;
         $Evento->save();
 
-        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'idcriador' => $idcriador, 'idtipoevento' => $idtipoevento]);
+        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'idtipoevento' => $idtipoevento]);
     }
 }

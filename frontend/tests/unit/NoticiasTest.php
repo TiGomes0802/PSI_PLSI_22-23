@@ -41,14 +41,14 @@ class NoticiasTest extends \Codeception\Test\Unit
         $this->assertFalse($noticias->validate(['descricao']));
         
 
-        $noticias->idcriador = null;
-        $this->assertFalse($noticias->validate(['idcriador']));
+        $noticias->id_criador = null;
+        $this->assertFalse($noticias->validate(['id_criador']));
 
-        $noticias->idcriador = 'testes';
-        $this->assertFalse($noticias->validate(['idcriador']));
+        $noticias->id_criador = 'testes';
+        $this->assertFalse($noticias->validate(['id_criador']));
 
-        $noticias->idcriador = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
-        $this->assertFalse($noticias->validate(['idcriador']));
+        $noticias->id_criador = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+        $this->assertFalse($noticias->validate(['id_criador']));
 
     }
 
@@ -67,8 +67,8 @@ class NoticiasTest extends \Codeception\Test\Unit
         $noticias->descricao = 'descricao'; 
         $this->assertTrue($noticias->validate(['descricao']));
         
-        $noticias->idcriador = 1;
-        $this->assertTrue($noticias->validate(['idcriador']));
+        $noticias->id_criador = 1;
+        $this->assertTrue($noticias->validate(['id_criador']));
     }
 
     public function testAddBDValidation()
@@ -79,14 +79,14 @@ class NoticiasTest extends \Codeception\Test\Unit
         $datetime = new Datetime();
         $datetime = $datetime->format('Y-m-d H:i:s');
         $descricao = "descricao";
-        $idcriador = 1;
+        $id_criador = 1;
 
         $noticias->titulo = $titulo;
         $noticias->datanoticia = $datetime;
         $noticias->descricao = $descricao;
-        $noticias->idcriador = $idcriador;
+        $noticias->id_criador = $id_criador;
         $noticias->save();
 
-        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'idcriador' => $idcriador]);
+        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'id_criador' => $id_criador]);
     }
 }
