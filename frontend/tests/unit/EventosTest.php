@@ -75,14 +75,14 @@ class EventosTest extends \Codeception\Test\Unit
         $this->assertFalse($Evento->validate(['id_criador']));
 
 
-        $Evento->idtipoevento = null;
-        $this->assertFalse($Evento->validate(['idtipoevento']));
+        $Evento->id_tipo_evento = null;
+        $this->assertFalse($Evento->validate(['id_tipo_evento']));
 
-        $Evento->idtipoevento = 'teste';
-        $this->assertFalse($Evento->validate(['idtipoevento']));
+        $Evento->id_tipo_evento = 'teste';
+        $this->assertFalse($Evento->validate(['id_tipo_evento']));
 
-        $Evento->idtipoevento = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
-        $this->assertFalse($Evento->validate(['idtipoevento']));
+        $Evento->id_tipo_evento = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+        $this->assertFalse($Evento->validate(['id_tipo_evento']));
     }
 
     public function testCorretValidation()
@@ -101,7 +101,7 @@ class EventosTest extends \Codeception\Test\Unit
         $date = new DateTime();
         $date = $date->format('Y-m-d');
         $Evento->dataevento = $date;
-        //$this->assertTrue($Evento->validate(['dataevento']));
+        $this->assertTrue($Evento->validate(['dataevento']));
 
         $Evento->numbilhetesdisp = 543;
         $this->assertTrue($Evento->validate(['numbilhetesdisp']));
@@ -112,8 +112,8 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->id_criador = 1;
         $this->assertTrue($Evento->validate(['id_criador']));
 
-        $Evento->idtipoevento = 1;
-        $this->assertTrue($Evento->validate(['idtipoevento']));
+        $Evento->id_tipo_evento = 1;
+        $this->assertTrue($Evento->validate(['id_tipo_evento']));
 
         $Evento->imageFile = null;
         $this->assertTrue($Evento->validate(['imageFile']));
@@ -132,7 +132,7 @@ class EventosTest extends \Codeception\Test\Unit
         $numbilhetesdisp = 500;
         $preco = 12.32;
         $id_criador = 1;
-        $idtipoevento = 1;
+        $id_tipo_evento = 1;
 
         $Evento->nome = $nome;
         $Evento->descricao = $descricao;
@@ -141,9 +141,9 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->numbilhetesdisp = $numbilhetesdisp;
         $Evento->preco = $preco;
         $Evento->id_criador = $id_criador;
-        $Evento->idtipoevento = $idtipoevento;
+        $Evento->id_tipo_evento = $id_tipo_evento;
         $Evento->save();
 
-        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'idtipoevento' => $idtipoevento]);
+        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
     }
 }

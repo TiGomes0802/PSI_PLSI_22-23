@@ -51,17 +51,17 @@ class Eventos extends \yii\db\ActiveRecord
         $disco = Disco::find()->where(['id' => 1])->one();
 
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'id_criador', 'id_tipo_evento'], 'required'],
             ['dataevento', 'safe'],
             ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
-            [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
+            [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
             ['numbilhetesdisp', 'integer', 'max' => $disco->lotacao],
             ['preco', 'double'],
             ['nome', 'string', 'max' => 25],
             ['descricao', 'string', 'max' => 750],
             ['cartaz', 'string', 'max' => 250],
-            ['idcriador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
-            ['idtipoevento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
+            ['id_criador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
+            ['id_tipo_evento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['id_tipo_evento' => 'id']],
             [['imageFile','imageFileUpdate'], 'file', 'extensions' => 'png, jpg'],
         ];
     }

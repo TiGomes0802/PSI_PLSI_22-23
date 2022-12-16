@@ -5,3 +5,8 @@ modules:
         - Yii2:
             part: [orm, email, fixtures]
         - Asserts
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=ecstasyclub_test'
+            user: 'root'
+            password: ''
+            cleanup: false
