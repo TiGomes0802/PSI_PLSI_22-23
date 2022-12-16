@@ -28,7 +28,7 @@
                         ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
                         ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index', 'estado' => 'ativo']],
                         ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
-                        ['label' => 'VIP', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
+                        ['label' => "Vip's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
                     ],   
                 ]);
             }
@@ -40,7 +40,7 @@
                         ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
                         ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index', 'estado' => 'ativo']],
                         ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
-                        ['label' => 'VIP', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
+                        ['label' => "Vip's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
                         ['label' => 'Disco', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/view', 'id' => 1]],
                     ],
                 ]);

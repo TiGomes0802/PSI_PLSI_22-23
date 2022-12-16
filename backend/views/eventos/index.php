@@ -44,7 +44,7 @@ $this->title = '';
                 },
             ],
             [
-                'label' => 'Descricao',
+                'label' => 'Descrição',
                 'format' => 'html',
                 'value' => function ($data) {
                     return $data->descricao;
