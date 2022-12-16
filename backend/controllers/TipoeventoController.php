@@ -2,22 +2,20 @@
 
 namespace backend\controllers;
 
-use common\models\Tipoevento;
-use common\models\TipoeventoSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Tipoevento;
+use common\models\TipoeventoSearch;
+use common\models\EventosUpdate;
 
-/**
- * TipoeventoController implements the CRUD actions for Tipoevento model.
- */
 class TipoeventoController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -31,11 +29,6 @@ class TipoeventoController extends Controller
         );
     }
 
-    /**
-     * Lists all Tipoevento models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $searchModel = new TipoeventoSearch();
@@ -47,31 +40,13 @@ class TipoeventoController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Tipoevento model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Tipoevento model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new Tipoevento();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -82,19 +57,12 @@ class TipoeventoController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Tipoevento model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -102,27 +70,6 @@ class TipoeventoController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Tipoevento model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Tipoevento model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Tipoevento the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Tipoevento::findOne(['id' => $id])) !== null) {

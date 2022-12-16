@@ -28,7 +28,8 @@ class Tipoevento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo'], 'string', 'max' => 25],
+            ['tipo', 'required', 'message' => '{attribute} não pode estar vazio'],
+            ['tipo', 'string', 'max' => 25],
         ];
     }
 
@@ -50,6 +51,6 @@ class Tipoevento extends \yii\db\ActiveRecord
      */
     public function getEventos()
     {
-        return $this->hasMany(Eventos::class, ['idtipoevento' => 'id']);
+        return $this->hasMany(Eventos::class, ['id_tipo_evento' => 'id']);
     }
 }

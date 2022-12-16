@@ -17,7 +17,7 @@ class UserprofileSearch extends Userprofile
     public function rules()
     {
         return [
-            [['id', 'userid'], 'integer'],
+            [['id', 'user_id'], 'integer'],
             [['nome', 'apelido', 'datanascimento', 'codigoRP', 'sexo'], 'safe'],
         ];
     }
@@ -60,7 +60,7 @@ class UserprofileSearch extends Userprofile
         $query->andFilterWhere([
             'id' => $this->id,
             'datanascimento' => $this->datanascimento,
-            'userid' => $this->userid,
+            'user_id' => $this->user_id,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])

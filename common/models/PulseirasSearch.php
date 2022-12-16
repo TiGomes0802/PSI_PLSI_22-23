@@ -17,7 +17,7 @@ class PulseirasSearch extends Pulseiras
     public function rules()
     {
         return [
-            [['id', 'codigorp', 'idevento', 'idcliente'], 'integer'],
+            [['id', 'codigorp', 'id_evento', 'id_cliente'], 'integer'],
             [['estado', 'tipo'], 'safe'],
         ];
     }
@@ -60,8 +60,8 @@ class PulseirasSearch extends Pulseiras
         $query->andFilterWhere([
             'id' => $this->id,
             'codigorp' => $this->codigorp,
-            'idevento' => $this->idevento,
-            'idcliente' => $this->idcliente,
+            'id_evento' => $this->id_evento,
+            'id_cliente' => $this->id_cliente,
         ]);
 
         $query->andFilterWhere(['like', 'estado', $this->estado])

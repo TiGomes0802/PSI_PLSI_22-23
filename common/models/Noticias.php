@@ -11,9 +11,9 @@ use Yii;
  * @property string $titulo
  * @property string $datanoticia
  * @property string $descricao
- * @property int $idcriador
+ * @property int $id_criador
  *
- * @property Userprofile $idcriador0
+ * @property Userprofile $criador
  */
 class Noticias extends \yii\db\ActiveRecord
 {
@@ -31,13 +31,13 @@ class Noticias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'datanoticia', 'descricao', 'idcriador'], 'required'],
+            [['titulo', 'datanoticia', 'descricao', 'id_criador'], 'required'],
             ['datanoticia', 'safe'],
             ['datanoticia', 'datetime', 'format' => 'Y-m-d H:i:s'],
-            ['idcriador', 'integer'],
+            ['id_criador', 'integer'],
             ['titulo', 'string', 'max' => 25],
             ['descricao', 'string', 'max' => 750],
-            ['idcriador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
+            ['id_criador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
         ];
     }
 
@@ -51,17 +51,17 @@ class Noticias extends \yii\db\ActiveRecord
             'titulo' => 'Titulo',
             'datanoticia' => 'Datanoticia',
             'descricao' => 'Descricao',
-            'idcriador' => 'Idcriador',
+            'id_criador' => 'Id Criador',
         ];
     }
 
-    /**
-     * Gets query for [[Idcriador0]].
+     /**
+     * Gets query for [[Criador]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdcriador0()
+    public function getCriador()
     {
-        return $this->hasOne(Userprofile::class, ['id' => 'idcriador']);
+        return $this->hasOne(Userprofile::class, ['id' => 'id_criador']);
     }
 }

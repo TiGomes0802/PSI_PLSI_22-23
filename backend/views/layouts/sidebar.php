@@ -26,9 +26,9 @@
                     'items' => [
                         ['label' => "Rp's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
                         ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
-                        ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index']],
+                        ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index', 'estado' => 'ativo']],
                         ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
-                        ['label' => 'VIP', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['VIP/index']],
+                        ['label' => "Vip's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
                     ],   
                 ]);
             }
@@ -38,10 +38,10 @@
                         ['label' => 'Empregados', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
                         ['label' => 'Cliente', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/indexclientes']],
                         ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
-                        ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index']],
+                        ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index', 'estado' => 'ativo']],
                         ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
-                        ['label' => 'VIP', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['VIP/index']],
-                        ['label' => 'Disco', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/index']],
+                        ['label' => "Vip's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
+                        ['label' => 'Disco', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/view', 'id' => 1]],
                     ],
                 ]);
             }

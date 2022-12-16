@@ -59,6 +59,6 @@ class Vip extends \yii\db\ActiveRecord
      */
     public function getVipPulseiras()
     {
-        return $this->hasMany(VipPulseira::class, ['idvip' => 'id']);
+        return $this->hasMany(VipPulseira::class, ['id_vip' => 'id']);
     }
 }

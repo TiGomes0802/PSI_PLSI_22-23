@@ -17,7 +17,7 @@ class LinhaFaturaSearch extends LinhaFatura
     public function rules()
     {
         return [
-            [['id', 'idbebida', 'idfatura'], 'integer'],
+            [['id', 'id_bebida', 'id_fatura'], 'integer'],
         ];
     }
 
@@ -58,8 +58,8 @@ class LinhaFaturaSearch extends LinhaFatura
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'idbebida' => $this->idbebida,
-            'idfatura' => $this->idfatura,
+            'id_bebida' => $this->id_bebida,
+            'id_fatura' => $this->id_fatura,
         ]);
 
         return $dataProvider;

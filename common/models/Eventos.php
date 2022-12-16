@@ -3,7 +3,9 @@
 namespace common\models;
 
 use Yii;
-
+use DateTime;
+use yii\base\Model;
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "eventos".
  *
@@ -14,13 +16,14 @@ use Yii;
  * @property string $dataevento
  * @property int $numbilhetesdisp
  * @property float $preco
- * @property int $idcriador
- * @property int $idtipoevento
+ * @property string $estado 
+ * @property int $id_criador
+ * @property int $id_tipo_evento
  *
+ * @property Userprofile $criador
  * @property Galerias[] $galerias
- * @property Userprofile $idcriador0
- * @property Tipoevento $idtipoevento0
  * @property Pulseiras[] $pulseiras
+ * @property Tipoevento $tipoEvento
  */
 class Eventos extends \yii\db\ActiveRecord
 {
@@ -28,6 +31,7 @@ class Eventos extends \yii\db\ActiveRecord
      * @var \yii\web\UploadedFile
      */
     public $imageFile;
+    public $imageFileUpdate;
 
     /**
      * {@inheritdoc}
@@ -42,12 +46,14 @@ class Eventos extends \yii\db\ActiveRecord
      */
     public function rules()
     {
+        $date = new DateTime();
+        $min = $date->format('Y-m-d h:i');
         $disco = Disco::find()->where(['id' => 1])->one();
 
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'idcriador', 'idtipoevento'], 'required'],
             ['dataevento', 'safe'],
-            ['dataevento', 'date'],
+            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
             [['numbilhetesdisp', 'idcriador', 'idtipoevento'], 'integer'],
             ['numbilhetesdisp', 'integer', 'max' => $disco->lotacao],
             ['preco', 'double'],
@@ -56,7 +62,7 @@ class Eventos extends \yii\db\ActiveRecord
             ['cartaz', 'string', 'max' => 250],
             ['idcriador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['idcriador' => 'id']],
             ['idtipoevento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['idtipoevento' => 'id']],
-            ['imageFile', 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFile','imageFileUpdate'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -71,12 +77,24 @@ class Eventos extends \yii\db\ActiveRecord
             'descricao' => 'Descricao',
             'cartaz' => 'Cartaz',
             'imageFile' => 'Product Image',
+            'imageFileUpdate' => 'Product Image',
             'dataevento' => 'Dataevento',
             'numbilhetesdisp' => 'Numbilhetesdisp',
             'preco' => 'Preco',
-            'idcriador' => 'Idcriador',
-            'idtipoevento' => 'Idtipoevento',
+            'estado' => 'Estado',
+            'id_criador' => 'Id Criador',
+            'id_tipo_evento' => 'Id Tipo Evento',
         ];
+    }
+
+    /**
+     * Gets query for [[Criador]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCriador()
+    {
+        return $this->hasOne(Userprofile::class, ['id' => 'id_criador']);
     }
 
     /**
@@ -86,27 +104,7 @@ class Eventos extends \yii\db\ActiveRecord
      */
     public function getGalerias()
     {
-        return $this->hasMany(Galerias::class, ['idevento' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Idcriador0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdcriador0()
-    {
-        return $this->hasOne(Userprofile::class, ['id' => 'idcriador']);
-    }
-
-    /**
-     * Gets query for [[Idtipoevento0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdtipoevento0()
-    {
-        return $this->hasOne(Tipoevento::class, ['id' => 'idtipoevento']);
+        return $this->hasMany(Galerias::class, ['id_evento' => 'id']);
     }
 
     /**
@@ -116,6 +114,16 @@ class Eventos extends \yii\db\ActiveRecord
      */
     public function getPulseiras()
     {
-        return $this->hasMany(Pulseiras::class, ['idevento' => 'id']);
+        return $this->hasMany(Pulseiras::class, ['id_evento' => 'id']);
+    }
+
+    /**
+     * Gets query for [[TipoEvento]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTipoEvento()
+    {
+        return $this->hasOne(Tipoevento::class, ['id' => 'id_tipo_evento']);
     }
 }

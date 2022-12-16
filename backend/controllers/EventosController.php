@@ -2,11 +2,18 @@
 
 namespace backend\controllers;
 
-use common\models\Eventos;
-use common\models\EventosSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use common\models\Eventos;
+use common\models\EventosSearch;
+use common\models\EventosUpdate;
+use common\models\Userprofile;
+use common\models\UserprofileSearch;
 
 /**
  * EventosController implements the CRUD actions for Eventos model.
@@ -18,6 +25,9 @@ class EventosController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -27,93 +37,180 @@ class EventosController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['gestor','admin'],
+                        ],
+                    ],
+                ],
             ]
         );
     }
 
-    /**
-     * Lists all Eventos models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $searchModel = new EventosSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+    public function actionIndex($estado)
+    {
+        if (\Yii::$app->user->can('viewEvento')) {
+
+            $model = Eventos::find()->where(['estado' => $estado]);
+            
+            $searchModel = new ActiveDataProvider([
+                'query' => $model,
+                'pagination' => [
+                    'pageSize' => 25,
+                ],
+            ]);
+
+            if($estado == "ativo"){
+                return $this->render('index', [
+                    'searchModel' => $searchModel,
+                ]);
+            }else {
+                if($estado == "desativo" or $estado == "cancelado") {
+                    return $this->render('indexDesaCanc', [
+                        'searchModel' => $searchModel,
+                    ]);
+                }
+            }
+                
+
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
-    /**
-     * Displays a single Eventos model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('viewEvento')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+            
+        }else{
+            return $this->render('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
-    /**
-     * Creates a new Eventos model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
+
     public function actionCreate()
     {
-        $model = new Eventos();
+        if (\Yii::$app->user->can('createEvento')) {
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model = new Eventos();
+        
+            $user = Userprofile::find()->where(['user_id' => Yii::$app->user->getId()])->one();
+
+            if ($this->request->isPost && $model->load($this->request->post())) {
+
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                
+                if($model->imageFile != null){
+                    $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
+                }
+                
+                $model->id_tipo_evento = (int)$model->id_tipo_evento;
+                $model->id_criador = $user->id;
+                
+                $input = strtotime($model->dataevento);
+                $newdatetime = date('Y-m-d H:i',$input);
+
+                $model->dataevento = $newdatetime;
+                $model->estado = "ativo";
+
+                if ($model->save()) {
+                    
+                    $directoryName = 'cartaz/';
+                    
+                    if (!file_exists($directoryName)) {
+                        mkdir($directoryName, 0777, true);
+                    }
+
+                    $model->imageFile->saveAs($directoryName . $model->cartaz);
+                    
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+
+        }else{
+            return $this->rende('/site/logout', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
-    /**
-     * Updates an existing Eventos model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('updateEvento')) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model = $this->findModel($id);
+            
+            if($model->estado == 'ativo'){
+                if ($this->request->isPost && $model->load($this->request->post())) {
+
+                    $input = strtotime($model->dataevento);
+                    $newdatetime = date('Y-m-d H:i',$input);
+                    $model->dataevento = $newdatetime;
+
+                    $model->imageFileUpdate = UploadedFile::getInstance($model, 'imageFileUpdate');
+                    
+                    $model->imageFile = 'nada.png';
+
+                    $model->id_tipo_evento = (int)$model->id_tipo_evento;
+
+                    if ($model->save()) {
+                        
+                        if($model->imageFileUpdate != null){
+                            $model->imageFileUpdate->saveAs('cartaz/' . $model->cartaz);
+                        }
+                        
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }else{
+                return $this->redirect(['index', 'estado' => 'ativo']);
+            }  
+
+        }else{
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
-    /**
-     * Deletes an existing Eventos model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('deleteEvento')) {
 
-        return $this->redirect(['index']);
+            $model = $this->findModel($id);
+            $this->findModel($id)->delete();
+            unlink('cartaz/' . $model->cartaz);
+            return $this->redirect(['index', 'estado' => $model->estado]);
+        
+        }else{
+            Yii::$app->user->logout();
+            return $this->redirect(['site/login']);
+        }
     }
 
     /**

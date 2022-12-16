@@ -51,6 +51,6 @@ class Bebidas extends \yii\db\ActiveRecord
      */
     public function getLinhaFaturas()
     {
-        return $this->hasMany(LinhaFatura::class, ['idbebida' => 'id']);
+        return $this->hasMany(LinhaFatura::class, ['id_bebida' => 'id']);
     }
 }
