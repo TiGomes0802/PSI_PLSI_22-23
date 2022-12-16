@@ -88,5 +88,29 @@ class NoticiasTest extends \Codeception\Test\Unit
         $noticias->save();
 
         $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'id_criador' => $id_criador]);
+
+        $id = $noticias->id;
+
+        //Update
+        $noticias = Noticias::findOne(['id' => $id]);
+
+        $titulo = "Outro titulo";
+        $datetime = new Datetime();
+        $datetime = $datetime->format('Y-m-d H:i:s');
+        $descricao = "Outra descricao";
+        $id_criador = 1;
+
+        $noticias->titulo = $titulo;
+        $noticias->datanoticia = $datetime;
+        $noticias->descricao = $descricao;
+        $noticias->id_criador = $id_criador;
+        $noticias->save();
+
+        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'id_criador' => $id_criador]);
+
+        //Delete
+        Noticias::findOne(['id' => $id])->delete();
+
+        $this->tester->dontSeeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'id_criador' => $id_criador]);
     }
 }

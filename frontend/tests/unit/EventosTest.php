@@ -145,5 +145,38 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->save();
 
         $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
+    
+        $id = $Evento->id;
+
+        //Update
+        $Evento = Eventos::findOne(['id' => $id]);
+
+        $nome = "Outro Nome";
+        $descricao = "Outra Descricao";
+        $cartaz = "Outro Cartaz";
+        $date = new DateTime();
+        $date = $date->format('Y-m-d');
+        $dataevento = $date;
+        $numbilhetesdisp = 250;
+        $preco = 25;
+        $id_criador = 1;
+        $id_tipo_evento = 1;
+
+        $Evento->nome = $nome;
+        $Evento->descricao = $descricao;
+        $Evento->cartaz = $cartaz;
+        $Evento->dataevento = $dataevento;
+        $Evento->numbilhetesdisp = $numbilhetesdisp;
+        $Evento->preco = $preco;
+        $Evento->id_criador = $id_criador;
+        $Evento->id_tipo_evento = $id_tipo_evento;
+        $Evento->save();
+
+        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
+
+        //Delete
+        Eventos::findOne(['id' => $id])->delete();
+
+        $this->tester->dontSeeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);    
     }
 }

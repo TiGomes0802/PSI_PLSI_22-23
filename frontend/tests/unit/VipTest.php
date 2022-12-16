@@ -66,14 +66,15 @@ class VipTest extends \Codeception\Test\Unit
         $this->assertTrue($vip->validate(['preco']));
     }
 
-    public function testAddBDValidation()
+    function testAddBDValidation()
     {
+        //Create
         $vip = new Vip();
 
         $npessoas = 12;
         $descricao = "descricao";
         $nbebidas = 2;
-        $preco = 55.01;
+        $preco = 25;
 
         $vip->npessoas = $npessoas;
         $vip->descricao = $descricao;
@@ -83,5 +84,29 @@ class VipTest extends \Codeception\Test\Unit
         $vip->save();
 
         $this->tester->seeRecord('common\models\Vip', ['npessoas' => $npessoas, 'descricao' => $descricao, 'nbebidas' => $nbebidas, 'preco' => $preco]);
+        
+        $id = $vip->id;
+
+        //Update
+        $vip = Vip::findOne(['id' => $id]);
+
+        $npessoas = 24;
+        $descricao = "Outra descricao";
+        $nbebidas = 32;
+        $preco = 55;
+
+        $vip->npessoas = $npessoas;
+        $vip->descricao = $descricao;
+        $vip->nbebidas = $nbebidas;
+        $vip->preco = $preco;
+
+        $vip->save();
+
+        $this->tester->seeRecord('common\models\Vip', ['npessoas' => $npessoas, 'descricao' => $descricao, 'nbebidas' => $nbebidas, 'preco' => $preco]);
+
+        //Delete
+        Vip::findOne(['id' => $id])->delete();
+
+        $this->tester->dontSeeRecord('common\models\Vip', ['id'=> $id, 'npessoas' => $npessoas, 'descricao' => $descricao, 'nbebidas' => $nbebidas, 'preco' => $preco]);
     }
 }
