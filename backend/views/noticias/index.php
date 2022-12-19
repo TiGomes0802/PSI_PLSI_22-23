@@ -10,30 +10,46 @@ use yii\grid\GridView;
 /** @var common\models\NoticiasSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Noticias';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="noticias-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Notícias') ?></h1>
 
     <p>
         <?= Html::a('Create Noticias', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'titulo',
-            'datanoticia',
-            'descricao',
-            'idcriador',
+            [
+                'label' => 'Título',
+                'value' => function ($data) {
+                    return $data->titulo;
+                },
+            ],
+            [
+                'label' => 'Data da notícia',
+                'format' => ['date', 'php:d/m/Y H:i'],
+                'value' => function ($data) {
+                    return $data->datanoticia;
+                },
+            ],
+            [
+                'label' => 'Descrição',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return $data->descricao;
+                },
+            ],
+            [
+                'label' => 'Criador',
+                'value' => function ($data) {
+                    return $data->criador->nome . ' ' . $data->criador->apelido;
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Noticias $model, $key, $index, $column) {

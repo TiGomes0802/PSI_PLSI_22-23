@@ -107,8 +107,6 @@ class EventosController extends Controller
         if (\Yii::$app->user->can('createEvento')) {
 
             $model = new Eventos();
-        
-            $user = Userprofile::find()->where(['user_id' => Yii::$app->user->getId()])->one();
 
             if ($this->request->isPost && $model->load($this->request->post())) {
 
@@ -119,7 +117,7 @@ class EventosController extends Controller
                 }
                 
                 $model->id_tipo_evento = (int)$model->id_tipo_evento;
-                $model->id_criador = $user->id;
+                $model->id_criador = Yii::$app->user->getId();
                 
                 $input = strtotime($model->dataevento);
                 $newdatetime = date('Y-m-d H:i',$input);

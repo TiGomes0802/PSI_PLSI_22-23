@@ -14,7 +14,7 @@ $this->title = '';
 ?>
 <div class="userprofile-index">
 
-    <h1><?= Html::encode('Funcionarios') ?></h1>
+    <h1><?= Html::encode('Funcionários ') ?></h1>
 
     <p>
         <?= Html::a('Create Userprofile', ['create'], ['class' => 'btn btn-success']) ?>

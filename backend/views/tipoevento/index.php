@@ -10,12 +10,11 @@ use yii\grid\GridView;
 /** @var common\models\TipoeventoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Tipoeventos';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="tipoevento-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Tipo de eventos') ?></h1>
 
     <p>
         <?= Html::a('Create Tipoevento', ['create'], ['class' => 'btn btn-success']) ?>

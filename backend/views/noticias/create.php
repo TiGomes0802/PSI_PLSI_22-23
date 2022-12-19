@@ -4,17 +4,16 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\Noticias $model */
-
-$this->title = 'Create Noticias';
-$this->params['breadcrumbs'][] = ['label' => 'Noticias', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
-<div class="noticias-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<section class="u-align-center u-clearfix u-custom-color-2 u-section-1" id="sec-1a0b">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-1">Criar Notícias</h2>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
 
-</div>
+    </div>
+</section>
