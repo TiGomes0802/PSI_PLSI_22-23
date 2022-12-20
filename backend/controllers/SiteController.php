@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use common\models\LoginForm;
+use common\models\Tipoevento;
 use common\models\Userprofile;
 use common\models\EventosUpdate;
 
@@ -73,6 +74,49 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $model = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();    
+
+        //--------------- Dados de todos os eventos ---------------//
+
+        $numeventos = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['ISNULL(id, 0)'])
+            ->count();
+
+        $valorfaturado = (new yii\db\Query())
+            ->from('faturas')
+            ->select(['ISNULL(preco, 0)'])
+            ->sum('preco');
+
+        $bilhetesveendidos = (new yii\db\Query())
+            ->from('pulseiras')
+            ->select(['ISNULL(id, 0)'])
+            ->count();
+
+        //--------------- Dados dos proprios eventos ---------------//
+
+        $numeventosuser = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['ISNULL(id, 0)'])
+            ->where(['id_criador' => $model->id])
+            ->count();
+
+        $valorfaturadouser = (new yii\db\Query())
+            ->from('faturas')
+            ->select(['ISNULL(preco, 0)'])
+            ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
+            ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
+            ->where(['eventos.id_criador' => $model->id])
+            ->sum('faturas.preco');
+
+        $bilhetesveendidosuser = (new yii\db\Query())
+            ->from('pulseiras')
+            ->select(['ISNULL(id, 0)'])
+            ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
+            ->where(['eventos.id_criador' => $model->id])
+            ->count('pulseiras.id');
+
+        //--------------- Graficos ---------------//
+
         $grafico = (new yii\db\Query())
             ->from('auth_assignment')
             ->select(['item_name', 'COUNT(item_name) AS quantidade_item_name'])
@@ -84,15 +128,46 @@ class SiteController extends Controller
             ->select(['sexo', 'COUNT(sexo) AS quantidade'])
             ->leftJoin('user', 'user.id = userprofile.user_id')
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
-            ->orwhere(['auth_assignment.item_name' => 'cliente'])
+            ->where(['auth_assignment.item_name' => 'cliente'])
             ->orderBy(['sexo'=>SORT_ASC])
             ->groupBy('sexo')
             ->all();
 
+        $grafico3 = Yii::$app->db->createCommand('
+            SELECT tipoevento.tipo, Sum(faturas.preco) as faturamento, DATE_FORMAT(datahora_compra, "%M") as mes FROM faturas
+            JOIN pulseiras 
+                ON pulseiras.id = faturas.id_pulseira
+            JOIN eventos 
+                ON eventos.id = pulseiras.id_evento
+            JOIN tipoevento 
+                ON tipoevento.id = eventos.id_tipo_evento
+            where datahora_compra >= now() - interval 12 month
+            group by tipoevento.tipo, DATE_FORMAT(datahora_compra, "%M")')
+        ->queryAll();
+
+        $listatiposeventos = (new yii\db\Query())
+            ->from('tipoevento')
+            ->select(['tipo'])
+            ->all();
+
+            
+        //var_dump($listatiposeventos);
+        //var_dump($grafico3);
+        //die();
+
+
         return $this->render('index', [
             'model' => $model,
+            'numeventos' => $numeventos,
+            'valorfaturado' => $valorfaturado,
+            'numeventosuser' => $numeventosuser,
+            'valorfaturadouser' => $valorfaturadouser,
+            'bilhetesveendidos' => $bilhetesveendidos,
+            'bilhetesveendidosuser' => $bilhetesveendidosuser,
             'grafico' => $grafico,
             'grafico2' => $grafico2,
+            'grafico3' => $grafico3,
+            'listatiposeventos' => $listatiposeventos,
         ]);
     }
 

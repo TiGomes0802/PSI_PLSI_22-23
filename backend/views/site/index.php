@@ -15,39 +15,43 @@ $this->title = '';
     <div class="row">
         <div class="col-6">
             <div class="info-box">
-                <span class="info-box-icon bg-olive"><i class="far fa-calendar-alt"></i></span>
+                <span class="info-box-icon bg-olive">
+                    <i class="far fa-calendar-alt"></i>
+                </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Eventos</span>
-                    <span class="info-box-number">nºdeeventos</span>
+                    <span class="info-box-number"><?=$numeventos?></span>
                 </div>
                 <span class="info-box-icon bg-olive"><i class="fa fa-money"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">retorno</span>
-                    <span class="info-box-number">dinheiro dos eventos</span>
+                    <span class="info-box-text">Retorno</span>
+                    <span class="info-box-number"><?=number_format($valorfaturado,2).'€'?></span>
                 </div>
                 <span class="info-box-icon bg-olive"><i class="fa fa-ticket"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">pulseiras</span>
-                    <span class="info-box-number">nºde pulseiras vendidas</span>
+                    <span class="info-box-text">Pulseiras</span>
+                    <span class="info-box-number"><?=$bilhetesveendidos?></span>
                 </div>
             </div>
         </div>
         <div class="col-6">
             <div class="info-box">
-                <span class="info-box-icon bg-olive"><i class="far fa-calendar-alt"></i></span>
+                <span class="info-box-icon bg-olive">
+                    <i class="far fa-calendar-alt"></i>
+                </span>
                 <div class="info-box-content">
                     <span class="info-box-text">Eventos</span>
-                    <span class="info-box-number">nºdeeventos</span>
+                    <span class="info-box-number"><?=$numeventosuser?></span>
                 </div>
                 <span class="info-box-icon bg-olive"><i class="fa fa-money"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">retorno</span>
-                    <span class="info-box-number">dinheiro dos eventos</span>
+                    <span class="info-box-text">Retorno</span>
+                    <span class="info-box-number"><?=number_format($valorfaturadouser,2).'€'?></span>
                 </div>
                 <span class="info-box-icon bg-olive"><i class="fa fa-ticket"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">pulseiras</span>
-                    <span class="info-box-number">nºde pulseiras vendidas</span>
+                    <span class="info-box-text">Pulseiras</span>
+                    <span class="info-box-number"><?=$bilhetesveendidosuser?></span>
                 </div>
             </div>
         </div>
@@ -55,6 +59,8 @@ $this->title = '';
         <script>
             var model = <?php print json_encode($grafico); ?>;
             var model2 = <?php print json_encode($grafico2); ?>;
+            var model3 = <?php print json_encode($grafico3); ?>;
+            var listatiposeventos = <?php print json_encode($listatiposeventos); ?>;
         </script>
         
         <div class="col-6">

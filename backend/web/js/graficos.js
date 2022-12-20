@@ -73,29 +73,108 @@ jQuery(document).ready(function () {
     );
     chart.draw(data, options);
   }
-
+  
   function draw_my_chart3() {
+
+    const meses =['January','February','March','April','May','June','July','August','September','October','November','December']
+
+    const Info      = ['mês'      ];
+    const January   = ['Janeiro'  ];
+    const February  = ['Fevereiro'];
+    const March     = ['Março'    ];
+    const April     = ['Abril'    ];
+    const May       = ['Maio'     ];
+    const June      = ['Junho'    ];
+    const July      = ['Julho'    ];
+    const August    = ['Agosto'   ];
+    const September = ['Setembro' ];
+    const October   = ['Outobro'  ];
+    const November  = ['Novembro' ];
+    const December  = ['Dezembro' ];
+    
+    listatiposeventos.forEach((element, index) => {
+      Info.push(element.tipo)
+      var Number = 0.00;
+      January.push(Number);
+      February.push(Number);
+      March.push(Number);
+      April.push(Number);
+      May.push(Number);
+      June.push(Number);
+      July.push(Number);
+      August.push(Number);
+      September.push(Number);
+      October.push(Number);
+      November.push(Number);
+      December.push(Number);
+    });
+
+    listatiposeventos.forEach((element, index) => {
+        model3.forEach((element2) => {
+          if(element.tipo === element2.tipo){
+            switch (element2.mes) {
+              case 'January':
+                January[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'February':
+                February[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'March':
+                March[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'April':
+                April[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'May':
+                May[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'June':
+                June[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'July':
+                July[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'August':
+                August[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'September':
+                September[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'October':
+                October[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'November':
+                November[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                break;
+              case 'December':
+                December[index] = parseFloat(parseFloat(element2.faturamento).toFixed(3));
+                break;
+            }
+          }
+        });
+    });
+
+    console.log(December);
+
     //------------ grafico ------------------//
     var data = google.visualization.arrayToDataTable([
-      ['mes', 'Sales', 'Expenses', 'Profit', 'teste', 'test2'],
-      ['Janeiro', 1000, 400, 200, 123, 200],
-      ['Fevereiro', 1170, 460, 250, 123, 250],
-      ['Março', 660, 1120, 300, 123, 300],
-      ['Abril', 660, 1120, 300, 123, 300],
-      ['Maio', 660, 1120, 300, 123, 300],
-      ['Junho', 660, 1120, 300, 123, 300],
-      ['Julho', 660, 1120, 300, 123, 300],
-      ['Agosto', 660, 1120, 300, 123, 300],
-      ['Setembro', 660, 1120, 300, 123, 300],
-      ['Outobro', 660, 1120, 300, 123, 300],
-      ['Novembro', 660, 1120, 300, 123, 300],
-      ['Dezembro', 1030, 540, 350, 350, 123]
+      Info,
+      January,
+      February,
+      March,
+      April,
+      May,
+      June,
+      July,
+      August,
+      September,
+      October,
+      November,
+      December
     ]);
 
     var options = {
-      chart: {
 
-      }
     };
 
     var chart = new google.charts.Bar(document.getElementById('chart_div3'));

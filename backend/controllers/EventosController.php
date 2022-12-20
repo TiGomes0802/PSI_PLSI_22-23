@@ -100,7 +100,7 @@ class EventosController extends Controller
 
             $numbilhetesdisp = (new yii\db\Query())
             ->from('pulseiras')
-            ->andwhere(['pulseiras.id_evento' => $model->id])
+            ->where(['pulseiras.id_evento' => $model->id])
             ->count();
 
             $grafico = (new yii\db\Query())
@@ -109,8 +109,7 @@ class EventosController extends Controller
             ->leftJoin('user', 'user.id = userprofile.user_id')
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
             ->leftJoin('pulseiras', 'pulseiras.id_cliente = userprofile.id')
-            ->orwhere(['auth_assignment.item_name' => 'cliente'])
-            ->andwhere(['pulseiras.id_evento' => $model->id])
+            ->where(['auth_assignment.item_name' => 'cliente', 'pulseiras.id_evento' => $model->id])
             ->orderBy(['sexo'=>SORT_ASC])
             ->groupBy('sexo')
             ->all();
@@ -118,7 +117,7 @@ class EventosController extends Controller
             $grafico2 = (new yii\db\Query())
             ->from('pulseiras')
             ->select(['codigorp', 'COUNT(codigorp) AS quantidade'])
-            ->andwhere(['pulseiras.id_evento' => $model->id])
+            ->where(['pulseiras.id_evento' => $model->id])
             ->andwhere(['!=', 'pulseiras.codigorp', 'null'])
             ->groupBy('codigorp')
             ->all();
