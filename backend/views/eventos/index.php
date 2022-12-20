@@ -46,6 +46,8 @@ $this->title = '';
             [
                 'label' => 'Descrição',
                 'format' => 'html',
+                'headerOptions' => ['width' => '670px'],
+                'contentOptions' => ['style'=>'text-align:justify;'],
                 'value' => function ($data) {
                     return $data->descricao;
                 },

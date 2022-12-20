@@ -6,6 +6,9 @@ jQuery(document).ready(function () {
   google.charts.load('current', {'packages':['bar']});
   google.charts.setOnLoadCallback(draw_my_chart3);
 
+  google.charts.setOnLoadCallback(draw_my_chart4);
+
+
   function draw_my_chart() {
 
     var options = {
@@ -25,8 +28,8 @@ jQuery(document).ready(function () {
     //------------ grafico1 ------------------//
     console.log('teste');
     var data = new google.visualization.DataTable();
-    data.addColumn("string", "Tipo de eventos");
-    data.addColumn("number", "pulseiras vendidas");
+    data.addColumn("string", "Roles dos users");
+    data.addColumn("number", "Numero de cada roles");
 
     model.forEach((element) => {
       data.addRows([[element.item_name, parseInt(element.quantidade_item_name)]]);
@@ -53,9 +56,9 @@ jQuery(document).ready(function () {
       colors: ['pink','lightblue']
     };
 
-    //------------ grafico ------------------//
+    //------------ grafico2 ------------------//
 
-    console.log('teste');
+    console.log('teste2');
     var data = new google.visualization.DataTable();
     data.addColumn("string", "descricao");
     data.addColumn("number", "numero");
@@ -65,7 +68,9 @@ jQuery(document).ready(function () {
     });
 
     
-    var chart = new google.visualization.PieChart(document.getElementById("chart_div2"));
+    var chart = new google.visualization.PieChart(
+      document.getElementById("chart_div2")
+    );
     chart.draw(data, options);
   }
 
@@ -96,6 +101,37 @@ jQuery(document).ready(function () {
     var chart = new google.charts.Bar(document.getElementById('chart_div3'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
+
+  function draw_my_chart4() {
+
+    var options = {
+      legend: {
+        alignment: "center",
+        textStyle: { color: "black", fontSize: 20 },
+      },
+      //legend: 'none',
+      pieSliceText: "value",
+      width: 700,
+      height: 350,
+      pieHole: 0.5,
+      //is3D: true,
+    };
+
+    //------------ grafico4 ------------------//
+    console.log('teste4');
+    var data = new google.visualization.DataTable();
+    data.addColumn("string", "Codigos de rps");
+    data.addColumn("number", "Numero de codigos de rps");
+
+    model4.forEach((element) => {
+      data.addRows([[element.codigorp, parseInt(element.quantidade)]]);
+    });
+    console.log(model4);
+    var chart = new google.visualization.PieChart(
+      document.getElementById("chart_div4")
+    );
+    chart.draw(data, options);
   }
   
 });

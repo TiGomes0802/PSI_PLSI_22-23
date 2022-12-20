@@ -89,9 +89,46 @@ class EventosController extends Controller
     public function actionView($id)
     {
         if (\Yii::$app->user->can('viewEvento')) {
+            
+            $model = $this->findModel($id);
+
+            $valorfaturado = (new yii\db\Query())
+            ->from('pulseiras')
+            ->rightJoin('faturas', 'pulseiras.id = faturas.id_pulseira')
+            ->where(['pulseiras.id_evento' => $model->id])
+            ->sum('faturas.preco');
+
+            $numbilhetesdisp = (new yii\db\Query())
+            ->from('pulseiras')
+            ->andwhere(['pulseiras.id_evento' => $model->id])
+            ->count();
+
+            $grafico = (new yii\db\Query())
+            ->from('userprofile')
+            ->select(['sexo', 'COUNT(sexo) AS quantidade'])
+            ->leftJoin('user', 'user.id = userprofile.user_id')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+            ->leftJoin('pulseiras', 'pulseiras.id_cliente = userprofile.id')
+            ->orwhere(['auth_assignment.item_name' => 'cliente'])
+            ->andwhere(['pulseiras.id_evento' => $model->id])
+            ->orderBy(['sexo'=>SORT_ASC])
+            ->groupBy('sexo')
+            ->all();
+
+            $grafico2 = (new yii\db\Query())
+            ->from('pulseiras')
+            ->select(['codigorp', 'COUNT(codigorp) AS quantidade'])
+            ->andwhere(['pulseiras.id_evento' => $model->id])
+            ->andwhere(['!=', 'pulseiras.codigorp', 'null'])
+            ->groupBy('codigorp')
+            ->all();
 
             return $this->render('view', [
-                'model' => $this->findModel($id),
+                'model' => $model,
+                'numbilhetesdisp' => $numbilhetesdisp,
+                'valorfaturado' => $valorfaturado,
+                'grafico' => $grafico,
+                'grafico2' => $grafico2,
             ]);
             
         }else{
