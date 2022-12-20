@@ -150,12 +150,6 @@ class SiteController extends Controller
             ->select(['tipo'])
             ->all();
 
-            
-        //var_dump($listatiposeventos);
-        //var_dump($grafico3);
-        //die();
-
-
         return $this->render('index', [
             'model' => $model,
             'numeventos' => $numeventos,

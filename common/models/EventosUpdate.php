@@ -97,7 +97,7 @@ class EventosUpdate extends \yii\db\ActiveRecord
                 $eventoupdate = new Eventosupdate();
                 $eventoupdate = Eventosupdate::find()->where(['id' => $evento->id])->one();
                 $date = strtotime($evento->dataevento);
-                $eventoupdate->dataevento = date('Y-m-d h:i', $date); 
+                $eventoupdate->dataevento = date('Y-m-d H:i', $date); 
                 $eventoupdate->estado = 'desativo';
                 $eventoupdate->imageFile = 'nada.png';
                 $eventoupdate->save();

@@ -10,6 +10,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\Eventos;
 use common\models\LoginForm;
 use frontend\models\SignupForm;
 use frontend\models\PasswordResetRequestForm;
@@ -75,7 +76,21 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $lasteventos = Eventos::find()
+        ->where(['estado' => 'desativo'])
+        ->orderBy(['dataevento'=>SORT_DESC])
+        ->limit(3)
+        ->all();
+
+        $proximoevento = Eventos::find()
+        ->where(['estado' => 'ativo'])
+        ->orderBy(['dataevento'=>SORT_DESC])
+        ->one();
+
+        return $this->render('index', [
+            'proximoevento' => $proximoevento,
+            'lasteventos' => $lasteventos,
+        ]);
     }
 
     /**

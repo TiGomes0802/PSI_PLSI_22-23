@@ -9,14 +9,16 @@
         
         <div class="u-align-center-md u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-1">
           <div class="u-container-layout u-container-layout-1">
-            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento</h1>
-            <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">25.09.2022</h3>
+            <?php if($proximoevento != null){ ?>
+              <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento</h1>
+              <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">&nbsp;&nbsp;<?= date_format(date_create($proximoevento->dataevento), "d.m.Y") ?></h3>
+            <?php } ?>
           </div>
         </div>
         <div class="u-align-center u-container-style u-layout-cell u-right-cell u-shape-rectangle u-size-38 u-layout-cell-2">
           <div class="u-container-layout u-container-layout-2">
-            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-3" spellcheck="false">Ecstasy</h1>
-            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-4" spellcheck="false">Club</h1>
+            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-3" spellcheck="false">Ecstasy&nbsp;&nbsp;</h1>
+            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-4" spellcheck="false">&nbsp;&nbsp;&nbsp;Club</h1>
           </div>
         </div>
       </div>
@@ -48,27 +50,15 @@
     </h1>
     <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xl u-list u-list-1">
       <div class="u-repeater u-repeater-1">
-        <div class="u-container-style u-list-item u-repeater-item">
-          <div class="u-container-layout u-similar-container u-container-layout-1">
-            <img src="./../web/assets/front-view-man-holding-vinyl-disk-his-face-music-store-mock-up_23-2148690557.jpg" alt="" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
-            <h2 class="u-custom-font u-text u-text-2" spellcheck="false">Vatos Locos and Friends Friday 5.26</h2>
-            <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">May 19, 2022</h5>
+        <?php foreach ($lasteventos as $lastevento) { ?>
+          <div class="u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-1">
+              <img src="./../../backend/web/cartaz/<?=$lastevento->cartaz?>" alt="<?= $lastevento->nome?>" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
+              <h2 class="u-custom-font u-text u-text-2" spellcheck="false"><?= $lastevento->nome?></h2>
+              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">&nbsp;<?php setlocale(LC_ALL, 'pt_BR'); echo strftime('%B %d, %G', date_create($lastevento->dataevento)->getTimestamp()); ?></h5>
+            </div>
           </div>
-        </div>
-        <div class="u-container-style u-list-item u-repeater-item">
-          <div class="u-container-layout u-similar-container u-container-layout-2">
-            <img src="./../web/assets/music-album-new-single-template_23-2148879485.jpg" alt="" class="u-image u-image-default u-preserve-proportions u-image-2" data-image-width="626" data-image-height="626">
-            <h2 class="u-custom-font u-text u-text-4" spellcheck="false">II Points x Secret Project – May 1st</h2>
-            <h5 class="u-custom-font u-font-pt-sans u-text u-text-5" spellcheck="false">March 15, 2022</h5>
-          </div>
-        </div>
-        <div class="u-container-style u-list-item u-repeater-item">
-          <div class="u-container-layout u-similar-container u-container-layout-3">
-            <img src="./../web/assets/square-music-cover-with-vintage-collage_23-2148913436.jpg" alt="" class="u-image u-image-default u-preserve-proportions u-image-3" data-image-width="626" data-image-height="626">
-            <h2 class="u-custom-font u-text u-text-6">Jean Pierre’s Wynwood Remix</h2>
-            <h5 class="u-custom-font u-font-pt-sans u-text u-text-7">February 6, 2022</h5>
-          </div>
-        </div>
+        <?php }?>
       </div>
     </div>
   </div>
