@@ -112,7 +112,7 @@
             </span>
           <br>
         </h1>
-        <a href="index.php?r=evento%2Findex" class="u-border-none u-btn u-button-style u-palette-5-base u-text-body-alt-color u-btn-1">Eventos</a>
+        <a href="index.php?r=eventos%2Findex" class="u-border-none u-btn u-button-style u-palette-5-base u-text-body-alt-color u-btn-1">Eventos</a>
       </div>
     </div>
   </div>
