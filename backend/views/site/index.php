@@ -66,7 +66,7 @@ $this->title = '';
         <div class="col-6">
             <div class="card card-olive">
                 <div class="card-header">
-                    <h3 class="card-title">Tipo de eventos</h3>
+                    <h3 class="card-title">Users</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>

@@ -130,8 +130,41 @@ class UserprofileController extends Controller
     {
         $userprofile = Userprofile::find()->where(['user_id' => $id])->one();
 
+        $numeventosuser = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['ISNULL(id, 0)'])
+            ->where(['id_criador' => $userprofile->id])
+            ->count();
+
+        $valorfaturadouser = (new yii\db\Query())
+            ->from('faturas')
+            ->select(['ISNULL(preco, 0)'])
+            ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
+            ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
+            ->where(['eventos.id_criador' => $userprofile->id])
+            ->sum('faturas.preco');
+
+        $bilhetesveendidosuser = (new yii\db\Query())
+            ->from('pulseiras')
+            ->select(['ISNULL(id, 0)'])
+            ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
+            ->where(['eventos.id_criador' => $userprofile->id])
+            ->count('pulseiras.id');
+
+        $grafico = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['tipoevento.tipo AS item_name', 'COUNT(eventos.id_tipo_evento) AS quantidade_item_name'])
+            ->leftJoin('tipoevento', 'tipoevento.id = eventos.id_tipo_evento')
+            ->where(['eventos.id_criador' => $userprofile->id])
+            ->groupBy('tipoevento.tipo')
+            ->all();
+
         return $this->render('view', [
             'model' => $userprofile,
+            'numeventosuser' => $numeventosuser,
+            'valorfaturadouser' => $valorfaturadouser,
+            'bilhetesveendidosuser' => $bilhetesveendidosuser,
+            'grafico' => $grafico,
         ]);
     }
 

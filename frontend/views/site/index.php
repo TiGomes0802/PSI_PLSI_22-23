@@ -50,12 +50,12 @@
     </h1>
     <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xl u-list u-list-1">
       <div class="u-repeater u-repeater-1">
-        <?php foreach ($lasteventos as $lastevento) { ?>
+        <?php foreach ($lasteventos as $evento) { ?>
           <div class="u-container-style u-list-item u-repeater-item">
             <div class="u-container-layout u-similar-container u-container-layout-1">
-              <img src="./../../backend/web/cartaz/<?=$lastevento->cartaz?>" alt="<?= $lastevento->nome?>" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
-              <h2 class="u-custom-font u-text u-text-2" spellcheck="false"><?= $lastevento->nome?></h2>
-              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">&nbsp;<?php setlocale(LC_ALL, 'pt_BR'); echo strftime('%B %d, %G', date_create($lastevento->dataevento)->getTimestamp()); ?></h5>
+              <img src="./../../backend/web/cartaz/<?=$evento->cartaz?>" alt="<?= $evento->nome?>" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
+              <h2 class="u-custom-font u-text u-text-2" spellcheck="false"><?= $evento->nome?></h2>
+              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">&nbsp;<?php setlocale(LC_ALL, 'pt_BR'); echo strftime('%B %d, %G', date_create($evento->dataevento)->getTimestamp()); ?></h5>
             </div>
           </div>
         <?php }?>

@@ -23,7 +23,7 @@ AppAsset::register($this);
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i|Abril+Fatface:400">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Ecstastsy Club</title>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
@@ -47,7 +47,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
     }
     if (!Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view','id'=> Yii::$app->user->id]];
+        $menuItems[] = ['label' => 'Seus dados', 'url' => ['/userprofile/view']];
     }
 
     echo Nav::widget([
@@ -90,6 +90,10 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>google.charts.load('current', {'packages':['corechart']});</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./../web/js/graficos.js"></script>
 </body>
 </html>
 <?php $this->endPage();

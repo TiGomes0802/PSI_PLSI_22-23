@@ -153,8 +153,8 @@ class SiteController extends Controller
         return $this->render('index', [
             'model' => $model,
             'numeventos' => $numeventos,
-            'valorfaturado' => $valorfaturado,
             'numeventosuser' => $numeventosuser,
+            'valorfaturado' => $valorfaturado,
             'valorfaturadouser' => $valorfaturadouser,
             'bilhetesveendidos' => $bilhetesveendidos,
             'bilhetesveendidosuser' => $bilhetesveendidosuser,
