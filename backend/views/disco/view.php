@@ -21,11 +21,26 @@ $this->title = $model->id;
         'model' => $model,
         'attributes' => [
             'nome',
-            'nif',
+            [
+                'label' => 'NIF',
+                'value' => function ($data) {
+                    return $data->nif;
+                },
+            ],
             'localidade',
-            'codpostal',
+            [
+                'label' => 'Código postal',
+                'value' => function ($data) {
+                    return $data->codpostal;
+                },
+            ],
             'morada',
-            'lotacao',
+            [
+                'label' => 'Lotação',
+                'value' => function ($data) {
+                    return $data->lotacao;
+                },
+            ],
         ],
     ]) ?>
 
