@@ -12,6 +12,9 @@
             <?php if($proximoevento != null){ ?>
               <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento</h1>
               <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">&nbsp;&nbsp;<?= date_format(date_create($proximoevento->dataevento), "d.m.Y") ?></h3>
+            <?php } else { ?>
+              <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento</h1>
+              <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">&nbsp;&nbsp; Brevemente </h3>
             <?php } ?>
           </div>
         </div>
@@ -46,7 +49,7 @@
 </section>
 <section class="u-align-center u-clearfix u-palette-5-dark-3 u-section-3" id="carousel_39ce">
   <div class="u-clearfix u-sheet u-sheet-1">
-    <h1 class="u-custom-font u-text u-text-1"><span class="u-icon"></span>&nbsp;Ultimos Eventos
+    <h1 class="u-custom-font u-text u-text-1"><span class="u-icon"></span>&nbsp;Últimos Eventos
     </h1>
     <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xl u-list u-list-1">
       <div class="u-repeater u-repeater-1">
@@ -78,8 +81,9 @@
             <div class="u-container-style u-layout-cell u-palette-5-base u-size-60 u-layout-cell-2" src="">
               <div class="u-container-layout u-valign-middle u-container-layout-2" src="">
                 <h2 class="u-align-center u-custom-font u-text u-text-1" spellcheck="true"> O proximo nível de diverção é no Ecstasy Club</h2>
-                <p class="u-align-justify u-text u-text-2" spellcheck="true"> Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id suscipit ex. Suspendisse rhoncus laoreet purus quis elementum. Phasellus sed efficitur dolor, et ultricies sapien. Quisque fringilla sit amet dolor commodo efficitur. Aliquam et sem odio. In ullamcorper nisi nunc, et molestie ipsum iaculis sit amet.</p>
-                <p class="u-align-justify u-text u-text-3" spellcheck="true">Neque vitae tempus quam pellentesque. Nulla aliquet porttitor lacus luctus accumsan tortor posuere. Mattis molestie a iaculis at erat pellentesque. Ornare arcu dui vivamus arcu. Facilisi cras fermentum odio eu feugiat pretium nibh.</p>
+                <br>
+                <p class="u-align-justify u-text u-text-2" spellcheck="true">O Ecstasy Club é o melhor bar da zona centro que está situado bem no corção de Leiria se queres uma noite totalmente inesquecivel cria já tua conta e compra a tua pulseira para os novos eventos.<p>
+                <p class="u-align-justify u-text u-text-3" spellcheck="true">O Ecstasy Club recebe os melhores artistas de portugal como os WBG, Piruka, Bispo entre outro tambem já contamos com no internacionais como McKevinho, Annita e Post Malone.</p>
               </div>
             </div>
           </div>
