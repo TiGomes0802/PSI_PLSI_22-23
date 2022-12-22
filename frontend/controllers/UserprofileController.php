@@ -79,6 +79,7 @@ class UserprofileController extends Controller
             ->select(['eventos.nome AS nome', 'eventos.dataevento AS dataevento', 'COUNT(pulseiras.codigorp) AS quantidade_codigos'])
             ->leftJoin('pulseiras', 'pulseiras.id_evento = eventos.id')
             ->where(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->orderBy(['eventos.dataevento'=>SORT_DESC])
             ->groupBy('eventos.nome')
             ->all();
 

@@ -52,6 +52,10 @@ class UserprofileController extends Controller
                             'roles' => ['admin'],
                         ],
                     ],
+                    'denyCallback' => function ($rule, $action) {
+                        Yii::$app->user->logout();
+                        return $this->redirect(['site/login']);
+                    }
                 ],
             ]
         );
@@ -159,11 +163,51 @@ class UserprofileController extends Controller
             ->groupBy('tipoevento.tipo')
             ->all();
 
+        //--------------- Dados de rp ---------------//
+        $graficorp = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['tipoevento.tipo AS item_name', 'COUNT(pulseiras.codigorp) AS quantidade_item_name'])
+            ->leftJoin('pulseiras', 'pulseiras.id_evento = eventos.id')
+            ->leftJoin('tipoevento', 'tipoevento.id = eventos.id_tipo_evento')
+            ->where(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->groupBy('tipoevento.tipo')
+            ->all();
+        
+        $grafico2rp = (new yii\db\Query())
+            ->from('userprofile')
+            ->select(['sexo', 'COUNT(pulseiras.codigorp) AS quantidade'])
+            ->leftJoin('user', 'user.id = userprofile.user_id')
+            ->leftJoin('pulseiras', 'pulseiras.id_cliente = userprofile.id')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+            ->where(['auth_assignment.item_name' => 'cliente'])
+            ->andwhere(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->orderBy(['sexo'=>SORT_ASC])
+            ->groupBy('sexo')
+            ->all();
+
+        $listaeventosrp = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['eventos.nome AS nome', 'eventos.dataevento AS dataevento', 'COUNT(pulseiras.codigorp) AS quantidade_codigos'])
+            ->leftJoin('pulseiras', 'pulseiras.id_evento = eventos.id')
+            ->where(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->orderBy(['eventos.dataevento'=>SORT_DESC])
+            ->groupBy('eventos.nome')
+            ->all();
+
+        if(array_keys(Yii::$app->authManager->getRolesByUser(Yii::$app->user->id))[0] == 'gestor'){
+            if(array_keys(Yii::$app->authManager->getRolesByUser($userprofile->user_id))[0] != 'rp'){
+                return $this->redirect(['index']);
+            }
+        }
+
         return $this->render('view', [
             'model' => $userprofile,
             'numeventosuser' => $numeventosuser,
             'valorfaturadouser' => $valorfaturadouser,
             'bilhetesveendidosuser' => $bilhetesveendidosuser,
+            'graficorp' => $graficorp,
+            'grafico2rp' => $grafico2rp,
+            'listaeventosrp' => $listaeventosrp,
             'grafico' => $grafico,
         ]);
     }

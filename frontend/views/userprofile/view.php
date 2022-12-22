@@ -64,7 +64,7 @@ $this->title = $model->nome . " " . $model->apelido;
                     ],
                     [
                         'label' => 'Data de Nascimento',
-                        'format' => ['date', 'php:d-m-Y'],
+                        'format' => ['date', 'php:d/m/Y'],
                         'value' => function ($data) {
                             return $data->datanascimento;
                         },

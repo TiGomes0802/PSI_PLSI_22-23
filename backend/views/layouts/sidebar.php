@@ -25,7 +25,7 @@
                 echo \hail812\adminlte\widgets\Menu::widget([
                     'items' => [
                         ['label' => "Rp's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
-                        ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
+                        ['label' => 'Notícias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
                         ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index', 'estado' => 'ativo']],
                         ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
                         ['label' => "Vip's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
@@ -37,7 +37,7 @@
                     'items' => [
                         ['label' => 'Empregados', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/index']],
                         ['label' => 'Cliente', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['userprofile/indexclientes']],
-                        ['label' => 'Noticias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
+                        ['label' => 'Notícias', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['noticias/index']],
                         ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index', 'estado' => 'ativo']],
                         ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
                         ['label' => "Vip's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],

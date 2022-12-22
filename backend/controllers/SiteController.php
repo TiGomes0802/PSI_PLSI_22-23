@@ -44,6 +44,10 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function ($rule, $action) {
+                    Yii::$app->user->logout();
+                    return $this->redirect(['site/login']);
+                }
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
@@ -120,6 +124,7 @@ class SiteController extends Controller
         $grafico = (new yii\db\Query())
             ->from('auth_assignment')
             ->select(['item_name', 'COUNT(item_name) AS quantidade_item_name'])
+            ->where(['!=', 'auth_assignment.item_name', 'cliente'])
             ->groupBy('item_name')
             ->all();
 
