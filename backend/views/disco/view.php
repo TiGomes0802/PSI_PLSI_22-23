@@ -14,18 +14,33 @@ $this->title = $model->id;
     <h1><?= Html::encode('Disco') ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'nome',
-            'nif',
+            [
+                'label' => 'NIF',
+                'value' => function ($data) {
+                    return $data->nif;
+                },
+            ],
             'localidade',
-            'codpostal',
+            [
+                'label' => 'Código postal',
+                'value' => function ($data) {
+                    return $data->codpostal;
+                },
+            ],
             'morada',
-            'lotacao',
+            [
+                'label' => 'Lotação',
+                'value' => function ($data) {
+                    return $data->lotacao;
+                },
+            ],
         ],
     ]) ?>
 

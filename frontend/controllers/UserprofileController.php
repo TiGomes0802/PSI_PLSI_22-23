@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\helpers\Html;
 use frontend\models\SignupForm;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
@@ -48,12 +49,45 @@ class UserprofileController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
-        $userprofile = Userprofile::find()->where(['user_id' => $id])->one();
+        $userprofile = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();
+        
+        $grafico = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['tipoevento.tipo AS item_name', 'COUNT(pulseiras.codigorp) AS quantidade_item_name'])
+            ->leftJoin('pulseiras', 'pulseiras.id_evento = eventos.id')
+            ->leftJoin('tipoevento', 'tipoevento.id = eventos.id_tipo_evento')
+            ->where(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->groupBy('tipoevento.tipo')
+            ->all();
+        
+        $grafico2 = (new yii\db\Query())
+            ->from('userprofile')
+            ->select(['sexo', 'COUNT(pulseiras.codigorp) AS quantidade'])
+            ->leftJoin('user', 'user.id = userprofile.user_id')
+            ->leftJoin('pulseiras', 'pulseiras.id_cliente = userprofile.id')
+            ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+            ->where(['auth_assignment.item_name' => 'cliente'])
+            ->andwhere(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->orderBy(['sexo'=>SORT_ASC])
+            ->groupBy('sexo')
+            ->all();
+
+        $listaeventos = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['eventos.nome AS nome', 'eventos.dataevento AS dataevento', 'COUNT(pulseiras.codigorp) AS quantidade_codigos'])
+            ->leftJoin('pulseiras', 'pulseiras.id_evento = eventos.id')
+            ->where(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->orderBy(['eventos.dataevento'=>SORT_DESC])
+            ->groupBy('eventos.nome')
+            ->all();
 
         return $this->render('view', [
             'model' => $userprofile,
+            'grafico' => $grafico,
+            'grafico2' => $grafico2,
+            'listaeventos' => $listaeventos,
         ]);
     }
 

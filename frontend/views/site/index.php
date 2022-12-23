@@ -9,14 +9,19 @@
         
         <div class="u-align-center-md u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-left-cell u-size-22 u-layout-cell-1">
           <div class="u-container-layout u-container-layout-1">
-            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento</h1>
-            <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">25.09.2022</h3>
+            <?php if($proximoevento != null){ ?>
+              <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento</h1>
+              <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">&nbsp;&nbsp;<?= date_format(date_create($proximoevento->dataevento), "d.m.Y") ?></h3>
+            <?php } else { ?>
+              <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-1" spellcheck="false">proximo ​evento</h1>
+              <h3 class="u-custom-font u-text u-text-body-alt-color u-text-2" spellcheck="false">&nbsp;&nbsp; Brevemente </h3>
+            <?php } ?>
           </div>
         </div>
         <div class="u-align-center u-container-style u-layout-cell u-right-cell u-shape-rectangle u-size-38 u-layout-cell-2">
           <div class="u-container-layout u-container-layout-2">
-            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-3" spellcheck="false">Ecstasy</h1>
-            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-4" spellcheck="false">Club</h1>
+            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-3" spellcheck="false">Ecstasy&nbsp;&nbsp;</h1>
+            <h1 class="u-custom-font u-text u-text-body-alt-color u-title u-text-4" spellcheck="false">&nbsp;&nbsp;&nbsp;Club</h1>
           </div>
         </div>
       </div>
@@ -44,31 +49,19 @@
 </section>
 <section class="u-align-center u-clearfix u-palette-5-dark-3 u-section-3" id="carousel_39ce">
   <div class="u-clearfix u-sheet u-sheet-1">
-    <h1 class="u-custom-font u-text u-text-1"><span class="u-icon"></span>&nbsp;Ultimos Eventos
+    <h1 class="u-custom-font u-text u-text-1"><span class="u-icon"></span>&nbsp;Últimos Eventos
     </h1>
     <div class="u-expanded-width-lg u-expanded-width-md u-expanded-width-sm u-expanded-width-xl u-list u-list-1">
       <div class="u-repeater u-repeater-1">
-        <div class="u-container-style u-list-item u-repeater-item">
-          <div class="u-container-layout u-similar-container u-container-layout-1">
-            <img src="./../web/assets/front-view-man-holding-vinyl-disk-his-face-music-store-mock-up_23-2148690557.jpg" alt="" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
-            <h2 class="u-custom-font u-text u-text-2" spellcheck="false">Vatos Locos and Friends Friday 5.26</h2>
-            <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">May 19, 2022</h5>
+        <?php foreach ($lasteventos as $evento) { ?>
+          <div class="u-container-style u-list-item u-repeater-item">
+            <div class="u-container-layout u-similar-container u-container-layout-1">
+              <img src="./../../backend/web/cartaz/<?=$evento->cartaz?>" alt="<?= $evento->nome?>" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
+              <h2 class="u-custom-font u-text u-text-2" spellcheck="false"><?= $evento->nome?></h2>
+              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">&nbsp;<?php setlocale(LC_ALL, 'pt_BR'); echo strftime('%B %d, %G', date_create($evento->dataevento)->getTimestamp()); ?></h5>
+            </div>
           </div>
-        </div>
-        <div class="u-container-style u-list-item u-repeater-item">
-          <div class="u-container-layout u-similar-container u-container-layout-2">
-            <img src="./../web/assets/music-album-new-single-template_23-2148879485.jpg" alt="" class="u-image u-image-default u-preserve-proportions u-image-2" data-image-width="626" data-image-height="626">
-            <h2 class="u-custom-font u-text u-text-4" spellcheck="false">II Points x Secret Project – May 1st</h2>
-            <h5 class="u-custom-font u-font-pt-sans u-text u-text-5" spellcheck="false">March 15, 2022</h5>
-          </div>
-        </div>
-        <div class="u-container-style u-list-item u-repeater-item">
-          <div class="u-container-layout u-similar-container u-container-layout-3">
-            <img src="./../web/assets/square-music-cover-with-vintage-collage_23-2148913436.jpg" alt="" class="u-image u-image-default u-preserve-proportions u-image-3" data-image-width="626" data-image-height="626">
-            <h2 class="u-custom-font u-text u-text-6">Jean Pierre’s Wynwood Remix</h2>
-            <h5 class="u-custom-font u-font-pt-sans u-text u-text-7">February 6, 2022</h5>
-          </div>
-        </div>
+        <?php }?>
       </div>
     </div>
   </div>
@@ -88,8 +81,9 @@
             <div class="u-container-style u-layout-cell u-palette-5-base u-size-60 u-layout-cell-2" src="">
               <div class="u-container-layout u-valign-middle u-container-layout-2" src="">
                 <h2 class="u-align-center u-custom-font u-text u-text-1" spellcheck="true"> O proximo nível de diverção é no Ecstasy Club</h2>
-                <p class="u-align-justify u-text u-text-2" spellcheck="true"> Paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur id suscipit ex. Suspendisse rhoncus laoreet purus quis elementum. Phasellus sed efficitur dolor, et ultricies sapien. Quisque fringilla sit amet dolor commodo efficitur. Aliquam et sem odio. In ullamcorper nisi nunc, et molestie ipsum iaculis sit amet.</p>
-                <p class="u-align-justify u-text u-text-3" spellcheck="true">Neque vitae tempus quam pellentesque. Nulla aliquet porttitor lacus luctus accumsan tortor posuere. Mattis molestie a iaculis at erat pellentesque. Ornare arcu dui vivamus arcu. Facilisi cras fermentum odio eu feugiat pretium nibh.</p>
+                <br>
+                <p class="u-align-justify u-text u-text-2" spellcheck="true">O Ecstasy Club é o melhor bar da zona centro que está situado bem no corção de Leiria se queres uma noite totalmente inesquecivel cria já tua conta e compra a tua pulseira para os novos eventos.<p>
+                <p class="u-align-justify u-text u-text-3" spellcheck="true">O Ecstasy Club recebe os melhores artistas de portugal como os WBG, Piruka, Bispo entre outro tambem já contamos com no internacionais como McKevinho, Annita e Post Malone.</p>
               </div>
             </div>
           </div>
@@ -122,7 +116,7 @@
             </span>
           <br>
         </h1>
-        <a href="index.php?r=evento%2Findex" class="u-border-none u-btn u-button-style u-palette-5-base u-text-body-alt-color u-btn-1">Eventos</a>
+        <a href="index.php?r=eventos%2Findex" class="u-border-none u-btn u-button-style u-palette-5-base u-text-body-alt-color u-btn-1">Eventos</a>
       </div>
     </div>
   </div>

@@ -30,12 +30,7 @@ $this->title = 'Login';?>
 
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                <div class="my-1 mx-0" style="color:#999;">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
-                </div>
-      
         <?= Html::submitButton('Login', ['class' => 'u-active-custom-color-2 u-border-2 u-border-active-custom-color-1 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-4 u-text-active-custom-color-1 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1']) ?>
       <?php ActiveForm::end(); ?>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </section>

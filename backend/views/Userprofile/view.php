@@ -48,7 +48,7 @@ $this->title = $model->nome . ' ' . $model->apelido;
             ],
             [
                 'label' => 'Data de Nascimento',
-                'format' => ['date', 'php:d-m-Y'],
+                'format' => ['date', 'php:d/m/Y'],
                 'value' => function ($data) {
                     return $data->datanascimento;
                 },
@@ -71,4 +71,21 @@ $this->title = $model->nome . ' ' . $model->apelido;
         ],
     ]) ?>
 
+    
+    <br>
+    <?php if(array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'gestor' or array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'admin') {?>
+        <?= $this->render('viewgraficosgestor', [
+            'grafico' => $grafico,
+            'numeventosuser' => $numeventosuser,
+            'valorfaturadouser' => $valorfaturadouser,
+            'bilhetesveendidosuser' => $bilhetesveendidosuser,
+        ]) ?>
+    <?php } 
+        if(array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'rp') { ?>
+            <?= $this->render('viewgraficosrp', [
+                'graficorp' => $graficorp,
+                'grafico2rp' => $grafico2rp,
+                'listaeventosrp' => $listaeventosrp,
+            ]) ?>
+    <?php } ?>
 </div>

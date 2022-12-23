@@ -22,7 +22,6 @@ $this->title = '';
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             [
                 'label' => 'Título',

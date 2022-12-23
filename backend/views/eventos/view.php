@@ -11,7 +11,7 @@ $this->title = '';
 ?>
 <div class="eventos-view">
 
-    <h1><?= Html::encode($model->nome) ?></h1>
+    <h1><?= Html::encode($model->nome)?></h1>
 
     <p>
         <?php 
@@ -30,62 +30,69 @@ $this->title = '';
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'label' => 'Nome',
-                'value' => function ($data) {
-                    return $data->nome;
-                },
-            ],
-            [
-                'label' => 'Descrição',
-                'format' => 'html',
-                'value' => function ($data) {
-                    return $data->descricao;
-                },
-            ],
-            [
-                'format' => 'html',
-                'label' => 'Cartaz',
-                'value' => function ($data) {
-                    return Html::img('cartaz/' . $data->cartaz,
-                    ['width' => '260px','height' => '350px']);
-                },
-            ],
-            [
-                'label' => 'Data do evento',
-                'format' => ['date', 'php:d/m/Y H:i'],
-                'value' => function ($data) {
-                    return $data->dataevento;
-                },
-            ],
-            [
-                'label' => 'Bilhetes disponiveis',
-                'value' => function ($data) {
-                    return $data->numbilhetesdisp;
-                },
-            ],
-            [
-                'label' => 'Preço',
-                'value' => function ($data) {
-                    return number_format( $data->preco, 2 ) . '€';
-                },
-            ],
-            [
-                'label' => 'Criador',
-                'value' => function ($data) {
-                    return $data->criador->nome . ' ' . $data->criador->apelido;
-                },
-            ],
-            [
-                'label' => 'Tipo de evento',
-                'value' => function ($data) {
-                    return $data->tipoEvento->tipo;
-                },
-            ],
-        ],
-    ]) ?>
+    <div class="row">
+        <div class="col-3">
+            <img src='cartaz/<?= $model->cartaz ?>' class="img-thumbnail" alt="<?= $model->nome ?> cartaz">
+        </div>
+        <div class="col-1"></div>
+        <div class="col-7" style="text-align:justify;">
+            <?= $model->descricao ?>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h5><strong>Bilhetes disponiveis:&nbsp;</strong><?=$model->numbilhetesdisp?></h5>
+            <h5><strong>Bilhetes vendidos:&nbsp;</strong><?=$numbilhetesdisp?></h5>
+            <h5><strong>Valor faturado:&nbsp;</strong><?=number_format($valorfaturado,2).'€'?></h5>
+            <h5><strong>Preço:&nbsp;</strong><?=number_format($model->preco,2).'€'?></h5>
+            <h5><strong>Data:&nbsp;</strong><?=$model->dataevento?></h5>
+            <h5><strong>Tipo de evento:&nbsp;</strong><?=$model->tipoEvento->tipo?></h5>
+            <h5><strong>Criador:&nbsp;</strong><?=$model->criador->nome.' '.$model->criador->apelido?></h5>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <script>
+            var model2 = <?php print json_encode($grafico); ?>;
+            var model4 = <?php print json_encode($grafico2); ?>;
+        </script>
+        
+        <div class="col-6">
+            <div class="card card-olive">
+                <div class="card-header">
+                    <h3 class="card-title">Clientes que compraram o bilhete</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="chart_div2"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card card-olive">
+                <div class="card-header">
+                    <h3 class="card-title">Codigos de Rp usados</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="chart_div4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

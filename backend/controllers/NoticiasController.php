@@ -43,6 +43,10 @@ class NoticiasController extends Controller
                             'roles' => ['gestor','admin'],
                         ],
                     ],
+                    'denyCallback' => function ($rule, $action) {
+                        Yii::$app->user->logout();
+                        return $this->redirect(['site/login']);
+                    }
                 ],
             ]
         );
