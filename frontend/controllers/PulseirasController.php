@@ -2,11 +2,21 @@
 
 namespace frontend\controllers;
 
-use common\models\Pulseiras;
-use common\models\PulseirasSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Eventos;
+use common\models\EventosSearch;
+use common\models\EventosUpdate;
+use common\models\Vip;
+use common\models\VipSearch;
+use common\models\VipPulseira;
+use common\models\VipPulseiraSearch;
+use common\models\Pulseiras;
+use common\models\PulseirasSearch;
 
 /**
  * PulseirasController implements the CRUD actions for Pulseiras model.
@@ -18,6 +28,9 @@ class PulseirasController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+
         return array_merge(
             parent::behaviors(),
             [
@@ -26,6 +39,19 @@ class PulseirasController extends Controller
                     'actions' => [
                         'delete' => ['POST'],
                     ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'comprar', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['cliente'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return $this->redirect(['site/login']);
+                    }
                 ],
             ]
         );
@@ -65,20 +91,30 @@ class PulseirasController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionComprar($id_evento, $codigorp)
     {
         $model = new Pulseiras();
+        $evento = Eventos::findOne($id_evento);
+        
+        $id_de_vips_ocupados = VipPulseira::find()
+            ->leftJoin('pulseiras', 'pulseiras.id = vip_pulseira.id_pulseira')
+            ->where(['pulseiras.id_evento' => $id_evento])
+            ->all();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        $id_de_vips=[];
+
+        foreach($id_de_vips_ocupados as $i){
+            array_push($id_de_vips, $i->id);
         }
 
-        return $this->render('create', [
+        $listavips = Vip::find()->orderBy(['preco'=>SORT_ASC])->all();
+
+        return $this->render('comprar', [
             'model' => $model,
+            'evento' => $evento,
+            'codigorp' => $codigorp,
+            'id_de_vips' => $id_de_vips,
+            'listavips' => $listavips,
         ]);
     }
 

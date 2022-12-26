@@ -18,9 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'codigorp')->textInput() ?>
 
-    <?= $form->field($model, 'idevento')->textInput() ?>
+    <?= $form->field($model, 'id_evento')->textInput() ?>
 
-    <?= $form->field($model, 'idcliente')->textInput() ?>
+    <?= $form->field($model, 'id_cliente')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
