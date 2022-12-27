@@ -67,7 +67,8 @@ class LinhafaturaController extends Controller
     {
         $user = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();
         $pulseira = Pulseiras::find()->where(['id_evento' =>  $id_evento])->andwhere([ 'id_cliente' =>  $user->id])->one();
-        $evento = Eventos::find()->where(['estado' => 'ativo'])->where(['id' =>  $id_evento])->one();
+        $evento2 = Eventos::find()->where(['estado' => 'ativo'])->where(['id' =>  $id_evento])->one();
+        $evento = Eventos::findOne($id_evento);
         $codigorpvalido = Userprofile::find()->where(['codigorp' => $codigorp])->one();
 
         $id_de_vips_ocupados = VipPulseira::find()
@@ -81,13 +82,13 @@ class LinhafaturaController extends Controller
             array_push($id_de_vips, $i->id_vip);
         }
 
-        if($pulseira == null && !in_array($id_vip,$id_de_vips) && $evento != null && ($codigorpvalido != null or $codigorp == null)){
+        if($pulseira == null && !in_array($id_vip,$id_de_vips) && $evento->numbilhetesdisp > 0 && $evento2 != null && ($codigorpvalido != null or $codigorp == null)){
         
             $linhasfaturas = new LinhaFatura();
             $fatura = new Faturas();
             $pulseira = new Pulseiras();
             $reserva_vip =  new VipPulseira();
-    
+
             $vip = Vip::findOne($id_vip);
     
             if ($this->request->isPost && $linhasfaturas->load($this->request->post())) {
@@ -116,8 +117,13 @@ class LinhafaturaController extends Controller
                     $novalinha->bebidas = $bebida;
                     $novalinha->save();
                 }
-    
-                if ($pulseira->save() && $fatura->save() && $reserva_vip->save()) {    
+                
+                $evento->numbilhetesdisp = $evento->numbilhetesdisp - 1;
+                $evento->numbilhetesdisp -= 1;
+                $date = strtotime($evento->dataevento);
+                $evento->dataevento = date('Y-m-d H:i', $date); 
+                
+                if ($pulseira->save() && $fatura->save() && $reserva_vip->save() && $evento->save()) {    
                     return $this->redirect(['eventos/view', 'id' => $id_evento]);
                 }
             } else {

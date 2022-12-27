@@ -59,17 +59,15 @@ class FaturasController extends Controller
 
     public function actionCreate($id_evento, $codigorp)
     {
-
         $user = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();
         $pulseira = Pulseiras::find()->where(['id_evento' =>  $id_evento])->andwhere([ 'id_cliente' =>  $user->id])->one();
         $codigorpvalido = Userprofile::find()->where(['codigorp' => $codigorp])->one();
+        $evento = EventosUpdate::findOne($id_evento);
 
-        if($pulseira == null && ($codigorpvalido != null or $codigorp == null)){
+        if($pulseira == null && ($codigorpvalido != null or $codigorp == null && $evento->numbilhetesdisp > 0)){
 
             $fatura = new Faturas();
             $pulseira = new Pulseiras();
-
-            $evento = Eventos::find()->where(['id' =>  $id_evento])->one();
 
             $pulseira->estado = 'ativa';
             $pulseira->tipo = 'normal';
@@ -85,14 +83,15 @@ class FaturasController extends Controller
             $fatura->preco = $evento->preco;
             $fatura->id_pulseira = $pulseira->id;
 
-            if ($pulseira->save() && $fatura->save()) {    
+            $evento->numbilhetesdisp -= 1;
+            $date = strtotime($evento->dataevento);
+            $evento->dataevento = date('Y-m-d H:i', $date); 
+
+            if ($evento->save() && $pulseira->save() && $fatura->save()) {    
                 return $this->redirect(['eventos/view', 'id' => $id_evento]);
             }
 
-            return $this->render('create', [
-                'model' => $linhasfaturas,
-                'ngarrafas' => $vip->nbebidas,
-            ]);
+            return $this->redirect(['eventos/view', 'id' => $id_evento]);
         }else{
             return $this->redirect(['eventos/view', 'id' => $id_evento]);
         }

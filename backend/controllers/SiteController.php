@@ -84,16 +84,20 @@ class SiteController extends Controller
         $numeventos = (new yii\db\Query())
             ->from('eventos')
             ->select(['ISNULL(id, 0)'])
+            ->where(['!=', 'estado', 'cancelado'])
             ->count();
 
         $valorfaturado = (new yii\db\Query())
             ->from('faturas')
             ->select(['ISNULL(preco, 0)'])
-            ->sum('preco');
+            ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
+            ->andwhere(['!=', 'pulseiras.estado', 'cancelada'])
+            ->sum('faturas.preco');
 
         $bilhetesveendidos = (new yii\db\Query())
             ->from('pulseiras')
             ->select(['ISNULL(id, 0)'])
+            ->andwhere(['!=', 'estado', 'cancelada'])
             ->count();
 
         //--------------- Dados dos proprios eventos ---------------//
@@ -102,6 +106,7 @@ class SiteController extends Controller
             ->from('eventos')
             ->select(['ISNULL(id, 0)'])
             ->where(['id_criador' => $model->id])
+            ->andwhere(['!=', 'estado', 'cancelado'])
             ->count();
 
         $valorfaturadouser = (new yii\db\Query())
@@ -110,6 +115,7 @@ class SiteController extends Controller
             ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
             ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
             ->where(['eventos.id_criador' => $model->id])
+            ->andwhere(['!=', 'pulseiras.estado', 'cancelada'])
             ->sum('faturas.preco');
 
         $bilhetesveendidosuser = (new yii\db\Query())
@@ -117,6 +123,7 @@ class SiteController extends Controller
             ->select(['ISNULL(id, 0)'])
             ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
             ->where(['eventos.id_criador' => $model->id])
+            ->andwhere(['!=', 'pulseiras.estado', 'cancelada'])
             ->count('pulseiras.id');
 
         //--------------- Graficos ---------------//
@@ -146,7 +153,7 @@ class SiteController extends Controller
                 ON eventos.id = pulseiras.id_evento
             JOIN tipoevento 
                 ON tipoevento.id = eventos.id_tipo_evento
-            where datahora_compra >= now() - interval 12 month
+            where datahora_compra >= now() - interval 12 month && eventos.estado != "cancelado"
             group by tipoevento.tipo, DATE_FORMAT(datahora_compra, "%M")')
         ->queryAll();
 
