@@ -138,6 +138,7 @@ class UserprofileController extends Controller
             ->from('eventos')
             ->select(['ISNULL(id, 0)'])
             ->where(['id_criador' => $userprofile->id])
+            ->andwhere(['!=', 'estado', 'cancelado'])
             ->count();
 
         $valorfaturadouser = (new yii\db\Query())
@@ -146,6 +147,7 @@ class UserprofileController extends Controller
             ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
             ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
             ->where(['eventos.id_criador' => $userprofile->id])
+            ->andwhere(['!=', 'pulseiras.estado', 'cancelado'])
             ->sum('faturas.preco');
 
         $bilhetesveendidosuser = (new yii\db\Query())
@@ -153,6 +155,7 @@ class UserprofileController extends Controller
             ->select(['ISNULL(id, 0)'])
             ->leftJoin('eventos', 'eventos.id = pulseiras.id_evento')
             ->where(['eventos.id_criador' => $userprofile->id])
+            ->andwhere(['!=', 'pulseiras.estado', 'cancelada'])
             ->count('pulseiras.id');
 
         $grafico = (new yii\db\Query())

@@ -44,7 +44,7 @@ $this->title = '';
             <br>
             <br>
             <h5><strong>Bilhetes disponiveis:&nbsp;</strong><?=$model->numbilhetesdisp?></h5>
-            <h5><strong>Bilhetes vendidos:&nbsp;</strong><?=$numbilhetesdisp?></h5>
+            <h5><strong>Bilhetes vendidos:&nbsp;</strong><?=$numbilhetesvendidos?></h5>
             <h5><strong>Valor faturado:&nbsp;</strong><?=number_format($valorfaturado,2).'€'?></h5>
             <h5><strong>Preço:&nbsp;</strong><?=number_format($model->preco,2).'€'?></h5>
             <h5><strong>Data:&nbsp;</strong><?=$model->dataevento?></h5>

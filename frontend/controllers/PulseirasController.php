@@ -64,13 +64,13 @@ class PulseirasController extends Controller
     {
         $user = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();
         $pulseira = Pulseiras::find()->where(['id_evento' =>  $id_evento])->andwhere(['id_cliente' =>  $user->id])->one();
-        $evento = Eventos::find()->where(['estado' => 'ativo'])->andwhere(['id' =>  $id_evento])->one();
+        $evento2 = Eventos::find()->where(['estado' => 'ativo'])->andwhere(['id' =>  $id_evento])->one();
+        $evento = Eventos::findOne($id_evento);
         $codigorpvalido = Userprofile::find()->where(['codigorp' => $codigorp])->one();
         
 
-        if($pulseira == null && $evento != null && ($codigorpvalido != null or $codigorp == null)){
+        if($pulseira == null && $evento2 != null && ($codigorpvalido != null or $codigorp == null) && $evento->numbilhetesdisp > 0){
             $model = new Pulseiras();
-            $evento = Eventos::findOne($id_evento);
             
             $id_de_vips_ocupados = VipPulseira::find()
                 ->leftJoin('pulseiras', 'pulseiras.id = vip_pulseira.id_pulseira')

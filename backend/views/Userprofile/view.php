@@ -24,52 +24,88 @@ $this->title = $model->nome . ' ' . $model->apelido;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'label' => 'Nome',
-                'value' => function ($data) {
-                    return $data->nome .' '. $data->apelido;;
-                },
-            ],
-            [
-                'label' => 'Username',
-                'value' => function ($data) {
-                    return $data->user->username;
-                },
-            ],
-            [
-                'label' => 'Email',
-                'value' => function ($data) {
-                    return $data->user->email;
-                },
-            ],
-            [
-                'label' => 'Data de Nascimento',
-                'format' => ['date', 'php:d/m/Y'],
-                'value' => function ($data) {
-                    return $data->datanascimento;
-                },
-            ],
-            [
-                'label' => 'Sexo',
-                'value' => function ($data) {
-                    return $data->sexo;
-                },
-            ],
-            [
-                'label' => 'codigo RP',
-                'value' => function ($data) {
-                    if($data->codigoRP != null){
+    <?php if(array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'rp'){ ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'label' => 'Nome',
+                    'value' => function ($data) {
+                        return $data->nome .' '. $data->apelido;;
+                    },
+                ],
+                [
+                    'label' => 'Username',
+                    'value' => function ($data) {
+                        return $data->user->username;
+                    },
+                ],
+                [
+                    'label' => 'Email',
+                    'value' => function ($data) {
+                        return $data->user->email;
+                    },
+                ],
+                [
+                    'label' => 'Data de Nascimento',
+                    'format' => ['date', 'php:d/m/Y'],
+                    'value' => function ($data) {
+                        return $data->datanascimento;
+                    },
+                ],
+                [
+                    'label' => 'Sexo',
+                    'value' => function ($data) {
+                        return $data->sexo;
+                    },
+                ],
+                [
+                    'label' => 'codigo RP',
+                    'value' => function ($data) {
                         return $data->codigoRP;
-                    }
-                    return '--------------';
-                },
+                    },
+                ],
             ],
-        ],
-    ]) ?>
+        ]);?>
+    <?php }else{ ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'label' => 'Nome',
+                    'value' => function ($data) {
+                        return $data->nome .' '. $data->apelido;;
+                    },
+                ],
+                [
+                    'label' => 'Username',
+                    'value' => function ($data) {
+                        return $data->user->username;
+                    },
+                ],
+                [
+                    'label' => 'Email',
+                    'value' => function ($data) {
+                        return $data->user->email;
+                    },
+                ],
+                [
+                    'label' => 'Data de Nascimento',
+                    'format' => ['date', 'php:d/m/Y'],
+                    'value' => function ($data) {
+                        return $data->datanascimento;
+                    },
+                ],
+                [
+                    'label' => 'Sexo',
+                    'value' => function ($data) {
+                        return $data->sexo;
+                    },
+                ],
+            ],
+        ]);?>
+    <?php } ?>
+    
 
     
     <br>

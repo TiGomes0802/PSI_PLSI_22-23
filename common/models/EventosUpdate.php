@@ -46,8 +46,9 @@ class EventosUpdate extends \yii\db\ActiveRecord
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
-            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i'],
-            [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
+            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
+            [['id_criador', 'id_tipo_evento'], 'integer'],
+            ['numbilhetesdisp', 'integer', 'min' => 0],
             ['preco', 'double'],
             [['nome', 'estado'], 'string', 'max' => 25],
             ['descricao', 'string', 'max' => 750],
@@ -91,14 +92,13 @@ class EventosUpdate extends \yii\db\ActiveRecord
             if($evento->dataevento < $date){
                 $eventoupdate = new Eventosupdate();
                 $eventoupdate = Eventosupdate::find()->where(['id' => $evento->id])->one();
-                var_dump($eventoupdate);
                 $date = strtotime($evento->dataevento);
                 $eventoupdate->dataevento = date('Y-m-d H:i', $date); 
                 $eventoupdate->estado = 'desativo';
                 if($eventoupdate->validate()){
                     $pulseiras = Pulseiras::find()->where(['estado' => 'ativa'])->andwhere(['id_evento' => $evento->id])->all();
                     foreach($pulseiras as $pulseira){
-                        $pulseiraupdate = new Pulseiras();
+                        $pulseiraupdate = Pulseiras::findOne($pulseira->id);
                         $pulseiraupdate->estado = 'naousada';
                         $pulseiraupdate->save();
                     }
