@@ -3,9 +3,12 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\models\Eventos;
+use common\models\EventosSearch;
 use common\models\EventosUpdate;
 use common\models\Faturas;
 use common\models\FaturasSearch;
@@ -62,52 +65,73 @@ class LinhafaturaController extends Controller
 
     public function actionCreate($id_evento, $codigorp, $id_vip)
     {
-        $linhasfaturas = new LinhaFatura();
-        $fatura = new Faturas();
-        $pulseira = new Pulseiras();
-        $reserva_vip =  new VipPulseira();
+        $user = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();
+        $pulseira = Pulseiras::find()->where(['id_evento' =>  $id_evento])->andwhere([ 'id_cliente' =>  $user->id])->one();
+        $evento = Eventos::find()->where(['estado' => 'ativo'])->where(['id' =>  $id_evento])->one();
+        $codigorpvalido = Userprofile::find()->where(['codigorp' => $codigorp])->one();
 
-        $user = Userprofile::find()->where(['user_id' =>  Yii::$app->user->id])->one();
-        $vip = Vip::findOne($id_vip);
+        $id_de_vips_ocupados = VipPulseira::find()
+            ->leftJoin('pulseiras', 'pulseiras.id = vip_pulseira.id_pulseira')
+            ->where(['pulseiras.id_evento' => $id_evento])
+            ->all();
 
-        if ($this->request->isPost && $linhasfaturas->load($this->request->post())) {
-            
-            $pulseira->estado = 'ativa';
-            $pulseira->tipo = 'vip';
-            if($codigorp != null){
-                $pulseira->codigorp = $codigorp;
-            }
-            $pulseira->id_evento = intval($id_evento);
-            $pulseira->id_cliente = $user->id;
-            $pulseira->save(false);
+        $id_de_vips=[];
 
-            $reserva_vip->id_pulseira = $pulseira->id;
-            $reserva_vip->id_vip = $vip->id;
-
-            $fatura->datahora_compra = date("Y-m-d H:i:s");
-            $fatura->preco = $vip->preco;
-            $fatura->id_pulseira = $pulseira->id;
-            $fatura->save(false);
-
-            foreach($linhasfaturas->bebidas as $bebida){
-                $novalinha = new LinhaFatura();
-                $novalinha->id_bebida = $bebida;
-                $novalinha->id_fatura = $fatura->id;
-                $novalinha->bebidas = $bebida;
-                $novalinha->save();
-            }
-
-            if ($pulseira->save() && $fatura->save() && $reserva_vip->save()) {    
-                return $this->redirect(['eventos/view', 'id' => $id_evento]);
-            }
-        } else {
-            $linhasfaturas->loadDefaultValues();
+        foreach($id_de_vips_ocupados as $i){
+            array_push($id_de_vips, $i->id_vip);
         }
 
-        return $this->render('create', [
-            'model' => $linhasfaturas,
-            'ngarrafas' => $vip->nbebidas,
-        ]);
+        if($pulseira == null && !in_array($id_vip,$id_de_vips) && $evento != null && ($codigorpvalido != null or $codigorp == null)){
+        
+            $linhasfaturas = new LinhaFatura();
+            $fatura = new Faturas();
+            $pulseira = new Pulseiras();
+            $reserva_vip =  new VipPulseira();
+    
+            $vip = Vip::findOne($id_vip);
+    
+            if ($this->request->isPost && $linhasfaturas->load($this->request->post())) {
+                
+                $pulseira->estado = 'ativa';
+                $pulseira->tipo = 'vip';
+                if($codigorp != null){
+                    $pulseira->codigorp = $codigorp;
+                }
+                $pulseira->id_evento = intval($id_evento);
+                $pulseira->id_cliente = $user->id;
+                $pulseira->save(false);
+    
+                $reserva_vip->id_pulseira = $pulseira->id;
+                $reserva_vip->id_vip = $vip->id;
+    
+                $fatura->datahora_compra = date("Y-m-d H:i:s");
+                $fatura->preco = $vip->preco;
+                $fatura->id_pulseira = $pulseira->id;
+                $fatura->save(false);
+    
+                foreach($linhasfaturas->bebidas as $bebida){
+                    $novalinha = new LinhaFatura();
+                    $novalinha->id_bebida = $bebida;
+                    $novalinha->id_fatura = $fatura->id;
+                    $novalinha->bebidas = $bebida;
+                    $novalinha->save();
+                }
+    
+                if ($pulseira->save() && $fatura->save() && $reserva_vip->save()) {    
+                    return $this->redirect(['eventos/view', 'id' => $id_evento]);
+                }
+            } else {
+                $linhasfaturas->loadDefaultValues();
+            }
+    
+            return $this->render('create', [
+                'model' => $linhasfaturas,
+                'ngarrafas' => $vip->nbebidas,
+            ]);
+
+        }else{
+            return $this->redirect(['eventos/view', 'id' => $id_evento]);
+        }
     }
 
     protected function findModel($id)

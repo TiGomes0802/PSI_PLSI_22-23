@@ -28,12 +28,6 @@ use yii\web\UploadedFile;
 class EventosUpdate extends \yii\db\ActiveRecord
 {
     /**
-     * @var \yii\web\UploadedFile
-     */
-    public $imageFile;
-    public $imageFileUpdate;
-
-    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -50,7 +44,7 @@ class EventosUpdate extends \yii\db\ActiveRecord
         $min = $date->format('Y-m-d h:i');
 
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
             ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i'],
             [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
@@ -85,8 +79,9 @@ class EventosUpdate extends \yii\db\ActiveRecord
     public function UpdateEstadoEvento()
     {
         $eventos = Eventosupdate::find()->where(['estado' => 'ativo'])->all();
-
+        
         foreach($eventos as $evento){
+
             if(date('Y-m-d 06:00:00') < date('Y-m-d H:m:s')){
                 $date = date('Y-m-d H:m:s');
             } else{
@@ -96,10 +91,18 @@ class EventosUpdate extends \yii\db\ActiveRecord
             if($evento->dataevento < $date){
                 $eventoupdate = new Eventosupdate();
                 $eventoupdate = Eventosupdate::find()->where(['id' => $evento->id])->one();
+                var_dump($eventoupdate);
                 $date = strtotime($evento->dataevento);
                 $eventoupdate->dataevento = date('Y-m-d H:i', $date); 
                 $eventoupdate->estado = 'desativo';
-                $eventoupdate->imageFile = 'nada.png';
+                if($eventoupdate->validate()){
+                    $pulseiras = Pulseiras::find()->where(['estado' => 'ativa'])->andwhere(['id_evento' => $evento->id])->all();
+                    foreach($pulseiras as $pulseira){
+                        $pulseiraupdate = new Pulseiras();
+                        $pulseiraupdate->estado = 'naousada';
+                        $pulseiraupdate->save();
+                    }
+                }
                 $eventoupdate->save();
             }
         }

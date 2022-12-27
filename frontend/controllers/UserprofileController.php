@@ -4,13 +4,14 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\helpers\Html;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use common\models\EventosUpdate;
 use frontend\models\SignupForm;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
  * UserprofileController implements the CRUD actions for Userprofile model.
@@ -22,6 +23,9 @@ class UserprofileController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+
         return array_merge(
             parent::behaviors(),
             [
