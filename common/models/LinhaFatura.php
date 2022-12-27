@@ -24,16 +24,18 @@ class LinhaFatura extends \yii\db\ActiveRecord
         return 'linha_fatura';
     }
 
+    public $bebidas;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id_bebida', 'id_bebida'], 'required'],
-            [['id_bebida', 'id_bebida'], 'integer'],
+            [['id_bebida', 'id_fatura', 'bebidas'], 'required'],
+            [['id_bebida', 'id_fatura'], 'integer'],
             [['id_bebida'], 'exist', 'skipOnError' => true, 'targetClass' => Bebidas::class, 'targetAttribute' => ['id_bebida' => 'id']],
-            [['id_bebida'], 'exist', 'skipOnError' => true, 'targetClass' => Faturas::class, 'targetAttribute' => ['id_bebida' => 'id']],
+            [['id_fatura'], 'exist', 'skipOnError' => true, 'targetClass' => Faturas::class, 'targetAttribute' => ['id_fatura' => 'id']],
         ];
     }
 
@@ -46,6 +48,7 @@ class LinhaFatura extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_bebida' => 'Id Bebida',
             'id_fatura' => 'Id Fatura',
+            'bebidas' => 'bebidas',
         ];
     }
 

@@ -2,22 +2,37 @@
 
 namespace frontend\controllers;
 
-use common\models\LinhaFatura;
-use common\models\LinhaFaturaSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\EventosUpdate;
+use common\models\Faturas;
+use common\models\FaturasSearch;
+use common\models\Linhafatura;
+use common\models\LinhafaturaSearch;
+use common\models\Pulseiras;
+use common\models\PulseirasSearch;
+use common\models\Userprofile;
+use common\models\UserprofileSearch;
+use common\models\Vip;
+use common\models\VipSearch;
+use common\models\VipPulseira;
+use common\models\VipPulseiraSearch;
 
 /**
- * LinhaFaturaController implements the CRUD actions for LinhaFatura model.
+ * LinhafaturaController implements the CRUD actions for LinhaFatura model.
  */
-class LinhaFaturaController extends Controller
+class LinhafaturaController extends Controller
 {
     /**
      * @inheritDoc
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -27,102 +42,74 @@ class LinhaFaturaController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['create'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        Yii::$app->user->logout();
+                        return $this->redirect(['site/login']);
+                    }
+                ],
             ]
         );
     }
 
-    /**
-     * Lists all LinhaFatura models.
-     *
-     * @return string
-     */
-    public function actionIndex()
+    public function actionCreate($id_evento, $codigorp, $id_vip)
     {
-        $searchModel = new LinhaFaturaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $linhasfaturas = new LinhaFatura();
+        $fatura = new Faturas();
+        $pulseira = new Pulseiras();
+        $reserva_vip =  new VipPulseira();
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+        $user = Userprofile::find()->where(['user_id' =>  Yii::$app->user->id])->one();
+        $vip = Vip::findOne($id_vip);
 
-    /**
-     * Displays a single LinhaFatura model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+        if ($this->request->isPost && $linhasfaturas->load($this->request->post())) {
+            
+            $pulseira->estado = 'ativa';
+            $pulseira->tipo = 'vip';
+            if($codigorp != null){
+                $pulseira->codigorp = $codigorp;
+            }
+            $pulseira->id_evento = intval($id_evento);
+            $pulseira->id_cliente = $user->id;
+            $pulseira->save(false);
 
-    /**
-     * Creates a new LinhaFatura model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new LinhaFatura();
+            $reserva_vip->id_pulseira = $pulseira->id;
+            $reserva_vip->id_vip = $vip->id;
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $fatura->datahora_compra = date("Y-m-d H:i:s");
+            $fatura->preco = $vip->preco;
+            $fatura->id_pulseira = $pulseira->id;
+            $fatura->save(false);
+
+            foreach($linhasfaturas->bebidas as $bebida){
+                $novalinha = new LinhaFatura();
+                $novalinha->id_bebida = $bebida;
+                $novalinha->id_fatura = $fatura->id;
+                $novalinha->bebidas = $bebida;
+                $novalinha->save();
+            }
+
+            if ($pulseira->save() && $fatura->save() && $reserva_vip->save()) {    
+                return $this->redirect(['eventos/view', 'id' => $id_evento]);
             }
         } else {
-            $model->loadDefaultValues();
+            $linhasfaturas->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $linhasfaturas,
+            'ngarrafas' => $vip->nbebidas,
         ]);
     }
 
-    /**
-     * Updates an existing LinhaFatura model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing LinhaFatura model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the LinhaFatura model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return LinhaFatura the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = LinhaFatura::findOne(['id' => $id])) !== null) {

@@ -2,11 +2,19 @@
 
 namespace frontend\controllers;
 
-use common\models\Faturas;
-use common\models\FaturasSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use common\models\Eventos;
+use common\models\EventosUpdate;
+use common\models\EventosSearch;
+use common\models\Faturas;
+use common\models\FaturasSearch;
+use common\models\Pulseiras;
+use common\models\PulseirasSearch;
+use common\models\Userprofile;
+use common\models\UserprofileSearch;
 
 /**
  * FaturasController implements the CRUD actions for Faturas model.
@@ -31,98 +39,37 @@ class FaturasController extends Controller
         );
     }
 
-    /**
-     * Lists all Faturas models.
-     *
-     * @return string
-     */
-    public function actionIndex()
+    public function actionCreate($id_evento, $codigorp)
     {
-        $searchModel = new FaturasSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $fatura = new Faturas();
+        $pulseira = new Pulseiras();
+        
+        $user = Userprofile::find()->where(['user_id' =>  Yii::$app->user->id])->one();
+        $evento = Eventos::find()->where(['id' =>  $id_evento])->one();
+            
+        $pulseira->estado = 'ativa';
+        $pulseira->tipo = 'normal';
+        if($codigorp != null){
+            $pulseira->codigorp = $codigorp;
+        }
+        $pulseira->id_evento = $evento->id;
+        $pulseira->id_cliente = $user->id;
+        $pulseira->save(false);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+        $fatura->datahora_compra = date("Y-m-d H:i:s");
+        $fatura->preco = $evento->preco;
+        $fatura->id_pulseira = $pulseira->id;
 
-    /**
-     * Displays a single Faturas model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Faturas model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Faturas();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        if ($pulseira->save() && $fatura->save()) {    
+            return $this->redirect(['eventos/view', 'id' => $id_evento]);
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $linhasfaturas,
+            'ngarrafas' => $vip->nbebidas,
         ]);
     }
 
-    /**
-     * Updates an existing Faturas model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Faturas model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Faturas model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Faturas the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Faturas::findOne(['id' => $id])) !== null) {

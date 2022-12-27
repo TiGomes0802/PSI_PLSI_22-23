@@ -55,7 +55,6 @@ class EventosController extends Controller
         );
     }
 
-
     public function actionIndex($estado)
     {
         if (\Yii::$app->user->can('viewEvento')) {

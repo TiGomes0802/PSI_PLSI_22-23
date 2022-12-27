@@ -35,7 +35,7 @@ class Pulseiras extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado', 'tipo', 'codigorp', 'id_evento', 'id_cliente'], 'required'],
+            [['estado', 'tipo', 'id_evento', 'id_cliente'], 'required'],
             [['id_evento', 'id_cliente'], 'integer'],
             [['estado', 'tipo', 'codigorp'], 'string', 'max' => 25],
             [['id_evento'], 'exist', 'skipOnError' => true, 'targetClass' => Eventos::class, 'targetAttribute' => ['id_evento' => 'id']],

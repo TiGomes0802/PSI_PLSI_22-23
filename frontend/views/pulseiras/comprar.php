@@ -26,7 +26,7 @@ $this->title = '';
 
 <section class="u-align-center u-clearfix u-custom-color-2 u-section-6" id="sec-1a0b">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-default u-text-1">Escolher&nbsp; tipo&nbsp; de&nbsp; pulseira</h2>
+        <h2 class="u-text u-text-default u-text-1">Escolher&nbsp; pulseira</h2>
         <br><br><br>
         <div class="row">
             <div class="col-2"></div>
@@ -55,7 +55,7 @@ $this->title = '';
                             <?php if(in_array($vip->id,$id_de_vips)) {?>
                                 <td style="width:10%"><input type="button" class="btn btn-danger" value="Indisponivel" disabled></td>
                             <?php } else {?>
-                                <td style="width:10%"><a href='index.php?r=faturas%2Fcreate&id_evento=<?=$evento->id?>&codigorp=<?=$codigorp?>&id_vip=<?=$vip->id?>'><input type="button" class="btn btn-success" value="Comprar"></a></td>
+                                <td style="width:10%"><a href='index.php?r=linhafatura%2Fcreate&id_evento=<?=$evento->id?>&codigorp=<?=$codigorp?>&id_vip=<?=$vip->id?>'><input type="button" class="btn btn-success" value="Comprar"></a></td>
                             <?php } ?>
                         </tr>
                     <?php } ?>

@@ -104,7 +104,7 @@ class PulseirasController extends Controller
         $id_de_vips=[];
 
         foreach($id_de_vips_ocupados as $i){
-            array_push($id_de_vips, $i->id);
+            array_push($id_de_vips, $i->id_vip);
         }
 
         $listavips = Vip::find()->orderBy(['preco'=>SORT_ASC])->all();

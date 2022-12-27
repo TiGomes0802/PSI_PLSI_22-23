@@ -59,7 +59,7 @@ class VipPulseiraSearch extends VipPulseira
         $query->andFilterWhere([
             'id' => $this->id,
             'id_vip' => $this->id_vip,
-            'idpulseira' => $this->idpulseira,
+            'id_pulseira' => $this->id_pulseira,
         ]);
 
         return $dataProvider;
