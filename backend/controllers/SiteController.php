@@ -153,7 +153,7 @@ class SiteController extends Controller
                 ON eventos.id = pulseiras.id_evento
             JOIN tipoevento 
                 ON tipoevento.id = eventos.id_tipo_evento
-            where datahora_compra >= now() - interval 12 month
+            where datahora_compra >= now() - interval 12 month && eventos.estado != "cancelado"
             group by tipoevento.tipo, DATE_FORMAT(datahora_compra, "%M")')
         ->queryAll();
 

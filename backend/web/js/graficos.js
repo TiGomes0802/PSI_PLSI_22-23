@@ -9,6 +9,7 @@ jQuery(document).ready(function () {
   google.charts.setOnLoadCallback(draw_my_chart4);
 
 
+  //------------ grafico1 ------------------//
   function draw_my_chart() {
 
     var options = {
@@ -25,7 +26,6 @@ jQuery(document).ready(function () {
       //is3D: true
     };
 
-    //------------ grafico1 ------------------//
     console.log('teste');
     var data = new google.visualization.DataTable();
     data.addColumn("string", "Roles dos users");
@@ -41,6 +41,7 @@ jQuery(document).ready(function () {
     chart.draw(data, options);
   }
 
+  //------------ grafico2 ------------------//
   function draw_my_chart2() {
     var options = {
       legend: {
@@ -55,8 +56,6 @@ jQuery(document).ready(function () {
       //is3D: true,
       colors: ['pink','lightblue']
     };
-
-    //------------ grafico2 ------------------//
 
     console.log('teste2');
     var data = new google.visualization.DataTable();
@@ -73,10 +72,9 @@ jQuery(document).ready(function () {
     );
     chart.draw(data, options);
   }
-  
-  function draw_my_chart3() {
 
-    const meses =['January','February','March','April','May','June','July','August','September','October','November','December']
+  //------------ grafico3 ------------------//
+  function draw_my_chart3() {
 
     const Info      = ['mês'      ];
     const January   = ['Janeiro'  ];
@@ -91,7 +89,7 @@ jQuery(document).ready(function () {
     const October   = ['Outobro'  ];
     const November  = ['Novembro' ];
     const December  = ['Dezembro' ];
-    
+    console.log(December);
     listatiposeventos.forEach((element, index) => {
       Info.push(element.tipo)
       var Number = 0.00;
@@ -108,46 +106,46 @@ jQuery(document).ready(function () {
       November.push(Number);
       December.push(Number);
     });
-
+    console.log(December);
     listatiposeventos.forEach((element, index) => {
         model3.forEach((element2) => {
           if(element.tipo === element2.tipo){
             switch (element2.mes) {
               case 'January':
-                January[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                January[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'February':
-                February[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                February[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'March':
-                March[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                March[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'April':
-                April[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                April[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'May':
-                May[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                May[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'June':
-                June[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                June[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'July':
-                July[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                July[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'August':
-                August[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                August[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'September':
-                September[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                September[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'October':
-                October[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                October[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'November':
-                November[index] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
+                November[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(2));
                 break;
               case 'December':
-                December[index] = parseFloat(parseFloat(element2.faturamento).toFixed(3));
+                December[index + 1] = parseFloat(parseFloat(element2.faturamento).toFixed(3));
                 break;
             }
           }
@@ -156,7 +154,6 @@ jQuery(document).ready(function () {
 
     console.log(December);
 
-    //------------ grafico ------------------//
     var data = google.visualization.arrayToDataTable([
       Info,
       January,
@@ -181,7 +178,8 @@ jQuery(document).ready(function () {
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
   }
-
+  
+  //------------ grafico4 ------------------//
   function draw_my_chart4() {
 
     var options = {
@@ -197,7 +195,7 @@ jQuery(document).ready(function () {
       //is3D: true,
     };
 
-    //------------ grafico4 ------------------//
+    
     console.log('teste4');
     var data = new google.visualization.DataTable();
     data.addColumn("string", "Codigos de rps");
