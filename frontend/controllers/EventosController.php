@@ -2,8 +2,11 @@
 
 namespace frontend\controllers;
 
+use Yii;
 use common\models\Eventos;
 use common\models\EventosSearch;
+use common\models\Pulseiras;
+use common\models\PulseirasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -55,8 +58,15 @@ class EventosController extends Controller
     {
         $evento = Eventos::FindOne($id);
 
+        if (Yii::$app->user->id != null) {
+            $comprado = Pulseiras::Find()->where(['id_cliente'=> Yii::$app->user->id])->andwhere(['id_evento'=>$id])->one();
+        }else{
+            $comprado = null;
+        }
+
         return $this->render('view', [
             'evento' => $evento,
+            'comprado' => $comprado,
         ]);
     }
 
