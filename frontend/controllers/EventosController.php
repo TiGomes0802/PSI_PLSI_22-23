@@ -38,7 +38,7 @@ class EventosController extends Controller
      */
     public function actionIndex()
     {
-        $eventos = Eventos::find()->all();
+        $eventos = Eventos::find()->where(['estado'=> 'ativo'])->all();
         
         return $this->render('index', [
             'eventos' => $eventos,
@@ -53,8 +53,10 @@ class EventosController extends Controller
      */
     public function actionView($id)
     {
+        $evento = Eventos::FindOne($id);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'evento' => $evento,
         ]);
     }
 

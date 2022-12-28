@@ -1,45 +1,28 @@
-<?php
-
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-
-/** @var yii\web\View $this */
-/** @var common\models\Eventos $model */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
-?>
-<div class="eventos-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'nome',
-            'descricao',
-            'cartaz',
-            'dataevento',
-            'numbilhetesdisp',
-            'preco',
-            'estado',
-            'id_criador',
-            'id_tipo_evento',
-        ],
-    ]) ?>
-
-</div>
+<link rel="stylesheet" href="./../web/css/nicepage2.css" media="screen">
+<link rel="stylesheet" href="./../web/css/detalhes_evento.css" media="screen">
+<section class="u-align-center u-clearfix u-custom-color-2 u-section-1" id="sec-0c69">
+  <div class="u-clearfix u-sheet u-sheet-1">
+    <div class="u-clearfix u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-gutter-40 u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-row">
+          <div class="u-align-left u-container-style u-image u-layout-cell u-size-27" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');" data-image-width="716" data-image-height="621">
+            <div class="u-container-layout u-valign-bottom u-container-layout-1"></div>
+          </div>
+          <div class="u-container-style u-layout-cell u-size-33 u-layout-cell-2">
+            <div class="u-container-layout u-valign-bottom-xs u-container-layout-2">
+              <h2 class="u-align-left u-custom-font u-font-montserrat u-text u-text-1" ><?=$evento->nome?></h2>
+              <p class="u-align-justify u-custom-font u-font-montserrat u-text u-text-2"><?=$evento->descricao?></p>
+              <p class="u-align-left u-custom-font u-font-montserrat u-text u-text-3">
+                <span style="font-weight: 700;"></span>
+              </p>
+              <p class="u-align-left u-custom-font u-font-montserrat u-text u-text-4">
+                <span style="font-weight: 700;">31/10/2022</span>
+              </p>
+              <a href="https://nicepage.com/c/grid-website-templates" class="u-active-custom-color-2 u-border-2 u-border-active-custom-color-1 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-font-lato u-hover-custom-color-2 u-radius-20 u-text-active-custom-color-1 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1" data-animation-duration="0" data-animation-delay="0" > &nbsp;Comprar<br>pulseira</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
