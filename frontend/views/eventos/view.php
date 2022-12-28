@@ -13,10 +13,10 @@
               <h2 class="u-align-left u-custom-font u-font-montserrat u-text u-text-1" ><?=$evento->nome?></h2>
               <p class="u-align-justify u-custom-font u-font-montserrat u-text u-text-2"><?=$evento->descricao?></p>
               <p class="u-align-left u-custom-font u-font-montserrat u-text u-text-3">
-                <span style="font-weight: 700;"></span>
+                <span style="font-weight: 700;"><?=number_format( $evento->preco, 2 ) . '€'?></span>
               </p>
               <p class="u-align-left u-custom-font u-font-montserrat u-text u-text-4">
-                <span style="font-weight: 700;">31/10/2022</span>
+                <span style="font-weight: 700;"><?=date("d/m/Y", strtotime($evento->dataevento));?></span>
               </p>
               <a href="https://nicepage.com/c/grid-website-templates" class="u-active-custom-color-2 u-border-2 u-border-active-custom-color-1 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-font-lato u-hover-custom-color-2 u-radius-20 u-text-active-custom-color-1 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1" data-animation-duration="0" data-animation-delay="0" > &nbsp;Comprar<br>pulseira</a>
             </div>
