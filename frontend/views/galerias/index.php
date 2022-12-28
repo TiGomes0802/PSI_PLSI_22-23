@@ -9,24 +9,26 @@
     <section class="u-clearfix u-custom-color-2 u-section-1" id="sec-07e1">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-align-center u-text u-text-default u-text-1" spellcheck="false">Lista de Galerias</h2>
+        
         <div class="container">
+
         <div class="u-expanded-width-lg u-expanded-width-xl u-layout-grid u-list u-list-1">
+          
           <div class="u-repeater u-repeater-1">
             
-            <?php foreach ($galerias as $galeira) {     ?>
+            <?php 
+              
+            foreach ($eventos as $evento) { ?>
+              <a href='index.php?r=galerias%2Fview&id=<?= $evento->id ?>'>
+              <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('./../../backend/web/cartaz/<?= $evento->cartaz ?>');">
+                <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
+                  <h3 class="u-text u-text-default-xl u-text-2"><?= $evento->nome ?></h3>
+                </div>
+              </div>
+            </a>
+              
+           <?php } ?>
 
-
-                <a href="">
-                    <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('./assets/front-view-man-holding-vinyl-disk-his-face-music-store-mock-up_23-2148690557.jpg');">
-                        <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
-                            <h3 class="u-text u-text-default-xl u-text-2"><?= $galeira->nome ?></h3>
-                        </div>
-                    </div>
-                </a>
-
-            <?php } ?>
-
-            
 
           </div>
         </div>
