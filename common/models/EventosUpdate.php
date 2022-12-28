@@ -3,9 +3,7 @@
 namespace common\models;
 
 use Yii;
-use DateTime;
 use yii\base\Model;
-use yii\web\UploadedFile;
 /**
  * This is the model class for table "eventos".
  *
@@ -40,13 +38,10 @@ class EventosUpdate extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        $date = new DateTime();
-        $min = $date->format('Y-m-d h:i');
-
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
-            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
+            ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i'],
             [['id_criador', 'id_tipo_evento'], 'integer'],
             ['numbilhetesdisp', 'integer', 'min' => 0],
             ['preco', 'double'],

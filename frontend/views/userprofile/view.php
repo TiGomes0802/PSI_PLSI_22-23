@@ -78,11 +78,6 @@ $this->title = $model->nome . " " . $model->apelido;
                 ],
             ]) ?>
 
-            <p>
-                <?= Html::a('Update', ['update', 'id' => $model->user_id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Update Password', ['update_password', 'id' => $model->user_id], ['class' => 'btn btn-primary']) ?>
-            </p>
-
             <?php if(\Yii::$app->user->can('verdadosEstatisticosCodigo')) {?>
                 <script>
                     var model = <?php print json_encode($grafico); ?>;

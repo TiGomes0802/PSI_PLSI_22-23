@@ -5,7 +5,7 @@
     <div class="u-clearfix u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-gutter-40 u-layout-wrap u-layout-wrap-1">
       <div class="u-layout">
         <div class="u-layout-row">
-          <div class="u-align-left u-container-style u-image u-layout-cell u-size-27" style="background-image: url('https://amymhaddad.s3.amazonaws.com/morocco-blue.png');" data-image-width="716" data-image-height="621">
+          <div class="u-align-left u-container-style u-image u-layout-cell u-size-27" style="background-image: url('./../../backend/web/cartaz/<?= $evento->cartaz ?>');" data-image-width="716" data-image-height="621">
             <div class="u-container-layout u-valign-bottom u-container-layout-1"></div>
           </div>
           <div class="u-container-style u-layout-cell u-size-33 u-layout-cell-2">

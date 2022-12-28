@@ -61,8 +61,10 @@ class EventosController extends Controller
     {
         if (\Yii::$app->user->can('viewEvento')) {
 
-            $model = Eventos::find()->where(['estado' => $estado]);
-            
+            $model = Eventos::find()
+                ->where(['estado' => $estado])
+                ->orderBy(['dataevento' => SORT_DESC]);
+
             $searchModel = new ActiveDataProvider([
                 'query' => $model,
                 'pagination' => [
@@ -151,6 +153,8 @@ class EventosController extends Controller
 
             if ($this->request->isPost && $model->load($this->request->post())) {
 
+                $userprofile = Userprofile::find()->where(['user_id' => Yii::$app->user->getId()])->one();
+
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                 
                 if($model->imageFile != null){
@@ -158,7 +162,7 @@ class EventosController extends Controller
                 }
                 
                 $model->id_tipo_evento = (int)$model->id_tipo_evento;
-                $model->id_criador = Yii::$app->user->getId();
+                $model->id_criador = $userprofile->id;
                 
                 $input = strtotime($model->dataevento);
                 $newdatetime = date('Y-m-d H:i',$input);
