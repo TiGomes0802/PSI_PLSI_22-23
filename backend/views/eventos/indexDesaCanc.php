@@ -44,7 +44,7 @@ $this->title = '';
                 },
             ],
             [
-                'label' => 'Descrição',
+                'label' => 'Descricao',
                 'format' => 'html',
                 'headerOptions' => ['width' => '670px'],
                 'contentOptions' => ['style'=>'text-align:justify;'],
@@ -85,6 +85,7 @@ $this->title = '';
             ],
             [
                 'class' => ActionColumn::className(),
+                'template' => '{view} {delete}',
                 'urlCreator' => function ($action, Eventos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

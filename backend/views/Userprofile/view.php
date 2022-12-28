@@ -7,18 +7,16 @@ use yii\widgets\DetailView;
 /** @var app\models\Userprofile $model */
 
 $this->title = $model->nome . ' ' . $model->apelido;
-$this->params['breadcrumbs'][] = ['label' => 'Userprofiles', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="userprofile-view">
 
-    <h2><?= array_keys(Yii::$app->authManager->getRolesByUser($model->userid))[0] ?></h2>
+    <h2><?= array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] ?></h2>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->userid], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Update password', ['update_password', 'id' => $model->userid], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->userid], [
+        <?= Html::a('Update', ['update', 'id' => $model->user_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Update password', ['update_password', 'id' => $model->user_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->user_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -26,51 +24,104 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            [
-                'label' => 'Nome',
-                'value' => function ($data) {
-                    return $data->nome .' '. $data->apelido;;
-                },
-            ],
-            [
-                'label' => 'Username',
-                'value' => function ($data) {
-                    return $data->user->username;
-                },
-            ],
-            [
-                'label' => 'Email',
-                'value' => function ($data) {
-                    return $data->user->email;
-                },
-            ],
-            [
-                'label' => 'Data de Nascimento',
-                'format' => ['date', 'php:d-m-Y'],
-                'value' => function ($data) {
-                    return $data->datanascimento;
-                },
-            ],
-            [
-                'label' => 'Sexo',
-                'value' => function ($data) {
-                    return $data->sexo;
-                },
-            ],
-            [
-                'label' => 'codigo RP',
-                'value' => function ($data) {
-                    if($data->codigoRP != null){
+    <?php if(array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'rp'){ ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'label' => 'Nome',
+                    'value' => function ($data) {
+                        return $data->nome .' '. $data->apelido;;
+                    },
+                ],
+                [
+                    'label' => 'Username',
+                    'value' => function ($data) {
+                        return $data->user->username;
+                    },
+                ],
+                [
+                    'label' => 'Email',
+                    'value' => function ($data) {
+                        return $data->user->email;
+                    },
+                ],
+                [
+                    'label' => 'Data de Nascimento',
+                    'format' => ['date', 'php:d/m/Y'],
+                    'value' => function ($data) {
+                        return $data->datanascimento;
+                    },
+                ],
+                [
+                    'label' => 'Sexo',
+                    'value' => function ($data) {
+                        return $data->sexo;
+                    },
+                ],
+                [
+                    'label' => 'codigo RP',
+                    'value' => function ($data) {
                         return $data->codigoRP;
-                    }
-                    return '--------------';
-                },
+                    },
+                ],
             ],
-        ],
-    ]) ?>
+        ]);?>
+    <?php }else{ ?>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'label' => 'Nome',
+                    'value' => function ($data) {
+                        return $data->nome .' '. $data->apelido;;
+                    },
+                ],
+                [
+                    'label' => 'Username',
+                    'value' => function ($data) {
+                        return $data->user->username;
+                    },
+                ],
+                [
+                    'label' => 'Email',
+                    'value' => function ($data) {
+                        return $data->user->email;
+                    },
+                ],
+                [
+                    'label' => 'Data de Nascimento',
+                    'format' => ['date', 'php:d/m/Y'],
+                    'value' => function ($data) {
+                        return $data->datanascimento;
+                    },
+                ],
+                [
+                    'label' => 'Sexo',
+                    'value' => function ($data) {
+                        return $data->sexo;
+                    },
+                ],
+            ],
+        ]);?>
+    <?php } ?>
+    
 
+    
+    <br>
+    <?php if(array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'gestor' or array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'admin') {?>
+        <?= $this->render('viewgraficosgestor', [
+            'grafico' => $grafico,
+            'numeventosuser' => $numeventosuser,
+            'valorfaturadouser' => $valorfaturadouser,
+            'bilhetesveendidosuser' => $bilhetesveendidosuser,
+        ]) ?>
+    <?php } 
+        if(array_keys(Yii::$app->authManager->getRolesByUser($model->user_id))[0] == 'rp') { ?>
+            <?= $this->render('viewgraficosrp', [
+                'graficorp' => $graficorp,
+                'grafico2rp' => $grafico2rp,
+                'listaeventosrp' => $listaeventosrp,
+            ]) ?>
+    <?php } ?>
 </div>

@@ -38,9 +38,10 @@ class Userprofile extends \yii\db\ActiveRecord
         return [
             [['nome', 'apelido', 'datanascimento', 'user_id'], 'required'],
             [['datanascimento'], 'safe'],
+            ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             [['user_id'], 'integer'],
             [['nome', 'apelido', 'codigoRP'], 'string', 'max' => 25],
-            [['sexo'], 'string', 'max' => 9],
+            ['sexo', 'string', 'max' => 9],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

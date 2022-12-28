@@ -54,7 +54,7 @@ class Noticias extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
+     /**
      * Gets query for [[Criador]].
      *
      * @return \yii\db\ActiveQuery

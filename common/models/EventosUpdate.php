@@ -16,7 +16,7 @@ use yii\web\UploadedFile;
  * @property string $dataevento
  * @property int $numbilhetesdisp
  * @property float $preco
- * @property string $estado
+ * @property string $estado 
  * @property int $id_criador
  * @property int $id_tipo_evento
  *
@@ -25,14 +25,8 @@ use yii\web\UploadedFile;
  * @property Pulseiras[] $pulseiras
  * @property Tipoevento $tipoEvento
  */
-class Eventos extends \yii\db\ActiveRecord
+class EventosUpdate extends \yii\db\ActiveRecord
 {
-    /**
-     * @var \yii\web\UploadedFile
-     */
-    public $imageFile;
-    public $imageFileUpdate;
-
     /**
      * {@inheritdoc}
      */
@@ -50,7 +44,7 @@ class Eventos extends \yii\db\ActiveRecord
         $min = $date->format('Y-m-d h:i');
 
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
             ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
             [['id_criador', 'id_tipo_evento'], 'integer'],
@@ -61,7 +55,6 @@ class Eventos extends \yii\db\ActiveRecord
             ['cartaz', 'string', 'max' => 250],
             ['id_criador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
             ['id_tipo_evento', 'exist', 'skipOnError' => true, 'targetClass' => Tipoevento::class, 'targetAttribute' => ['id_tipo_evento' => 'id']],
-            [['imageFile','imageFileUpdate'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -75,8 +68,6 @@ class Eventos extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'descricao' => 'Descricao',
             'cartaz' => 'Cartaz',
-            'imageFile' => 'Product Image',
-            'imageFileUpdate' => 'Product Image',
             'dataevento' => 'Dataevento',
             'numbilhetesdisp' => 'Numbilhetesdisp',
             'preco' => 'Preco',
@@ -86,43 +77,34 @@ class Eventos extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Criador]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCriador()
+    public function UpdateEstadoEvento()
     {
-        return $this->hasOne(Userprofile::class, ['id' => 'id_criador']);
-    }
+        $eventos = Eventosupdate::find()->where(['estado' => 'ativo'])->all();
+        
+        foreach($eventos as $evento){
 
-    /**
-     * Gets query for [[Galerias]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGalerias()
-    {
-        return $this->hasMany(Galerias::class, ['id_evento' => 'id']);
-    }
+            if(date('Y-m-d 06:00:00') < date('Y-m-d H:m:s')){
+                $date = date('Y-m-d H:m:s');
+            } else{
+                $date = date('Y-m-d H:m:s', strtotime(date('Y-m-d H:m:s') . " - 1 day"));
+            }
 
-    /**
-     * Gets query for [[Pulseiras]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPulseiras()
-    {
-        return $this->hasMany(Pulseiras::class, ['id_evento' => 'id']);
-    }
-
-    /**
-     * Gets query for [[TipoEvento]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTipoEvento()
-    {
-        return $this->hasOne(Tipoevento::class, ['id' => 'id_tipo_evento']);
+            if($evento->dataevento < $date){
+                $eventoupdate = new Eventosupdate();
+                $eventoupdate = Eventosupdate::find()->where(['id' => $evento->id])->one();
+                $date = strtotime($evento->dataevento);
+                $eventoupdate->dataevento = date('Y-m-d H:i', $date); 
+                $eventoupdate->estado = 'desativo';
+                if($eventoupdate->validate()){
+                    $pulseiras = Pulseiras::find()->where(['estado' => 'ativa'])->andwhere(['id_evento' => $evento->id])->all();
+                    foreach($pulseiras as $pulseira){
+                        $pulseiraupdate = Pulseiras::findOne($pulseira->id);
+                        $pulseiraupdate->estado = 'naousada';
+                        $pulseiraupdate->save();
+                    }
+                }
+                $eventoupdate->save();
+            }
+        }
     }
 }

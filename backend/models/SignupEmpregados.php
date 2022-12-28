@@ -25,7 +25,7 @@ class SignupEmpregados extends Model
     public $apelido;
     public $datanascimento;
     public $codigoRP;
-    public $userid;
+    public $user_id;
     public $sexo;
 
     public $role;
@@ -53,10 +53,10 @@ class SignupEmpregados extends Model
 
             [['datanascimento'], 'safe'],
             ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
-            ['userid', 'integer'],
-            [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 5, 'max' => 25],
+            ['user_id', 'integer'],
+            [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 2, 'max' => 25],
             ['sexo', 'string', 'min' => 8, 'max' => 9],
-            ['userid', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userid' => 'id']],
+            ['user_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -89,7 +89,7 @@ class SignupEmpregados extends Model
         $user->generateEmailVerificationToken();
         $user->save(false);
 
-        $userprofile->userid = $user->getId();
+        $userprofile->user_id = $user->getId();
 
         $auth = \Yii::$app->authManager;
         $authorRole = $auth->getRole($this->role);
@@ -100,7 +100,7 @@ class SignupEmpregados extends Model
 
     public function loadingdados($id)
     {   
-        $userprofile = Userprofile::find()->where(['userid' => $id])->one();
+        $userprofile = Userprofile::find()->where(['user_id' => $id])->one();
         $user = user::find()->where(['id' => $id])->one();
         $model = $this;
 
@@ -122,7 +122,7 @@ class SignupEmpregados extends Model
         $user = new User();
 
         $user = user::find()->where(['id' => $id])->one();
-        $userprofile = Userprofile::find()->where(['userid' => $user->id])->one();
+        $userprofile = Userprofile::find()->where(['user_id' => $user->id])->one();
         
         $user->username = $this->username;
         $user->email = $this->email;

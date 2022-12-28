@@ -63,6 +63,7 @@ class EventosSearch extends Eventos
             'dataevento' => $this->dataevento,
             'numbilhetesdisp' => $this->numbilhetesdisp,
             'preco' => $this->preco,
+            'estado' => $this->estado,
             'id_criador' => $this->id_criador,
             'id_tipo_evento' => $this->id_tipo_evento,
         ]);

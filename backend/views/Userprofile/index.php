@@ -10,12 +10,11 @@ use yii\grid\GridView;
 /** @var app\models\UserprofileSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Userprofiles';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="userprofile-index">
 
-    <h1><?= Html::encode('Funcionarios') ?></h1>
+    <h1><?= Html::encode('Funcionários ') ?></h1>
 
     <p>
         <?= Html::a('Create Userprofile', ['create'], ['class' => 'btn btn-success']) ?>
@@ -29,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => '',
                 'value' => function ($data) {
-                    return array_keys(Yii::$app->authManager->getRolesByUser($data->userid))[0];
+                    return array_keys(Yii::$app->authManager->getRolesByUser($data->user_id))[0];
                 },
             ],
             [
@@ -58,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Data de Nascimento',
-                'format' => ['date', 'php:d-m-Y'],
+                'format' => ['date', 'php:d/m/Y'],
                 'value' => function ($data) {
                     return $data->datanascimento;
                 },
@@ -66,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->userid]);
+                    return Url::toRoute([$action, 'id' => $model->user_id]);
                  }
             ],
         ],

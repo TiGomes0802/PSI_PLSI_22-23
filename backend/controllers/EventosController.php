@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -10,6 +11,9 @@ use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use common\models\Eventos;
 use common\models\EventosSearch;
+use common\models\EventosUpdate;
+use common\models\Pulseiras;
+use common\models\PulseirasSearch;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
 
@@ -23,6 +27,9 @@ class EventosController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -41,23 +48,40 @@ class EventosController extends Controller
                             'roles' => ['gestor','admin'],
                         ],
                     ],
+                    'denyCallback' => function ($rule, $action) {
+                        Yii::$app->user->logout();
+                        return $this->redirect(['site/login']);
+                    }
                 ],
             ]
         );
     }
 
-
-    public function actionIndex()
+    public function actionIndex($estado)
     {
         if (\Yii::$app->user->can('viewEvento')) {
 
-            $searchModel = new EventosSearch();
-            $dataProvider = $searchModel->search($this->request->queryParams);
-    
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            $model = Eventos::find()->where(['estado' => $estado]);
+            
+            $searchModel = new ActiveDataProvider([
+                'query' => $model,
+                'pagination' => [
+                    'pageSize' => 25,
+                ],
             ]);
+
+            if($estado == "ativo"){
+                return $this->render('index', [
+                    'searchModel' => $searchModel,
+                ]);
+            }else {
+                if($estado == "desativo" or $estado == "cancelado") {
+                    return $this->render('indexDesaCanc', [
+                        'searchModel' => $searchModel,
+                    ]);
+                }
+            }
+                
 
         }else{
             return $this->render('/site/logout', [
@@ -70,9 +94,45 @@ class EventosController extends Controller
     public function actionView($id)
     {
         if (\Yii::$app->user->can('viewEvento')) {
+            
+            $model = $this->findModel($id);
+
+            $valorfaturado = (new yii\db\Query())
+                ->from('pulseiras')
+                ->rightJoin('faturas', 'pulseiras.id = faturas.id_pulseira')
+                ->where(['pulseiras.id_evento' => $model->id])
+                ->sum('faturas.preco');
+
+            $numbilhetesvendidos = (new yii\db\Query())
+                ->from('pulseiras')
+                ->where(['pulseiras.id_evento' => $model->id])
+                ->count();
+
+            $grafico = (new yii\db\Query())
+                ->from('userprofile')
+                ->select(['sexo', 'COUNT(sexo) AS quantidade'])
+                ->leftJoin('user', 'user.id = userprofile.user_id')
+                ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
+                ->leftJoin('pulseiras', 'pulseiras.id_cliente = userprofile.id')
+                ->where(['pulseiras.id_evento' => $model->id])
+                ->orderBy(['sexo'=>SORT_ASC])
+                ->groupBy('sexo')
+                ->all();
+
+             $grafico2 = (new yii\db\Query())
+                ->from('pulseiras')
+                ->select(['codigorp', 'COUNT(codigorp) AS quantidade'])
+                ->where(['pulseiras.id_evento' => $model->id])
+                ->andwhere(['!=', 'pulseiras.codigorp', 'null'])
+                ->groupBy('codigorp')
+                ->all();
 
             return $this->render('view', [
-                'model' => $this->findModel($id),
+                'model' => $model,
+                'numbilhetesvendidos' => $numbilhetesvendidos,
+                'valorfaturado' => $valorfaturado,
+                'grafico' => $grafico,
+                'grafico2' => $grafico2,
             ]);
             
         }else{
@@ -88,8 +148,6 @@ class EventosController extends Controller
         if (\Yii::$app->user->can('createEvento')) {
 
             $model = new Eventos();
-        
-            $user = Userprofile::find()->where(['userid' => Yii::$app->user->getId()])->one();
 
             if ($this->request->isPost && $model->load($this->request->post())) {
 
@@ -99,13 +157,14 @@ class EventosController extends Controller
                     $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
                 }
                 
-                $model->idtipoevento = (int)$model->idtipoevento;
-                $model->idcriador = $user->id;
+                $model->id_tipo_evento = (int)$model->id_tipo_evento;
+                $model->id_criador = Yii::$app->user->getId();
                 
                 $input = strtotime($model->dataevento);
-                $newdatetime = date('Y-m-d h:i',$input);
+                $newdatetime = date('Y-m-d H:i',$input);
 
                 $model->dataevento = $newdatetime;
+                $model->estado = "ativo";
 
                 if ($model->save()) {
                     
@@ -128,7 +187,7 @@ class EventosController extends Controller
             ]);
 
         }else{
-            return $this->render('/site/logout', [
+            return $this->rende('/site/logout', [
                 'model' => $this->findModel($id),
             ]);
         }
@@ -140,32 +199,45 @@ class EventosController extends Controller
         if (\Yii::$app->user->can('updateEvento')) {
 
             $model = $this->findModel($id);
+            
+            if($model->estado == 'ativo'){
+                if ($this->request->isPost && $model->load($this->request->post())) {
 
-            if ($this->request->isPost && $model->load($this->request->post())) {
+                    $input = strtotime($model->dataevento);
+                    $newdatetime = date('Y-m-d H:i',$input);
+                    $model->dataevento = $newdatetime;
 
-                $input = strtotime($model->dataevento);
-                $newdatetime = date('Y-m-d h:i',$input);
-                $model->dataevento = $newdatetime;
-
-                $model->imageFileUpdate = UploadedFile::getInstance($model, 'imageFileUpdate');
-                
-                $model->imageFile = 'nada.png';
-
-                $model->idtipoevento = (int)$model->idtipoevento;
-
-                if ($model->save()) {
+                    $model->imageFileUpdate = UploadedFile::getInstance($model, 'imageFileUpdate');
                     
-                    if($model->imageFileUpdate != null){
-                        $model->imageFileUpdate->saveAs('cartaz/' . $model->cartaz);
+                    $model->imageFile = 'nada.png';
+
+                    $model->id_tipo_evento = (int)$model->id_tipo_evento;
+                    
+                    if($model->validate() && $model->estado == 'cancelado'){
+                        $pulseiras = Pulseiras::find()->where(['id_evento' => $model->id])->all();
+                        foreach($pulseiras as $pulseira){
+                            $pulseiraupdate = Pulseiras::findOne($pulseira->id);
+                            $pulseiraupdate->estado = 'cancelada';
+                            $pulseiraupdate->save();
+                        }
                     }
-                    
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            }
 
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                    if ($model->save()) {
+                        
+                        if($model->imageFileUpdate != null){
+                            $model->imageFileUpdate->saveAs('cartaz/' . $model->cartaz);
+                        }
+                        
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }else{
+                return $this->redirect(['index', 'estado' => 'ativo']);
+            }  
 
         }else{
             Yii::$app->user->logout();
@@ -181,7 +253,7 @@ class EventosController extends Controller
             $model = $this->findModel($id);
             $this->findModel($id)->delete();
             unlink('cartaz/' . $model->cartaz);
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'estado' => $model->estado]);
         
         }else{
             Yii::$app->user->logout();

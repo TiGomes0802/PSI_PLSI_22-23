@@ -57,7 +57,7 @@ create table pulseiras(
 	id int not null primary key auto_increment,
     estado varchar(25) not null,
     tipo varchar(25) not null,
-    codigorp int not null,
+    codigorp varchar(25),
 	id_evento int not null,
     id_cliente int not null,
     foreign key (id_evento) references eventos(id),

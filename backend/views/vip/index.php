@@ -10,30 +10,44 @@ use yii\grid\GridView;
 /** @var common\models\VipSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Vips';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
 ?>
 <div class="vip-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode("Vip's") ?></h1>
 
     <p>
         <?= Html::a('Create Vip', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'npessoas',
-            'descricao',
-            'nbebidas',
-            'preco',
+            [
+                'label' => 'Número de Pessoas',
+                'value' => function ($data) {
+                    return $data->npessoas;
+                },
+            ],
+            [
+                'label' => 'Descrição',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return $data->descricao;
+                },
+            ],
+            [
+                'label' => 'Número de bebidas',
+                'value' => function ($data) {
+                    return $data->nbebidas;
+                },
+            ],
+            [
+                'label' => 'Preço',
+                'value' => function ($data) {
+                    return number_format( $data->preco, 2 ) . '€';
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Vip $model, $key, $index, $column) {
