@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use DateTime;
 use DateInterval;
+
 /**
  * This is the model class for table "userprofile".
  *
@@ -41,7 +42,7 @@ class Userprofile extends \yii\db\ActiveRecord
         $max = $date->format('Y-m-d');
 
         return [
-            [['nome', 'apelido', 'datanascimento', 'sexo'], 'required'],
+            [['nome', 'apelido', 'datanascimento', 'user_id'], 'required'],
             [['datanascimento'], 'safe'],
             ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             [['user_id'], 'integer'],
