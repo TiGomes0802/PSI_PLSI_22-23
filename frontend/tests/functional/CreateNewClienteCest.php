@@ -33,16 +33,15 @@ class CreateNewClienteCest
         
         $I->fillField('#nome', 'teste');
         $I->fillField('#apelido', 'teste');
-        //$I->fillField('#username', 'clarinha');
+        $I->fillField('#username', 'clarinha');
         $I->fillField('#password', '12345678');
         $I->fillField('#passwordrepet', '12345678');
         $I->fillField('#email', 'teste.email@example.com');
-        $I->fillField('#date', '2015/05/02');
+        $I->selectOption('#sexo', 'Masculino');
+        $I->fillField('#date', '2000-06-13');
 
         //$I->see('Logout (clarinha)');
         $I->click('Submit');
-        $I->seeValidationError('Sexo não pode estar vazio');
-        $I->seeValidationError('Precisa ser maior de 18 anos.');
         //$I->seeRecord('common\,models\Userprofile', [
         //    'nome' => 'teste',
         //    'apelido' => 'teste',

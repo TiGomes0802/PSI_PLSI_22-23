@@ -75,6 +75,8 @@ class SignupForm extends Model
         $userprofile->nome = $this->nome;
         $userprofile->apelido = $this->apelido;
         $userprofile->datanascimento = $this->datanascimento;
+        var_dump($userprofile->datanascimento);
+        die;
         $userprofile->sexo = $this->sexo;
 
         $user->username = $this->username;
