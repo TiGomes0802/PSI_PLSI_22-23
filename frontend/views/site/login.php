@@ -19,13 +19,13 @@ $this->title = 'Login';?>
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
         <div class="u-form-group u-form-name u-label-top">
-          <label for="name-40e2" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Username</label>
-          <?= $form->field($model, 'username')->input('text', ['placeholder' => 'Username'])->label(false); ?>
+          <label class="u-label u-spacing-0 u-text-custom-color-1 u-label">Username</label>
+          <?= $form->field($model, 'username')->input('text', ['placeholder' => 'Username', 'id' => 'username'])->label(false); ?>
         </div>
 
         <div class="u-form-group u-form-name u-label-top">
-          <label for="name-818d" class="u-label u-spacing-0 u-text-custom-color-1 u-label">Password</label>
-          <?= $form->field($model, 'password')->input('password',['placeholder' => 'Password'])->label(false); ?>
+          <label class="u-label u-spacing-0 u-text-custom-color-1 u-label">Password</label>
+          <?= $form->field($model, 'password')->input('password',['placeholder' => 'Password', 'id' => 'password'])->label(false); ?>
         </div>
 
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
