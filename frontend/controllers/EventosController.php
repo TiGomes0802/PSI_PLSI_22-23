@@ -7,6 +7,8 @@ use common\models\Eventos;
 use common\models\EventosSearch;
 use common\models\Pulseiras;
 use common\models\PulseirasSearch;
+use common\models\Userprofile;
+use common\models\UserprofileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -78,9 +80,13 @@ class EventosController extends Controller
             $comprado = null;
         }
 
+        $user = Userprofile::Find()->where(['user_id'=> Yii::$app->user->id])->one();
+        
+
         return $this->render('view', [
             'evento' => $evento,
             'comprado' => $comprado,
+            'user' => $user,
         ]);
     }
 

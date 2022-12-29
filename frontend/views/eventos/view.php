@@ -27,9 +27,20 @@
                   <a href="" class="u-active-custom-color-2 u-border-2 u-border-active-custom-color-1 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-font-lato u-hover-custom-color-2 u-radius-20 u-text-active-custom-color-1 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1" data-animation-duration="0" data-animation-delay="0" >Pulseira<br>Adquirida</a>
                 <?php } else { ?>
                   <a href="" class="u-active-custom-color-2 u-border-2 u-border-active-custom-color-1 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-font-lato u-hover-custom-color-2 u-radius-20 u-text-active-custom-color-1 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1" data-animation-duration="0" data-animation-delay="0" >Evento<br>Esgotado</a>
-                <?php } ?>  
-              <?php } ?>  
-              
+                <?php } ?>
+
+              <?php }   
+                  
+                if(array_keys(Yii::$app->authManager->getRolesByUser($user->user_id))[0] == 'rp') { ?>
+                  <br>
+                  <script>
+                    function myFunction() {
+                      navigator.clipboard.writeText("http://localhost/ecstasyclub/frontend/web/index.php?r=pulseiras%2Fcomprar&id_evento=<?=$evento->id?>&codigorp=<?=$user->codigoRP?>");
+                    }
+                  </script>
+                  <button class="u-active-custom-color-2 u-border-2 u-border-active-custom-color-1 u-border-custom-color-1 u-border-hover-custom-color-1 u-btn u-btn-round u-button-style u-custom-color-1 u-custom-font u-font-lato u-hover-custom-color-2 u-radius-20 u-text-active-custom-color-1 u-text-custom-color-2 u-text-hover-custom-color-1 u-btn-1" data-animation-duration="0" data-animation-delay="0" onclick="myFunction()">Copy text</button>
+                <?php } ?>
+                
             </div>
           </div>
         </div>
