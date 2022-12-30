@@ -72,8 +72,7 @@ class UserprofileController extends Controller
             ->leftJoin('user', 'user.id = userprofile.user_id')
             ->leftJoin('pulseiras', 'pulseiras.id_cliente = userprofile.id')
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
-            ->where(['auth_assignment.item_name' => 'cliente'])
-            ->andwhere(['pulseiras.codigorp' => $userprofile->codigoRP])
+            ->where(['pulseiras.codigorp' => $userprofile->codigoRP])
             ->orderBy(['sexo'=>SORT_ASC])
             ->groupBy('sexo')
             ->all();

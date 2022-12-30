@@ -82,7 +82,7 @@ class LinhafaturaController extends Controller
             array_push($id_de_vips, $i->id_vip);
         }
 
-        if($pulseira == null && !in_array($id_vip,$id_de_vips) && $evento->numbilhetesdisp > 0 && $evento2 != null && ($codigorpvalido != null or $codigorp == null)){
+        if(/*$pulseira == null && !in_array($id_vip,$id_de_vips) && $evento->numbilhetesdisp > 0 && $evento2 != null && ($codigorpvalido != null or*/ $codigorp == null){
         
             $linhasfaturas = new LinhaFatura();
             $fatura = new Faturas();
@@ -101,7 +101,8 @@ class LinhafaturaController extends Controller
                 $pulseira->id_evento = intval($id_evento);
                 $pulseira->id_cliente = $user->id;
                 $pulseira->save(false);
-    
+                
+                
                 $reserva_vip->id_pulseira = $pulseira->id;
                 $reserva_vip->id_vip = $vip->id;
     
@@ -119,10 +120,11 @@ class LinhafaturaController extends Controller
                 }
                 
                 $evento->numbilhetesdisp = $evento->numbilhetesdisp - 1;
-                $evento->numbilhetesdisp -= 1;
-                $date = strtotime($evento->dataevento);
-                $evento->dataevento = date('Y-m-d H:i', $date); 
-                
+                $input = strtotime($evento->dataevento);
+                $newdatetime = date('Y-m-d H:i', $input);
+                $evento->dataevento = $newdatetime;
+                $evento->imageFile = 'nada.png';
+
                 if ($pulseira->save() && $fatura->save() && $reserva_vip->save() && $evento->save()) {    
                     return $this->redirect(['eventos/view', 'id' => $id_evento]);
                 }
