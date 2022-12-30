@@ -150,7 +150,7 @@ class DiscoTest extends \Codeception\Test\Unit
 
         $Disco = Disco::findOne(['id'=> $id]);
 
-        $nome = "José";
+        $nome = "Jose";
         $nif = "249024355";
         $localidade = "Braga";
         $codpostal = "2660-134";
