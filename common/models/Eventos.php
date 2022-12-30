@@ -16,7 +16,7 @@ use yii\web\UploadedFile;
  * @property string $dataevento
  * @property int $numbilhetesdisp
  * @property float $preco
- * @property string $estado 
+ * @property string $estado
  * @property int $id_criador
  * @property int $id_tipo_evento
  *

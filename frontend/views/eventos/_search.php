@@ -29,9 +29,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'preco') ?>
 
-    <?php // echo $form->field($model, 'idcriador') ?>
+    <?php // echo $form->field($model, 'estado') ?>
 
-    <?php // echo $form->field($model, 'idtipoevento') ?>
+    <?php // echo $form->field($model, 'id_criador') ?>
+
+    <?php // echo $form->field($model, 'id_tipo_evento') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

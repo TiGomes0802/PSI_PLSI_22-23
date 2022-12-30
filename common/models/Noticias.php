@@ -35,7 +35,7 @@ class Noticias extends \yii\db\ActiveRecord
             [['datanoticia'], 'safe'],
             [['id_criador'], 'integer'],
             [['titulo'], 'string', 'max' => 25],
-            [['descricao'], 'string', 'max' => 250],
+            [['descricao'], 'string', 'max' => 750],
             [['id_criador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
         ];
     }

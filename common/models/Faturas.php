@@ -36,7 +36,6 @@ class Faturas extends \yii\db\ActiveRecord
             [['preco'], 'number'],
             [['id_pulseira'], 'integer'],
             [['id_pulseira'], 'exist', 'skipOnError' => true, 'targetClass' => Pulseiras::class, 'targetAttribute' => ['id_pulseira' => 'id']],
-
         ];
     }
 

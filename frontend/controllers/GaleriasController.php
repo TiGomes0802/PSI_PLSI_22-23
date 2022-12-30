@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\models\Galerias;
 use common\models\GaleriasSearch;
+use common\models\Eventos;
+use common\models\EventosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,12 +40,10 @@ class GaleriasController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new GaleriasSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $eventos = Eventos::find()->where(['estado'=> 'desativo'])->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'eventos' => $eventos,
         ]);
     }
 
@@ -55,65 +55,11 @@ class GaleriasController extends Controller
      */
     public function actionView($id)
     {
+        $galerias = Galerias::find()->where(['id_evento'=> $id])->all();
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'galerias' => $galerias,
         ]);
-    }
-
-    /**
-     * Creates a new Galerias model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Galerias();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Galerias model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Galerias model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

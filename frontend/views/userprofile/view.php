@@ -77,6 +77,7 @@ $this->title = $model->nome . " " . $model->apelido;
                     ],
                 ],
             ]) ?>
+
             <?php if(\Yii::$app->user->can('verdadosEstatisticosCodigo')) {?>
                 <script>
                     var model = <?php print json_encode($grafico); ?>;
