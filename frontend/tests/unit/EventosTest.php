@@ -3,13 +3,14 @@
 namespace frontend\tests\Unit;
 
 use frontend\tests\UnitTester;
+use common\models\Eventos;
 use DateTime;
 
 class EventosTest extends \Codeception\Test\Unit
 {
     public function testFailValidation()
     {
-        $Evento = new \common\models\Eventos();
+        $Evento = new Eventos();
 
         $Evento->nome = null;
         $this->assertFalse($Evento->validate(['nome']));
@@ -87,7 +88,7 @@ class EventosTest extends \Codeception\Test\Unit
 
     public function testCorretValidation()
     {
-        $Evento = new \common\models\Eventos();
+        $Evento = new Eventos();
 
         $Evento->nome = "nome";
         $this->assertTrue($Evento->validate(['nome']));
@@ -98,9 +99,9 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->cartaz = "cartaz";
         $this->assertTrue($Evento->validate(['cartaz']));
 
-        $date = new DateTime();
-        $date = $date->format('Y-m-d');
-        $Evento->dataevento = $date;
+        $input = strtotime('2050-08-08T23:30');
+        $newdatetime = date('Y-m-d H:i',$input);
+        $Evento->dataevento = $newdatetime;
         $this->assertTrue($Evento->validate(['dataevento']));
 
         $Evento->numbilhetesdisp = 543;
@@ -121,16 +122,15 @@ class EventosTest extends \Codeception\Test\Unit
 
     public function testAddBDValidation()
     {
-        $Evento = new \common\models\Eventos();
+        $Evento = new Eventos();
 
         $nome = "nome";
         $descricao = "descricao";
         $cartaz = "cartaz";
-        $date = new DateTime();
-        $date = $date->format('Y-m-d');
-        $dataevento = $date;
+        $input = strtotime('2050-08-08T23:30');
+        $dataevento = date('Y-m-d H:i',$input);
         $numbilhetesdisp = 500;
-        $preco = 12.32;
+        $preco = 12;
         $id_criador = 1;
         $id_tipo_evento = 1;
 
@@ -144,7 +144,7 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->id_tipo_evento = $id_tipo_evento;
         $Evento->save();
 
-        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
+        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
     
         $id = $Evento->id;
 
@@ -154,9 +154,8 @@ class EventosTest extends \Codeception\Test\Unit
         $nome = "Outro Nome";
         $descricao = "Outra Descricao";
         $cartaz = "Outro Cartaz";
-        $date = new DateTime();
-        $date = $date->format('Y-m-d');
-        $dataevento = $date;
+        $input = strtotime('2050-08-08T23:30');
+        $dataevento = date('Y-m-d H:i',$input);
         $numbilhetesdisp = 250;
         $preco = 25;
         $id_criador = 1;
@@ -172,11 +171,11 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->id_tipo_evento = $id_tipo_evento;
         $Evento->save();
 
-        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
+        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
 
         //Delete
         Eventos::findOne(['id' => $id])->delete();
 
-        $this->tester->dontSeeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);    
+        $this->tester->dontSeeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);    
     }
 }

@@ -3,13 +3,14 @@
 namespace frontend\tests\Unit;
 
 use frontend\tests\UnitTester;
+use \common\models\Noticias;
 use DateTime;
 
 class NoticiasTest extends \Codeception\Test\Unit
 {
     public function testFailValidation()
     {
-        $noticias = new \common\models\Noticias();
+        $noticias = new Noticias();
 
         $noticias->titulo = null;
         $this->assertFalse($noticias->validate(['titulo']));
@@ -54,16 +55,16 @@ class NoticiasTest extends \Codeception\Test\Unit
 
     public function testCorretValidation()
     {
-        $noticias = new \common\models\Noticias();
+        $noticias = new Noticias();
 
         $noticias->titulo = 'teste';
         $this->assertTrue($noticias->validate(['titulo']));
 
-        $datetime = new Datetime();
-        $datetime = $datetime->format('Y-m-d H:i:s');
-        $noticias->datanoticia = $datetime;
+        $input = strtotime('2012-08-08T23:30:00');
+        $newdatetime = date('Y-m-d H:i:s',$input);
+        $noticias->datanoticia = $newdatetime;
         $this->assertTrue($noticias->validate(['datanoticia']));
-        
+
         $noticias->descricao = 'descricao'; 
         $this->assertTrue($noticias->validate(['descricao']));
         
@@ -73,21 +74,21 @@ class NoticiasTest extends \Codeception\Test\Unit
 
     public function testAddBDValidation()
     {
-        $noticias = new \common\models\Noticias();
+        $noticias = new Noticias();
 
         $titulo = "titulo";
-        $datetime = new Datetime();
-        $datetime = $datetime->format('Y-m-d H:i:s');
+        $input = strtotime('2012-08-08T23:30:00');
+        $datanoticia = date('Y-m-d H:i:s',$input);
         $descricao = "descricao";
         $id_criador = 1;
 
         $noticias->titulo = $titulo;
-        $noticias->datanoticia = $datetime;
+        $noticias->datanoticia = $datanoticia;
         $noticias->descricao = $descricao;
         $noticias->id_criador = $id_criador;
         $noticias->save();
 
-        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'id_criador' => $id_criador]);
+        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datanoticia, 'descricao' => $descricao, 'id_criador' => $id_criador]);
 
         $id = $noticias->id;
 
@@ -95,22 +96,22 @@ class NoticiasTest extends \Codeception\Test\Unit
         $noticias = Noticias::findOne(['id' => $id]);
 
         $titulo = "Outro titulo";
-        $datetime = new Datetime();
-        $datetime = $datetime->format('Y-m-d H:i:s');
+        $input = strtotime('2020-08-08T23:30:00');
+        $datanoticia = date('Y-m-d H:i:s',$input);
         $descricao = "Outra descricao";
         $id_criador = 1;
 
         $noticias->titulo = $titulo;
-        $noticias->datanoticia = $datetime;
+        $noticias->datanoticia = $datanoticia;
         $noticias->descricao = $descricao;
         $noticias->id_criador = $id_criador;
         $noticias->save();
 
-        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'id_criador' => $id_criador]);
+        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datanoticia, 'descricao' => $descricao, 'id_criador' => $id_criador]);
 
         //Delete
         Noticias::findOne(['id' => $id])->delete();
 
-        $this->tester->dontSeeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datetime, 'descricao' => $descricao, 'id_criador' => $id_criador]);
+        $this->tester->dontSeeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datanoticia, 'descricao' => $descricao, 'id_criador' => $id_criador]);
     }
 }

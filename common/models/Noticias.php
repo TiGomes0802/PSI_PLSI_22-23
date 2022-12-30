@@ -33,7 +33,7 @@ class Noticias extends \yii\db\ActiveRecord
         return [
             [['titulo', 'datanoticia', 'descricao', 'id_criador'], 'required'],
             ['datanoticia', 'safe'],
-            ['datanoticia', 'datetime', 'format' => 'Y-m-d H:i:s'],
+            ['datanoticia', 'datetime', 'format' => 'php:Y-m-d H:i:s'],
             ['id_criador', 'integer'],
             ['titulo', 'string', 'max' => 25],
             ['descricao', 'string', 'max' => 750],
