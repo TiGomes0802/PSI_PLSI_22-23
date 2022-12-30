@@ -73,16 +73,14 @@ class EventosController extends Controller
     public function actionView($id)
     {
         $evento = Eventos::FindOne($id);
-
+        
         if (Yii::$app->user->id != null) {
-            $comprado = Pulseiras::Find()->where(['id_cliente'=> Yii::$app->user->id])->andwhere(['id_evento'=>$id])->one();
+            $user = Userprofile::Find()->where(['user_id'=> Yii::$app->user->id])->one();
+            $comprado = Pulseiras::Find()->where(['id_cliente'=> $user->id])->andwhere(['id_evento'=>$id])->one();
         }else{
             $comprado = null;
         }
-
-        $user = Userprofile::Find()->where(['user_id'=> Yii::$app->user->id])->one();
         
-
         return $this->render('view', [
             'evento' => $evento,
             'comprado' => $comprado,

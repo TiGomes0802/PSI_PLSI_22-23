@@ -30,23 +30,30 @@ class CreateNewClienteCest
 
     public function signupSuccessfully(FunctionalTester $I)
     {
-        
         $I->fillField('#nome', 'teste');
         $I->fillField('#apelido', 'teste');
-        $I->fillField('#username', 'clarinha');
+        $I->fillField('#username', 'teste');
         $I->fillField('#password', '12345678');
         $I->fillField('#passwordrepet', '12345678');
-        $I->fillField('#email', 'teste.email@example.com');
+        $I->fillField('#email', 'teste@email.com');
         $I->selectOption('#sexo', 'Masculino');
         $I->fillField('#date', '2000-06-13');
-
-        //$I->see('Logout (clarinha)');
         $I->click('Submit');
-        //$I->seeRecord('common\,models\Userprofile', [
-        //    'nome' => 'teste',
-        //    'apelido' => 'teste',
-        //    'sexo' => 'masculino',
-        //    'datanascimento' => '10/12/2000',
-        //]);
+
+        $I->seeRecord('common\models\Userprofile', [
+            'nome' => 'teste',
+            'apelido' => 'teste',
+            'sexo' => 'masculino',
+            'datanascimento' => '2000-06-13',
+        ]);
+
+        $I->see('Login');
+        $I->click('Login');
+        
+        $I->fillField('#username', 'teste');
+        $I->fillField('#password', '12345678');
+        $I->click('#login');
+
+        $I->see('Logout (teste)');
     }
 }
