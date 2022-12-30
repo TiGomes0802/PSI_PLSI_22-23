@@ -64,6 +64,18 @@ class DiscoTest extends \Codeception\Test\Unit
         $Disco->codpostal = "zuLiiVi";
         $this->assertFalse($Disco->validate(['codpostal']));
 
+        $Disco->codpostal = "11123211";
+        $this->assertFalse($Disco->validate(['codpostal']));
+
+        $Disco->codpostal = "1112-q11";
+        $this->assertFalse($Disco->validate(['codpostal']));
+
+        $Disco->codpostal = "111-111";
+        $this->assertFalse($Disco->validate(['codpostal']));
+
+        $Disco->codpostal = "111-1111";
+        $this->assertFalse($Disco->validate(['codpostal']));
+
         $Disco->codpostal = "2625b35";
         $this->assertFalse($Disco->validate(['codpostal']));
 
@@ -166,14 +178,14 @@ class DiscoTest extends \Codeception\Test\Unit
 
         $Disco->save();
 
-        $this->tester->seeRecord("common\models\Disco", ['nome' => $nome, "nif" => $nif, "localidade" => $localidade, "codpostal" => $codpostal, "morada" => $morada, "lotacao" => $lotacao]);
+        $this->tester->seeRecord("common\models\Disco", ["id" => $id, 'nome' => $nome, "nif" => $nif, "localidade" => $localidade, "codpostal" => $codpostal, "morada" => $morada, "lotacao" => $lotacao]);
 
 
         //Delete
 
         $Disco = Disco::FindOne(['id'=> $id])->delete();
 
-        $this->tester->dontSeeRecord("common\models\Disco", ['nome' => $nome, "nif" => $nif, "localidade" => $localidade, "codpostal" => $codpostal, "morada" => $morada, "lotacao" => $lotacao]);
+        $this->tester->dontSeeRecord("common\models\Disco", ["id" => $id, 'nome' => $nome, "nif" => $nif, "localidade" => $localidade, "codpostal" => $codpostal, "morada" => $morada, "lotacao" => $lotacao]);
 
     }
     

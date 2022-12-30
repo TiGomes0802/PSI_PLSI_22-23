@@ -102,7 +102,7 @@ class VipTest extends \Codeception\Test\Unit
 
         $vip->save();
 
-        $this->tester->seeRecord('common\models\Vip', ['npessoas' => $npessoas, 'descricao' => $descricao, 'nbebidas' => $nbebidas, 'preco' => $preco]);
+        $this->tester->seeRecord('common\models\Vip', ["id" => $id, 'npessoas' => $npessoas, 'descricao' => $descricao, 'nbebidas' => $nbebidas, 'preco' => $preco]);
 
         //Delete
         Vip::findOne(['id' => $id])->delete();

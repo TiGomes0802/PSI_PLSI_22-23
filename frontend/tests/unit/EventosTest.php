@@ -171,11 +171,11 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->id_tipo_evento = $id_tipo_evento;
         $Evento->save();
 
-        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
+        $this->tester->seeRecord('common\models\Eventos', ["id" => $id, 'nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
 
         //Delete
         Eventos::findOne(['id' => $id])->delete();
 
-        $this->tester->dontSeeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);    
+        $this->tester->dontSeeRecord('common\models\Eventos', ["id" => $id, 'nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);    
     }
 }

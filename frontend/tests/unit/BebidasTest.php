@@ -23,8 +23,6 @@ class BebidasTest extends \Codeception\Test\Unit
 
         $Bebidas->nome = 1.5;
         $this->assertFalse($Bebidas->validate(['nome']));
-
-
     }
 
     public function testCorretValidation()
@@ -61,13 +59,13 @@ class BebidasTest extends \Codeception\Test\Unit
 
         $Bebidas->save();
 
-        $this->tester->seeRecord("common\models\Bebidas", ["nome" => $nome]);
+        $this->tester->seeRecord("common\models\Bebidas", ["id" => $id, "nome" => $nome]);
 
 
         //Delete
         $Bebidas = Bebidas::FindOne(['id'=>$id])->delete();
 
-        $this->tester->dontSeeRecord("common\models\Bebidas", ["nome" => $nome]);
+        $this->tester->dontSeeRecord("common\models\Bebidas", ["id" => $id, "nome" => $nome]);
 
     }
 

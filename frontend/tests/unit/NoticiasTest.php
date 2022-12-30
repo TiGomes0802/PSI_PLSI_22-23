@@ -107,11 +107,11 @@ class NoticiasTest extends \Codeception\Test\Unit
         $noticias->id_criador = $id_criador;
         $noticias->save();
 
-        $this->tester->seeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datanoticia, 'descricao' => $descricao, 'id_criador' => $id_criador]);
+        $this->tester->seeRecord('common\models\Noticias', ["id" => $id, 'titulo' => $titulo, 'datanoticia' => $datanoticia, 'descricao' => $descricao, 'id_criador' => $id_criador]);
 
         //Delete
         Noticias::findOne(['id' => $id])->delete();
 
-        $this->tester->dontSeeRecord('common\models\Noticias', ['titulo' => $titulo, 'datanoticia' => $datanoticia, 'descricao' => $descricao, 'id_criador' => $id_criador]);
+        $this->tester->dontSeeRecord('common\models\Noticias', ["id" => $id, 'titulo' => $titulo, 'datanoticia' => $datanoticia, 'descricao' => $descricao, 'id_criador' => $id_criador]);
     }
 }
