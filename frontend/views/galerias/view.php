@@ -17,17 +17,17 @@
           <div class="u-repeater u-repeater-1">
             
           
-
-            <?php foreach ($galerias as $galeria) { ?>
-              <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('./../../backend/web/galeria/<?=$galeria->id_evento?>/<?=$galeria->foto ?>');">
-                <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
-                  <h3 class="u-text u-text-default-xl u-text-2"></h3>
+            <?php if ($galerias != null) { ?>
+              <?php foreach ($galerias as $galeria) { ?>
+                <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('./../../backend/web/galeria/<?=$galeria->id_evento?>/<?=$galeria->foto ?>');">
+                  <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
+                    <h3 class="u-text u-text-default-xl u-text-2"></h3>
+                  </div>
                 </div>
-              </div>
-              
-           <?php } ?>
-
-
+              <?php } ?>    
+            <?php } else {?>
+              <h2 class="u-align-center u-text u-text-default u-text-1" spellcheck="false">Galeria Sem Imagens</h2>
+            <?php } ?>  
           </div>
         </div>
         </div>
