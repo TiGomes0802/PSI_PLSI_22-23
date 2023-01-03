@@ -31,7 +31,7 @@ class Noticias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'datanoticia', 'descricao', 'id_criador'], 'required'],
+            [['titulo', 'datanoticia', 'descricao', 'id_criador'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['datanoticia', 'safe'],
             ['datanoticia', 'datetime', 'format' => 'php:Y-m-d H:i:s'],
             ['id_criador', 'integer'],

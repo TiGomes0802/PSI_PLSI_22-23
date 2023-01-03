@@ -42,7 +42,7 @@ class Userprofile extends \yii\db\ActiveRecord
         $max = $date->format('Y-m-d');
 
         return [
-            [['nome', 'apelido', 'datanascimento', 'user_id'], 'required'],
+            [['nome', 'apelido', 'datanascimento', 'user_id'], 'required', 'message' => '{attribute} não pode estar vazio'],
             [['datanascimento'], 'safe'],
             ['datanascimento', 'date', 'format' => 'php:Y-m-d', 'max' => $max, 'tooBig' => 'Precisa ser maior de 18 anos.'],
             [['user_id'], 'integer'],

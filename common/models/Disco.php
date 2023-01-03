@@ -31,7 +31,7 @@ class Disco extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'nif', 'localidade', 'codpostal', 'morada', 'lotacao'], 'required'],
+            [['nome', 'nif', 'localidade', 'codpostal', 'morada', 'lotacao'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['lotacao', 'integer'],
             [['nome', 'localidade'], 'string', 'max' => 25],
             ['nif', 'match', 'pattern' => '/^[0-9]{9}\w*$/i', 'message' => 'NIF invalido o NIF são 9 números'],

@@ -31,7 +31,7 @@ class Faturas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['datahora_compra', 'preco', 'id_pulseira'], 'required'],
+            [['datahora_compra', 'preco', 'id_pulseira'], 'required', 'message' => '{attribute} não pode estar vazio'],
             [['datahora_compra'], 'safe'],
             [['preco'], 'number'],
             [['id_pulseira'], 'integer'],

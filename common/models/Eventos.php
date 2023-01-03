@@ -51,7 +51,7 @@ class Eventos extends \yii\db\ActiveRecord
         $disco = Disco::find()->where(['id' => 1])->one();
 
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'id_criador', 'id_tipo_evento'], 'required'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
             ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
             [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
