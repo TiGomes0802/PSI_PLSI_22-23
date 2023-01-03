@@ -32,11 +32,12 @@ class Noticias extends \yii\db\ActiveRecord
     {
         return [
             [['titulo', 'datanoticia', 'descricao', 'id_criador'], 'required'],
-            [['datanoticia'], 'safe'],
-            [['id_criador'], 'integer'],
-            [['titulo'], 'string', 'max' => 25],
-            [['descricao'], 'string', 'max' => 750],
-            [['id_criador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
+            ['datanoticia', 'safe'],
+            ['datanoticia', 'datetime', 'format' => 'php:Y-m-d H:i:s'],
+            ['id_criador', 'integer'],
+            ['titulo', 'string', 'max' => 25],
+            ['descricao', 'string', 'max' => 750],
+            ['id_criador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
         ];
     }
 

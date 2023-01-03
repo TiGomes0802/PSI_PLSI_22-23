@@ -12,6 +12,8 @@ use common\models\AuthAssignment;
 use common\models\EventosUpdate;
 use common\models\User;
 use common\models\Userprofile;
+use common\models\Disco;
+use common\models\DiscoSearch;
 use common\models\UserprofileSearch;
 use backend\models\SignupEmpregados;
 

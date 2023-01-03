@@ -33,8 +33,8 @@ class Vip extends \yii\db\ActiveRecord
         return [
             [['npessoas', 'descricao', 'nbebidas', 'preco'], 'required'],
             [['npessoas', 'nbebidas'], 'integer'],
-            [['preco'], 'number'],
-            [['descricao'], 'string', 'max' => 750],
+            ['preco', 'number'],
+            ['descricao', 'string', 'max' => 750],
         ];
     }
 
