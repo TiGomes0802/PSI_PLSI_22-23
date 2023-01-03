@@ -44,7 +44,7 @@ $this->title = '';
                         <td style="width:40%">Pulseira normal</td>
                         <td style="width:17%"><?=number_format( $evento->preco, 2 ) . '€'?></td>
                         <td style="width:18%">0</td>
-                        <td style="width:10%"><a href="index.php?r=faturas%2Fcreate&id_evento=<?=$evento->id?>&codigorp=<?=$codigorp?>"><input type="button" class="btn btn-success" value="Comprar"></a></td>
+                        <td style="width:10%"><a href="index.php?r=faturas%2Fcreate&id_evento=<?=$evento->id?>&codigorp=<?=$codigorp?>"><input type="button" class="btn btn-success" value="Comprar" id="comprar"></a></td>
                     </tr>
                     <?php foreach ($listavips as $vip) { ?>
                         <tr>
@@ -55,7 +55,7 @@ $this->title = '';
                             <?php if(in_array($vip->id,$id_de_vips)) {?>
                                 <td style="width:10%"><input type="button" class="btn btn-danger" value="Indisponivel" disabled></td>
                             <?php } else {?>
-                                <td style="width:10%"><a href='index.php?r=linhafatura%2Fcreate&id_evento=<?=$evento->id?>&codigorp=<?=$codigorp?>&id_vip=<?=$vip->id?>'><input type="button" class="btn btn-success" value="Comprar"></a></td>
+                                <td style="width:10%"><a href='index.php?r=linhafatura%2Fcreate&id_evento=<?=$evento->id?>&codigorp=<?=$codigorp?>&id_vip=<?=$vip->id?>'><input type="button" class="btn btn-success" value="Comprar" id="comprarvip"></a></td>
                             <?php } ?>
                         </tr>
                     <?php } ?>

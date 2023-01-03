@@ -48,13 +48,14 @@ class Eventos extends \yii\db\ActiveRecord
     {
         $date = new DateTime();
         $min = $date->format('Y-m-d h:i');
+        $disco = Disco::findOne(1);
 
         return [
             [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
             ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
-            [['id_criador', 'id_tipo_evento'], 'integer'],
-            ['numbilhetesdisp', 'integer', 'min' => 0],
+            [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
+            ['numbilhetesdisp', 'integer', 'max' => $disco->lotacao],
             ['preco', 'double'],
             [['nome', 'estado'], 'string', 'max' => 25],
             ['descricao', 'string', 'max' => 750],

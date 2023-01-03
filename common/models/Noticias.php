@@ -31,12 +31,13 @@ class Noticias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'datanoticia', 'descricao', 'id_criador'], 'required'],
-            [['datanoticia'], 'safe'],
-            [['id_criador'], 'integer'],
-            [['titulo'], 'string', 'max' => 25],
-            [['descricao'], 'string', 'max' => 750],
-            [['id_criador'], 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
+            [['titulo', 'datanoticia', 'descricao', 'id_criador'], 'required', 'message' => '{attribute} não pode estar vazio'],
+            ['datanoticia', 'safe'],
+            ['datanoticia', 'datetime', 'format' => 'php:Y-m-d H:i:s'],
+            ['id_criador', 'integer'],
+            ['titulo', 'string', 'max' => 25],
+            ['descricao', 'string', 'max' => 750],
+            ['id_criador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
         ];
     }
 

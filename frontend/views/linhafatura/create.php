@@ -15,7 +15,7 @@ $this->title = '';
 <section class="u-align-center u-clearfix u-custom-color-2 u-section-1" id="sec-1a0b">
     <div class="u-clearfix u-sheet u-sheet-1">
         <br>
-        <h2 class="u-text u-text-default u-text-1">Criar Evento</h2>
+        <h2 class="u-text u-text-default u-text-1">Escolher Bebidas</h2>
 
         <div class="u-form u-form-1">    
             <?php $form = ActiveForm::begin(); ?>

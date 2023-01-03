@@ -31,12 +31,14 @@ class Disco extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'nif', 'localidade', 'codpostal', 'morada', 'lotacao'], 'required'],
-            [['lotacao'], 'integer'],
+            [['nome', 'nif', 'localidade', 'codpostal', 'morada', 'lotacao'], 'required', 'message' => '{attribute} não pode estar vazio'],
+            ['lotacao', 'integer'],
             [['nome', 'localidade'], 'string', 'max' => 25],
-            [['nif'], 'string', 'max' => 9],
-            [['codpostal'], 'string', 'max' => 8],
-            [['morada'], 'string', 'max' => 50],
+            ['nif', 'match', 'pattern' => '/^[0-9]{9}\w*$/i', 'message' => 'NIF invalido o NIF são 9 números'],
+            ['nif', 'string', 'max' => 9, 'min' => 9],
+            ['codpostal', 'string', 'max' => 8],
+            ['codpostal', 'match', 'pattern' => '/^[0-9_]{4,4}+([0-9_]+)*[-][0-9_]{2,2}+([0-9_])$/', 'message' => 'codigopostal invalido, formato valido = (xxxx-xxx)'],
+            ['morada', 'string', 'max' => 50],
         ];
     }
 

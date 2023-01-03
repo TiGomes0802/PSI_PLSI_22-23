@@ -31,10 +31,10 @@ class Vip extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['npessoas', 'descricao', 'nbebidas', 'preco'], 'required'],
+            [['npessoas', 'descricao', 'nbebidas', 'preco'], 'required', 'message' => '{attribute} não pode estar vazio'],
             [['npessoas', 'nbebidas'], 'integer'],
-            [['preco'], 'number'],
-            [['descricao'], 'string', 'max' => 750],
+            ['preco', 'number'],
+            ['descricao', 'string', 'max' => 750],
         ];
     }
 

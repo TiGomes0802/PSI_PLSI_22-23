@@ -7,8 +7,8 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\Disco;
-use backend\models\DiscoSearch;
+use common\models\Disco;
+use common\models\DiscoSearch;
 use common\models\EventosUpdate;
 
 /**

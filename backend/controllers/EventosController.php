@@ -9,6 +9,8 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+use common\models\Disco;
+use common\models\DiscoSearch;
 use common\models\Eventos;
 use common\models\EventosSearch;
 use common\models\EventosUpdate;
@@ -147,6 +149,8 @@ class EventosController extends Controller
 
     public function actionCreate()
     {
+        $disco = Disco::findOne(1);
+
         if (\Yii::$app->user->can('createEvento')) {
 
             $model = new Eventos();
@@ -188,6 +192,7 @@ class EventosController extends Controller
 
             return $this->render('create', [
                 'model' => $model,
+                'disco' => $disco,
             ]);
 
         }else{

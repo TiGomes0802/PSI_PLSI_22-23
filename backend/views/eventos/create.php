@@ -14,6 +14,7 @@ $this->title = '';
 
         <?= $this->render('_form', [
             'model' => $model,
+            'disco' => $disco,
         ]) ?>
 
     </div>
