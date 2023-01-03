@@ -20,6 +20,15 @@ class BackendLoginCest
         $I->see('Password não pode estar vazio');
     }
 
+
+    public function signupWithWrongPassword(FunctionalTester $I)
+    {
+        $I->fillField('#username', 'Loperson');
+        $I->fillField('#password', '12345678');
+        $I->click('Sign In');
+        $I->see('Incorrect username or password.');
+    }
+
     public function signupSuccessfully(FunctionalTester $I)
     {
         $I->fillField('#username', 'Loperson');
