@@ -66,6 +66,19 @@ class EventosTest extends \Codeception\Test\Unit
         $this->assertFalse($Evento->validate(['preco']));
 
 
+        $Evento->estado = null;
+        $this->assertFalse($Evento->validate(['estado']));
+
+        $Evento->estado = 'Jwqze3NaLx7F4ho9vkVyfJVrmG';
+        $this->assertFalse($Evento->validate(['estado']));
+
+        $Evento->estado = 12;
+        $this->assertFalse($Evento->validate(['estado']));
+
+        $Evento->estado = 12.21;
+        $this->assertFalse($Evento->validate(['estado']));
+
+
         $Evento->id_criador = null;
         $this->assertFalse($Evento->validate(['id_criador']));
 
@@ -84,6 +97,10 @@ class EventosTest extends \Codeception\Test\Unit
 
         $Evento->id_tipo_evento = 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
         $this->assertFalse($Evento->validate(['id_tipo_evento']));
+
+
+        $Evento->imageFile = null;
+        $this->assertFalse($Evento->validate(['imageFile']));
     }
 
     public function testCorretValidation()
@@ -110,13 +127,16 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->preco = 23.12;
         $this->assertTrue($Evento->validate(['preco']));
 
+        $Evento->estado = "estado";
+        $this->assertTrue($Evento->validate(['estado']));
+
         $Evento->id_criador = 1;
         $this->assertTrue($Evento->validate(['id_criador']));
 
         $Evento->id_tipo_evento = 1;
         $this->assertTrue($Evento->validate(['id_tipo_evento']));
 
-        $Evento->imageFile = null;
+        $Evento->imageFile = "image.png";
         $this->assertTrue($Evento->validate(['imageFile']));
     }
 
@@ -127,10 +147,11 @@ class EventosTest extends \Codeception\Test\Unit
         $nome = "nome";
         $descricao = "descricao";
         $cartaz = "cartaz";
-        $input = strtotime('2050-08-08T23:30');
+        $input = strtotime('2100-08-08T23:30');
         $dataevento = date('Y-m-d H:i',$input);
         $numbilhetesdisp = 500;
         $preco = 12;
+        $estado = "estado";
         $id_criador = 1;
         $id_tipo_evento = 1;
 
@@ -140,11 +161,13 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->dataevento = $dataevento;
         $Evento->numbilhetesdisp = $numbilhetesdisp;
         $Evento->preco = $preco;
+        $Evento->estado = $estado;
         $Evento->id_criador = $id_criador;
         $Evento->id_tipo_evento = $id_tipo_evento;
+        $Evento->imageFile = "image.png";
         $Evento->save();
 
-        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
+        $this->tester->seeRecord('common\models\Eventos', ['nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'estado' => $estado, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
     
         $id = $Evento->id;
 
@@ -154,10 +177,11 @@ class EventosTest extends \Codeception\Test\Unit
         $nome = "Outro Nome";
         $descricao = "Outra Descricao";
         $cartaz = "Outro Cartaz";
-        $input = strtotime('2050-08-08T23:30');
+        $input = strtotime('2150-08-08T23:30');
         $dataevento = date('Y-m-d H:i',$input);
         $numbilhetesdisp = 250;
         $preco = 25;
+        $estado = "Outro estado";
         $id_criador = 1;
         $id_tipo_evento = 1;
 
@@ -167,15 +191,17 @@ class EventosTest extends \Codeception\Test\Unit
         $Evento->dataevento = $dataevento;
         $Evento->numbilhetesdisp = $numbilhetesdisp;
         $Evento->preco = $preco;
+        $Evento->estado = $estado;
         $Evento->id_criador = $id_criador;
         $Evento->id_tipo_evento = $id_tipo_evento;
+        $Evento->imageFile = "image.png";
         $Evento->save();
 
-        $this->tester->seeRecord('common\models\Eventos', ["id" => $id, 'nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
+        $this->tester->seeRecord('common\models\Eventos', ["id" => $id, 'nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'estado' => $estado, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);
 
         //Delete
         Eventos::findOne(['id' => $id])->delete();
 
-        $this->tester->dontSeeRecord('common\models\Eventos', ["id" => $id, 'nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);    
+        $this->tester->dontSeeRecord('common\models\Eventos', ["id" => $id, 'nome' => $nome, 'descricao' => $descricao, 'cartaz' => $cartaz, 'dataevento' => $dataevento, 'numbilhetesdisp' => $numbilhetesdisp, 'preco' => $preco, 'estado' => $estado, 'id_criador' => $id_criador, 'id_tipo_evento' => $id_tipo_evento]);    
     }
 }

@@ -48,16 +48,16 @@ class Eventos extends \yii\db\ActiveRecord
     {
         $date = new DateTime();
         $min = $date->format('Y-m-d h:i');
-        $disco = Disco::find()->where(['id' => 1])->one();
+        $disco = Disco::findOne(1);
 
         return [
-            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
+            [['nome', 'descricao', 'cartaz', 'dataevento', 'numbilhetesdisp', 'preco', 'estado', 'id_criador', 'id_tipo_evento', 'imageFile'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['dataevento', 'safe'],
             ['dataevento', 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => $min, 'tooSmall' => 'Data minima é ' . $min],
             [['numbilhetesdisp', 'id_criador', 'id_tipo_evento'], 'integer'],
             ['numbilhetesdisp', 'integer', 'max' => $disco->lotacao],
             ['preco', 'double'],
-            ['nome', 'string', 'max' => 25],
+            [['nome', 'estado'], 'string', 'max' => 25],
             ['descricao', 'string', 'max' => 750],
             ['cartaz', 'string', 'max' => 250],
             ['id_criador', 'exist', 'skipOnError' => true, 'targetClass' => Userprofile::class, 'targetAttribute' => ['id_criador' => 'id']],
