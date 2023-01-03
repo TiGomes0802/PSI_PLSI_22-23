@@ -76,7 +76,7 @@ class EventosController extends Controller
         $user = Userprofile::Find()->where(['user_id'=> Yii::$app->user->id])->one();
         
         if (Yii::$app->user->id != null) {
-            //$comprado = Pulseiras::Find()->where(['id_cliente'=> $user->id])->andwhere(['id_evento'=>$id])->one();
+            $comprado = Pulseiras::Find()->where(['id_cliente'=> $user->id])->andwhere(['id_evento'=>$id])->one();
         }else{
             $comprado = null;
         }
