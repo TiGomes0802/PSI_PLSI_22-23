@@ -161,7 +161,9 @@ class EventosController extends Controller
 
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                 
-                $model->cartaz =  str_replace(' ', '', $model->nome) . date("Ymdhisv") . '.' . $model->imageFile->extension;
+                if($model->imageFile != null){
+                    $model->cartaz =  str_replace(' ', '', $model->nome) . date("Ymdhisv") . '.' . $model->imageFile->extension;
+                }
 
                 $model->id_tipo_evento = (int)$model->id_tipo_evento;
                 $model->id_criador = $userprofile->id;
