@@ -29,9 +29,6 @@ class DiscoController extends Controller
             [
                 'verbs' => [
                     'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
                 ],
                 'access' => [
                     'class' => AccessControl::class,
@@ -51,12 +48,6 @@ class DiscoController extends Controller
         );
     }
 
-    /**
-     * Displays a single Disco model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -64,13 +55,6 @@ class DiscoController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Disco model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -84,13 +68,6 @@ class DiscoController extends Controller
         ]);
     }
 
-    /**
-     * Finds the Disco model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Disco the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Disco::findOne(['id' => $id])) !== null) {

@@ -85,7 +85,7 @@ $this->title = '';
             ],
             [
                 'class' => ActionColumn::className(),
-                'template' => '{view} {delete}',
+                'template' => '{view}',
                 'urlCreator' => function ($action, Eventos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
