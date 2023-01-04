@@ -161,10 +161,8 @@ class EventosController extends Controller
 
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                 
-                if($model->imageFile != null){
-                    $model->cartaz = $model->nome . date("Ymdhisv") . '.' . $model->imageFile->extension;
-                }
-                
+                $model->cartaz =  str_replace(' ', '', $model->nome) . date("Ymdhisv") . '.' . $model->imageFile->extension;
+
                 $model->id_tipo_evento = (int)$model->id_tipo_evento;
                 $model->id_criador = $userprofile->id;
                 
@@ -234,6 +232,7 @@ class EventosController extends Controller
                     if ($model->save()) {
                         
                         if($model->imageFileUpdate != null){
+                            //unlink('cartaz/' . $model->cartaz);
                             $model->imageFileUpdate->saveAs('cartaz/' . $model->cartaz);
                         }
                         
