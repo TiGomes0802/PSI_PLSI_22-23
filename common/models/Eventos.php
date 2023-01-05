@@ -47,7 +47,7 @@ class Eventos extends \yii\db\ActiveRecord
     public function rules()
     {
         $date = new DateTime();
-        $min = $date->format('Y-m-d h:i');
+        $min = $date->format('Y-m-d H:i');
         $disco = Disco::findOne(1);
 
         return [
@@ -74,13 +74,13 @@ class Eventos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'cartaz' => 'Cartaz',
-            'imageFile' => 'Product Image',
-            'imageFileUpdate' => 'Product Image',
-            'dataevento' => 'Dataevento',
-            'numbilhetesdisp' => 'Numbilhetesdisp',
-            'preco' => 'Preco',
+            'imageFile' => 'Imagem do cartaz',
+            'imageFileUpdate' => 'Imagem do cartaz',
+            'dataevento' => 'Data do evento',
+            'numbilhetesdisp' => 'Número de bilhetes',
+            'preco' => 'Preço',
             'estado' => 'Estado',
             'id_criador' => 'Id Criador',
             'id_tipo_evento' => 'Id Tipo Evento',
