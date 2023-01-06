@@ -45,7 +45,7 @@ class EventosController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'actions' => ['index', 'view', 'create', 'update', 'delete', 'viewalleventos'],
                             'allow' => true,
                             'roles' => ['gestor','admin'],
                         ],
@@ -286,4 +286,6 @@ class EventosController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
 }
