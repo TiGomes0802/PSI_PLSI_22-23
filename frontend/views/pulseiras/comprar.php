@@ -53,7 +53,7 @@ $this->title = '';
                             <td style="width:17%"><?=number_format( $vip->preco, 2 ) . '€'?></td>
                             <td style="width:18%"><?=$vip->nbebidas?></td>
                             <?php if(in_array($vip->id,$id_de_vips)) {?>
-                                <td style="width:10%"><input type="button" class="btn btn-danger" value="Indisponivel" disabled></td>
+                                <td style="width:10%"><input type="button" class="btn btn-danger" value="Indisponivel" disabled ></td>
                             <?php } else {?>
                                 <td style="width:10%"><a href='index.php?r=linhafatura%2Fcreate&id_evento=<?=$evento->id?>&codigorp=<?=$codigorp?>&id_vip=<?=$vip->id?>'><input type="button" class="btn btn-success" value="Comprar" id="comprarvip"></a></td>
                             <?php } ?>
