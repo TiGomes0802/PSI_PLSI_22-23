@@ -26,7 +26,7 @@ class ComprarPulseiraVipCest
         $I->fillField('#passwordrepet', '12345678');
         $I->fillField('#email', $username.'@email.com');
         $I->selectOption('#sexo', 'Masculino');
-        $I->fillField('#date', '2000-06-13');
+        $I->fillField('#date', '07-07-2001');
         $I->click('Submit');
         $I->wait(3);
 

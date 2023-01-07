@@ -14,8 +14,8 @@ class ComprarPulseiraCest
         $I->see('Login');
         $I->click('Login');
         
-        $I->fillField('#username', 'Xuxas');
-        $I->fillField('#password', '123456789');
+        $I->fillField('#username', 'clarinha');
+        $I->fillField('#password', '12345678');
         $I->click('#login');
 
         $I->see('Logout');
@@ -27,16 +27,13 @@ class ComprarPulseiraCest
     {
         $I->click('Eventos');
         $I->see('LISTA DE EVENTOS');
-        $I->click('Marron 5');
+        $I->click('outro evento');
         $I->see('Comprarpulseira');
         $I->click('#comprarpuls');
-        $I->see('10');
         $I->click('Comprar','#comprarvip');
         $I->see('Escolher Bebidas');
-        $I->selectOption('#linhafatura-bebidas', 'Vodka');
-        $I->selectOption('#linhafatura-bebidas', 'Licor Beirão');
-        $I->selectOption('#linhafatura-bebidas', 'Safari');
-        $I->selectOption('#linhafatura-bebidas', 'RedBull');
+        $I->selectOption('#bebida1', 'Vodka Grey Goose Citron');
+        $I->selectOption('#bebida2', 'Gin Bombay Sapphire');
         $I->click('Submit');
         $I->see('PulseiraAdquirida');
 
@@ -46,7 +43,7 @@ class ComprarPulseiraCest
     {
         $I->click('Eventos');
         $I->see('LISTA DE EVENTOS');
-        $I->click('Marron 5');
+        $I->click('outro evento');
         $I->see('Comprarpulseira');
         $I->click('#comprarpuls');
         $I->click('Comprar');
@@ -60,7 +57,7 @@ class ComprarPulseiraCest
         $I->see('Login');
         $I->click('Eventos');
         $I->see('LISTA DE EVENTOS');
-        $I->click('Marron 5');
+        $I->click('outro evento');
         $I->see('Comprarpulseira');
         $I->click('#comprarpuls');
         $I->see('Login');
