@@ -98,14 +98,13 @@ class EventosController extends Controller
             
             $model = $this->findModel($id);
 
-            $valorfaturado = (new yii\db\Query())
-                ->from('pulseiras')
+            $valorfaturado = Pulseiras::find()
                 ->rightJoin('faturas', 'pulseiras.id = faturas.id_pulseira')
                 ->where(['pulseiras.id_evento' => $model->id])
                 ->sum('faturas.preco');
 
-            $numbilhetesvendidos = (new yii\db\Query())
-                ->from('pulseiras')
+
+            $numbilhetesvendidos = Pulseiras::find()
                 ->where(['pulseiras.id_evento' => $model->id])
                 ->count();
 
@@ -120,7 +119,7 @@ class EventosController extends Controller
                 ->groupBy('sexo')
                 ->all();
 
-             $grafico2 = (new yii\db\Query())
+            $grafico2 = (new yii\db\Query())
                 ->from('pulseiras')
                 ->select(['codigorp', 'COUNT(codigorp) AS quantidade'])
                 ->where(['pulseiras.id_evento' => $model->id])
