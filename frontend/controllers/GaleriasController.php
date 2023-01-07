@@ -40,7 +40,7 @@ class GaleriasController extends Controller
      */
     public function actionIndex()
     {
-        $eventos = Eventos::find()->where(['estado'=> 'desativo'])->all();
+        $eventos = Eventos::find()->where(['estado'=> 'desativo'])->orderby('dataevento Desc')->all();
 
         return $this->render('index', [
             'eventos' => $eventos,

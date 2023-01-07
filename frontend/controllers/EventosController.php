@@ -57,7 +57,7 @@ class EventosController extends Controller
      */
     public function actionIndex()
     {
-        $eventos = Eventos::find()->where(['estado'=> 'ativo'])->all();
+        $eventos = Eventos::find()->where(['estado'=> 'ativo'])->orderby('dataevento Asc')->all();
         
         return $this->render('index', [
             'eventos' => $eventos,
