@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Galerias;
 use common\models\GaleriasSearch;
 use common\models\Eventos;
+use common\models\EventosUpdate;
 use common\models\EventosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,6 +21,9 @@ class GaleriasController extends Controller
      */
     public function behaviors()
     {
+        $model = new Eventosupdate();
+        $model->UpdateEstadoEvento();
+        
         return array_merge(
             parent::behaviors(),
             [
@@ -28,6 +32,20 @@ class GaleriasController extends Controller
                     'actions' => [
                         'delete' => ['POST'],
                     ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        Yii::$app->user->logout();
+                        return $this->redirect(['site/login']);
+                    }
                 ],
             ]
         );
