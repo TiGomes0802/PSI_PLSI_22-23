@@ -23,7 +23,7 @@ class BackendLoginCest
 
     public function signupWithWrongPassword(FunctionalTester $I)
     {
-        $I->fillField('#username', 'Loperson');
+        $I->fillField('#username', 'gomes0802');
         $I->fillField('#password', '12345678');
         $I->click('Sign In');
         $I->see('Incorrect username or password.');
@@ -31,11 +31,11 @@ class BackendLoginCest
 
     public function signupSuccessfully(FunctionalTester $I)
     {
-        $I->fillField('#username', 'Loperson');
-        $I->fillField('#password', '123456789');
+        $I->fillField('#username', 'gomes0802');
+        $I->fillField('#password', '12345678');
         $I->click('Sign In');
 
-        $I->see('Olá Bruno Lopes');
+        $I->see('Olá Tiago Gomes');
     }
 
 }
