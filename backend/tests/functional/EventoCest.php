@@ -79,6 +79,8 @@ class EventoCest
         $I->see($tipo_evento);
         $I->see('Tiago Gomes');
 
+        //Update
+        
         $I->click('Update');
 
         $nome = 'teste987654321';
