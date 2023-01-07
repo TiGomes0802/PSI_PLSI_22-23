@@ -56,9 +56,11 @@ class GaleriasController extends Controller
     public function actionView($id)
     {
         $galerias = Galerias::find()->where(['id_evento'=> $id])->all();
-        
+        $evento = Eventos::findOne($id);
+
         return $this->render('view', [
             'galerias' => $galerias,
+            'evento' => $evento,
         ]);
     }
 

@@ -24,7 +24,7 @@ class BackendLoginCest
     public function signupWithWrongPassword(FunctionalTester $I)
     {
         $I->fillField('#username', 'gomes0802');
-        $I->fillField('#password', '12345678');
+        $I->fillField('#password', '123456789');
         $I->click('Sign In');
         $I->see('Incorrect username or password.');
     }

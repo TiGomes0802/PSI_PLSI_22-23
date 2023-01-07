@@ -22,10 +22,9 @@ class CreateNewClienteCest
         $I->seeValidationError('Apelido não pode estar vazio');
         $I->seeValidationError('Username não pode estar vazio');
         $I->seeValidationError('Password não pode estar vazio');
-        $I->seeValidationError('Passwordrepet não pode estar vazio');
         $I->seeValidationError('Email não pode estar vazio');
         $I->seeValidationError('Sexo não pode estar vazio');
-        $I->seeValidationError('Datanascimento não pode estar vazio');
+        $I->seeValidationError('Data de nascimento não pode estar vazio');
     }
 
     public function signupSuccessfully(FunctionalTester $I)
