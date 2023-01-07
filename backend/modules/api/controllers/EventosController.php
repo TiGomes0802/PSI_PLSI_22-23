@@ -40,6 +40,8 @@ class EventosController extends \yii\web\Controller
                 'id' => $userprofile->id,
                 'nome' => $userprofile->nome,
                 'apelido' => $userprofile->apelido,
+                'username' => Yii::$app->user->identity->username,
+                'email' => Yii::$app->user->identity->email,
                 'datanascimento' => $userprofile->datanascimento,
                 'sexo' => $userprofile->sexo,
                 'role' => $role->item_name,
