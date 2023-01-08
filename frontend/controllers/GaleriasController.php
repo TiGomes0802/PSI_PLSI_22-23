@@ -10,6 +10,7 @@ use common\models\EventosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * GaleriasController implements the CRUD actions for Galerias model.
