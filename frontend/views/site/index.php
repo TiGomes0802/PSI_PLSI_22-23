@@ -1,5 +1,5 @@
 <head>
-  <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
+  <link rel="stylesheet" href="././css/nicepage.css" media="screen">
 </head>
 <div class="u-body u-xl-mode" data-lang="pt">
 <section class="u-clearfix u-image u-section-1" id="carousel_bd30">
@@ -33,16 +33,16 @@
     <h2 class="u-custom-font u-text u-text-default u-text-1" spellcheck="false">A TUA DISCOTECA</h2>
     <p class="u-text u-text-2">Zona VIP&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-1">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Bar&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-2">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Pistas de dança&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-3">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Hookah&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-4">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Karaoke
     </p>
   </div>

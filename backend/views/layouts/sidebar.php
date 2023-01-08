@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?=\yii\helpers\Url::home()?>" class="brand-link">
-        <img src="../web/img/EcstasyClubLogo.png" alt="Ecstasy Club Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="./img/EcstasyClubLogo.png" alt="Ecstasy Club Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Ecstasy Club</span>
     </a>
 

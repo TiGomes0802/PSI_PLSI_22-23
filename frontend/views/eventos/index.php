@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="./../web/css/nicepage2.css" media="screen">
-<link rel="stylesheet" href="./../web/css/lista-de-eventos.css" media="screen">
+<link rel="stylesheet" href="././css/nicepage2.css" media="screen">
+<link rel="stylesheet" href="././css/lista-de-eventos.css" media="screen">
 <section class="u-clearfix u-custom-color-2 u-section-1" id="sec-07e1">
 <br>
   <div class="u-clearfix u-sheet u-sheet-1">

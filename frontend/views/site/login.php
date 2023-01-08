@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="./../web/css/nicepage2.css" media="screen">
-<link rel="stylesheet" href="./../web/css/form_add_empregado.css" media="screen">
+<link rel="stylesheet" href="././css/nicepage2.css" media="screen">
+<link rel="stylesheet" href="././css/form_add_empregado.css" media="screen">
 <?php
 
 /** @var yii\web\View $this */
