@@ -22,7 +22,7 @@
               <a href='index.php?r=galerias%2Fview&id=<?= $evento->id ?>'>
               <div class="u-container-style u-custom-item u-image u-repeater-item u-shading" style="background-image: url('./../../backend/web/cartaz/<?= $evento->cartaz ?>');">
                 <div class="u-container-layout u-similar-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-valign-top-xl u-container-layout-1">
-                  <h3 class="u-text u-text-default-xl u-text-2"><?= $evento->nome ?></h3>
+                  <h3 class="u-text u-text-default-xl u-text-2" style="font-size:1.90rem;"><?= $evento->nome ?></h3>
                 </div>
               </div>
             </a>

@@ -87,7 +87,6 @@ class FaturasController extends Controller
             $date = strtotime($evento->dataevento);
             $evento->dataevento = date('Y-m-d H:i', $date); 
 
-
             if ($evento->save() && $pulseira->save() && $fatura->save()) {    
                 return $this->redirect(['eventos/view', 'id' => $id_evento]);
             }

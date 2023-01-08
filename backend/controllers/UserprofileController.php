@@ -36,15 +36,12 @@ class UserprofileController extends Controller
             [
                 'verbs' => [
                     'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
                 ],
                 'access' => [
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'update_password', 'delete'],
+                            'actions' => ['index', 'view', 'create', 'update', 'update_password'],
                             'allow' => true,
                             'roles' => ['gestor','admin'],
                         ],
@@ -217,11 +214,6 @@ class UserprofileController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Userprofile model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-    */
     public function actionCreate()
     {
         $model = new SignupEmpregados();
@@ -239,13 +231,6 @@ class UserprofileController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Userprofile model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-    */
     public function actionUpdate($id)
     {
         $model = new SignupEmpregados();
@@ -281,33 +266,6 @@ class UserprofileController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Userprofile model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $user = User::find()->where(['id' => $id])->one();
-        $userprofile = Userprofile::find()->where(['user_id' => $id])->one();
-        $auth = AuthAssignment::find()->where(['user_id' => $id])->one();
-        
-        $userprofile->delete();
-        $auth->delete();
-        $user->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Userprofile model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Userprofile the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Userprofile::findOne(['id' => $id])) !== null) {

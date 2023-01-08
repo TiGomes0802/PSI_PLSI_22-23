@@ -21,13 +21,6 @@ $this->title = '';
         if($model->estado == "desativo"){
             echo Html::a('Galeria', ['galerias/index', 'id_evento' => $model->id], ['class' => 'btn btn-primary']) ;
         } ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
     </p>
 
     <div class="row">

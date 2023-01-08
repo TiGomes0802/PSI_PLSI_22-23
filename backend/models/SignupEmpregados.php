@@ -41,7 +41,7 @@ class SignupEmpregados extends Model
 
         return [
             [['username', 'email', 'role'], 'trim'],
-            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'role', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => 'Este campo não pode ser vazio.'],
+            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'role', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
             [['username', 'email'], 'string', 'min' => 2, 'max' => 255],
 
@@ -59,6 +59,27 @@ class SignupEmpregados extends Model
             ['user_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'nome' => 'Nome',
+            'apelido' => 'Apelido',
+            'datanascimento' => 'Data de nascimento',
+            'email' =>'Email',
+            'password' => 'Password',
+            'passwordrepet' => 'Password',
+            'codigoRP' => 'Codigo Rp',
+            'sexo' => 'Sexo',
+            'user_id' => 'User ID',
+            'role' => 'Role'
+        ];
+    }
+
 
     /**
      * Signs user up.

@@ -27,7 +27,7 @@ $this->title = '';
                         <?= $form->field($model, 'bebidas[]')
                             ->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Bebidas::find()
                             ->asArray()
-                            ->all(), 'id', 'nome'))
+                            ->all(), 'id', 'nome'), ['id' => 'bebida'.$i])
                             ->label(false)?>
                             <br>
                     <?php } ?>

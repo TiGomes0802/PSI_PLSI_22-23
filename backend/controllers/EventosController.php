@@ -37,15 +37,12 @@ class EventosController extends Controller
             [
                 'verbs' => [
                     'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
                 ],
                 'access' => [
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'actions' => ['index', 'view', 'create', 'update'],
                             'allow' => true,
                             'roles' => ['gestor','admin'],
                         ],
@@ -101,14 +98,13 @@ class EventosController extends Controller
             
             $model = $this->findModel($id);
 
-            $valorfaturado = (new yii\db\Query())
-                ->from('pulseiras')
+            $valorfaturado = Pulseiras::find()
                 ->rightJoin('faturas', 'pulseiras.id = faturas.id_pulseira')
                 ->where(['pulseiras.id_evento' => $model->id])
                 ->sum('faturas.preco');
 
-            $numbilhetesvendidos = (new yii\db\Query())
-                ->from('pulseiras')
+
+            $numbilhetesvendidos = Pulseiras::find()
                 ->where(['pulseiras.id_evento' => $model->id])
                 ->count();
 
@@ -123,7 +119,7 @@ class EventosController extends Controller
                 ->groupBy('sexo')
                 ->all();
 
-             $grafico2 = (new yii\db\Query())
+            $grafico2 = (new yii\db\Query())
                 ->from('pulseiras')
                 ->select(['codigorp', 'COUNT(codigorp) AS quantidade'])
                 ->where(['pulseiras.id_evento' => $model->id])
@@ -230,7 +226,6 @@ class EventosController extends Controller
                             $pulseiraupdate->save();
                         }
                     }
-
                     if ($model->save()) {
                         
                         if($model->imageFileUpdate != null){
@@ -255,29 +250,6 @@ class EventosController extends Controller
         }
     }
 
-
-    public function actionDelete($id)
-    {
-        if (\Yii::$app->user->can('deleteEvento')) {
-
-            $model = $this->findModel($id);
-            $this->findModel($id)->delete();
-            unlink('cartaz/' . $model->cartaz);
-            return $this->redirect(['index', 'estado' => $model->estado]);
-        
-        }else{
-            Yii::$app->user->logout();
-            return $this->redirect(['site/login']);
-        }
-    }
-
-    /**
-     * Finds the Eventos model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Eventos the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Eventos::findOne(['id' => $id])) !== null) {

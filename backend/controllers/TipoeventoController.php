@@ -22,9 +22,6 @@ class TipoeventoController extends Controller
             [
                 'verbs' => [
                     'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
                 ],
                 'access' => [
                     'class' => AccessControl::class,
