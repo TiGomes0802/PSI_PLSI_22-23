@@ -58,3 +58,8 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+
+Admin - gomes0802/12345678 <br>
+Gestor - Lucas/12345678 <br>
+Rp - brunorp/12345678 <br>
+Cliente - clarinha/12345678
