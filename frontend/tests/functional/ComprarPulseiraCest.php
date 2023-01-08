@@ -14,7 +14,7 @@ class ComprarPulseiraCest
         $I->see('Login');
         $I->click('Login');
         
-        $I->fillField('#username', 'clarinha');
+        $I->fillField('#username', 'BerserkerPT');
         $I->fillField('#password', '12345678');
         $I->click('#login');
 
