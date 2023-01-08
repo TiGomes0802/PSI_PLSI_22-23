@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Eventos;
+use common\models\EventosUpdate;
 use common\models\EventosSearch;
 use common\models\Pulseiras;
 use common\models\PulseirasSearch;
@@ -13,7 +14,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\EventosUpdate;
 
 /**
  * EventosController implements the CRUD actions for Eventos model.
