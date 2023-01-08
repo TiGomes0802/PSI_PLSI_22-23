@@ -40,7 +40,6 @@ class GaleriasController extends Controller
                         [
                             'actions' => ['index', 'view'],
                             'allow' => true,
-                            'roles' => ['@'],
                         ],
                     ],
                     'denyCallback' => function ($rule, $action) {
