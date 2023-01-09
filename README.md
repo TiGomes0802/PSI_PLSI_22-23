@@ -1,3 +1,8 @@
+Admin - gomes0802/12345678 <br>
+Gestor - Lucas/12345678 <br>
+Rp - brunorp/12345678 <br>
+Cliente - clarinha/12345678
+
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
@@ -58,8 +63,3 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
-
-Admin - gomes0802/12345678 <br>
-Gestor - Lucas/12345678 <br>
-Rp - brunorp/12345678 <br>
-Cliente - clarinha/12345678
