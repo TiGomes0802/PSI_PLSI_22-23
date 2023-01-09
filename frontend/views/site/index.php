@@ -58,7 +58,7 @@
             <div class="u-container-layout u-similar-container u-container-layout-1">
               <img src="./../../backend/web/cartaz/<?=$evento->cartaz?>" alt="<?= $evento->nome?>" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
               <h2 class="u-custom-font u-text u-text-2" spellcheck="false"><?= $evento->nome?></h2>
-              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">&nbsp;<?php setlocale(LC_ALL, 'pt_BR'); echo strftime('%B %d, %G', date_create($evento->dataevento)->getTimestamp()); ?></h5>
+              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false"><?php setlocale(LC_ALL, 'Portuguese'); echo strftime('%B %d, %G', date_create($evento->dataevento)->getTimestamp()); ?></h5>
             </div>
           </div>
         <?php }?>
