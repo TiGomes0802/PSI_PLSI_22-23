@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="././css/nicepage2.css" media="screen">
+<link rel="stylesheet" href="././css/form_add_empregado.css" media="screen">
 <?php
   use yii\helpers\Html;
   use yii\widgets\ActiveForm;
