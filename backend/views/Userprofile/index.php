@@ -62,10 +62,14 @@ $this->title = '';
                     return $data->datanascimento;
                 },
             ],
+            
             [
                 'class' => ActionColumn::className(),
-                'template' => '{view} {update}',
+                'template' => '{view} {view} {update}',
                 'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {
+                    if ($action == "view") {
+                        return Url::toRoute(['tarefas/index', 'id'=> $model->user_id ]);
+                    }
                     return Url::toRoute([$action, 'id' => $model->user_id]);
                  }
             ],

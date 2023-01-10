@@ -148,6 +148,24 @@ class RbacController extends Controller
                 $deleteBebida->description = 'Delete Bebida';
                 $auth->add($deleteBebida);
 
+        //Add Tarefas permission
+            //view
+                $viewTarefa = $auth->createPermission('viewTarefa');
+                $viewTarefa->description = 'View Tarefa';
+                $auth->add($viewTarefa);
+            //create
+                $createTarefa = $auth->createPermission('createTarefa');
+                $createTarefa->description = 'Create Tarefa';
+                $auth->add($createTarefa);  
+            //Update
+                $updateTarefa = $auth->createPermission('updateTarefa');
+                $updateTarefa->description = 'Update Tarefa';
+                $auth->add($updateTarefa); 
+            //Delete
+                $deleteTarefa = $auth->createPermission('deleteTarefa');
+                $deleteTarefa->description = 'Delete Tarefa';
+                $auth->add($deleteTarefa); 
+
     //----------------------------- Add Permission --------------------------------//
 
         $auth->add($gestor);
@@ -178,6 +196,10 @@ class RbacController extends Controller
         $auth->addChild($admin, $createEmpregado);
         $auth->addChild($admin, $updateEmpregado);
         $auth->addChild($admin, $deleteEmpregado);
+        $auth->addChild($admin, $createTarefa);
+        $auth->addChild($admin, $updateTarefa);
+        $auth->addChild($admin, $deleteTarefa);
+        
 
         $auth->add($rp);
         $auth->addChild($rp, $verdadosEstatisticosCodigo);

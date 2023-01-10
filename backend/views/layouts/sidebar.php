@@ -41,7 +41,9 @@
                         ['label' => 'Eventos', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['eventos/index', 'estado' => 'ativo']],
                         ['label' => 'Bebidas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['bebidas/index']],
                         ['label' => "Vip's", 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['vip/index']],
+                        ['label' => 'Tarefas', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['tarefas/index']],
                         ['label' => 'Disco', 'badge' => '<span class="right badge badge-danger"></span>', 'url' => ['disco/view']],
+
                     ],
                 ]);
             }
