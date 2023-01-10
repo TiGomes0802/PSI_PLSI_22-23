@@ -12,7 +12,9 @@ use common\models\EventosUpdate;
 use frontend\models\SignupForm;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
-
+use common\models\Tarefas;
+use common\models\TarefasSearch;
+use yii\data\ActiveDataProvider;
 /**
  * UserprofileController implements the CRUD actions for Userprofile model.
  */
@@ -56,7 +58,9 @@ class UserprofileController extends Controller
     public function actionView()
     {
         $userprofile = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();
-        
+
+        $tarefas = Tarefas::find()->where(['id_user' => $userprofile->id])->all();
+
         $grafico = (new yii\db\Query())
             ->from('eventos')
             ->select(['tipoevento.tipo AS item_name', 'COUNT(pulseiras.codigorp) AS quantidade_item_name'])
@@ -87,6 +91,7 @@ class UserprofileController extends Controller
             ->all();
 
         return $this->render('view', [
+            'tarefas' => $tarefas,
             'model' => $userprofile,
             'grafico' => $grafico,
             'grafico2' => $grafico2,

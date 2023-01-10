@@ -148,6 +148,11 @@ class RbacController extends Controller
                 $deleteBebida->description = 'Delete Bebida';
                 $auth->add($deleteBebida);
 
+        //Ver tarefas
+            $verTarefas = $auth->createPermission('verTarefas');
+            $verTarefas->description = 'Ver tarefas';
+            $auth->add($verTarefas);
+
     //----------------------------- Add Permission --------------------------------//
 
         $auth->add($gestor);
@@ -186,6 +191,12 @@ class RbacController extends Controller
         $auth->addChild($cliente, $comprarPulseira);
 
         $auth->add($seguranca);
+
+        $auth->addChild($admin, $verTarefas);
+        $auth->addChild($gestor, $verTarefas);
+        $auth->addChild($rp, $verTarefas);
+        $auth->addChild($cliente, $verTarefas);
+        $auth->addChild($seguranca, $verTarefas);
         
     //-----------------------------------------------------------------------------//
 

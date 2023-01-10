@@ -20,6 +20,7 @@ use DateInterval;
  * @property Eventos[] $eventos
  * @property Noticias[] $noticias
  * @property Pulseiras[] $pulseiras
+ * @property Tarefas[] $tarefas 
  * @property User $user
  */
 class Userprofile extends \yii\db\ActiveRecord
@@ -99,6 +100,16 @@ class Userprofile extends \yii\db\ActiveRecord
     }
 
     /**
+    * Gets query for [[Tarefas]]. 
+    * 
+    * @return \yii\db\ActiveQuery 
+    */ 
+    public function getTarefas() 
+    { 
+        return $this->hasMany(Tarefas::class, ['id_user' => 'id']); 
+    } 
+ 
+    /** 
      * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery

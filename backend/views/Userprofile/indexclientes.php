@@ -59,11 +59,13 @@ $this->title = '';
             ],
             
             [
-                'class' => ActionColumn::className(),
-                'template' => '{view} {update}',
-                'urlCreator' => function ($action, Userprofile $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->user_id]);
-                 }
+            'class' => ActionColumn::className(),
+            'urlCreator' => function ($action, Userprofile $model, $key, $index,$column) {
+                if($action == 'delete'){
+                    return Url::toRoute(['tarefas/index', 'iduser' => $model->id]);
+                }
+                return Url::toRoute([$action, 'id' => $model->id]);
+            }
             ],
         ],
     ]); ?>

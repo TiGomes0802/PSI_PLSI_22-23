@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var common\models\Userprofile $model */
 
@@ -77,7 +77,34 @@ $this->title = $model->nome . " " . $model->apelido;
                     ],
                 ],
             ]) ?>
-
+            <?php if(\Yii::$app->user->can('verTarefas')) {?>
+                <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-1">Escolher&nbsp; pulseira</h2>
+        <br><br><br>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <table>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                    </tr>
+                    <?php foreach ($tarefas as $tarefa) { ?>
+                        <tr>
+                            <td style="width:40%"><?=$tarefa->descricao?></td>
+                            <?php if($tarefa->feito == 1) {?>
+                                <td style="width:10%"><input type="button" class="btn btn-danger" value="Realizada" disabled ></td>
+                            <?php } else {?>
+                                <td style="width:10%"><a href='index.php?r=tarefas%2Fupdate&id=<?=$tarefa->id?>'><input type="button" class="btn btn-success" value="Não realizado"></a></td>
+                            <?php } ?>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+            <?php } ?>
             <?php if(\Yii::$app->user->can('verdadosEstatisticosCodigo')) {?>
                 <script>
                     var model = <?php print json_encode($grafico); ?>;
