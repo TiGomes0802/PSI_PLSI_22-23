@@ -15,7 +15,7 @@ class ComprarPulseiraVipCest
         $I->see('Signup');
         $I->click('Signup');
         $I->see('REGISTAR');
-        $I->wait(3);
+        $I->wait(2);
 
         $username = 'teste' . date("hisv");
 
@@ -28,43 +28,43 @@ class ComprarPulseiraVipCest
         $I->selectOption('#sexo', 'Masculino');
         $I->fillField('#date', '07-07-2001');
         $I->click('Submit');
-        $I->wait(3);
+        $I->wait(2);
 
         $I->see('Login');
         $I->click('Login');
-        $I->wait(3);
+        $I->wait(2);
 
         $I->fillField('#username', $username);
         $I->fillField('#password', '12345678');
         $I->click('#login');
         $I->see('Logout ('.$username.')');
-        $I->wait(3);
+        $I->wait(2);
         
         $I->see('Logout');
         $I->see('Eventos');
         $I->click('Eventos');
-        $I->wait(3);
+        $I->wait(2);
         
         $I->see('LISTA DE EVENTOS');
         $I->click('outro evento');
-        $I->wait(3);
+        $I->wait(2);
         
         $I->see('COMPRAR PULSEIRA');
         $I->click('#comprarpuls');
-        $I->wait(3);
+        $I->wait(2);
 
         $I->click('#comprarvip');
         $I->see('Escolher Bebidas');
-        $I->wait(3);
+        $I->wait(2);
 
         $I->selectOption('#bebida1', 'Vodka Grey Goose Citron');
         $I->selectOption('#bebida2', 'Gin Bombay Sapphire');
-        $I->wait(3);
+        $I->wait(2);
 
         $I->click('Submit');
-        $I->wait(3);
+        $I->wait(2);
 
         $I->see('PULSEIRA ADQUIRIDA');
-        $I->wait(3);
+        $I->wait(2);
     }
 }
