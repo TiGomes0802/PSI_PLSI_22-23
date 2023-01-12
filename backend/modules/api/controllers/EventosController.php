@@ -35,7 +35,6 @@ class EventosController extends \yii\web\Controller
         if ($model->login()) {
             $userprofile = Userprofile::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
             $role = AuthAssignment::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
-            //$user += [ "role" => $role->item_name ];
             $user = (object) [
                 'id' => $userprofile->id,
                 'nome' => $userprofile->nome,
