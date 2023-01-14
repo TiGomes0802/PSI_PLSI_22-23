@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="./../web/css/nicepage2.css" media="screen">
-<link rel="stylesheet" href="./../web/css/form_add_empregado.css" media="screen">
+<link rel="stylesheet" href="././css/nicepage2.css" media="screen">
+<link rel="stylesheet" href="././css/form_add_empregado.css" media="screen">
 
 <?php
 
@@ -27,7 +27,7 @@ $this->title = '';
                         <?= $form->field($model, 'bebidas[]')
                             ->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Bebidas::find()
                             ->asArray()
-                            ->all(), 'id', 'nome'))
+                            ->all(), 'id', 'nome'), ['id' => 'bebida'.$i])
                             ->label(false)?>
                             <br>
                     <?php } ?>

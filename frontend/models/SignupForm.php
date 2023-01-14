@@ -38,7 +38,7 @@ class SignupForm extends Model
 
         return [
             [['username', 'email'], 'trim'],
-            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => 'Este campo não pode ser vazio.'],
+            [['nome', 'apelido', 'datanascimento', 'username', 'email', 'password', 'passwordrepet', 'sexo'], 'required', 'message' => '{attribute} não pode estar vazio'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Este username já está a ser utilizado.'],
             [['username', 'email'], 'string', 'min' => 2, 'max' => 255],
 
@@ -54,6 +54,25 @@ class SignupForm extends Model
             [['nome', 'apelido', 'codigoRP'], 'string', 'min' => 5, 'max' => 25],
             ['sexo', 'string', 'min' => 8, 'max' => 9],
             ['user_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'nome' => 'Nome',
+            'apelido' => 'Apelido',
+            'datanascimento' => 'Data de nascimento',
+            'email' =>'Email',
+            'password' => 'Password',
+            'passwordrepet' => 'Password',
+            'sexo' => 'Sexo',
+            'user_id' => 'User ID',
+            'role' => 'Role'
         ];
     }
 

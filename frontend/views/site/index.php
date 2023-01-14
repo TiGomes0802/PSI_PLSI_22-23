@@ -1,5 +1,5 @@
 <head>
-  <link rel="stylesheet" href="./../web/css/nicepage.css" media="screen">
+  <link rel="stylesheet" href="././css/nicepage.css" media="screen">
 </head>
 <div class="u-body u-xl-mode" data-lang="pt">
 <section class="u-clearfix u-image u-section-1" id="carousel_bd30">
@@ -33,16 +33,16 @@
     <h2 class="u-custom-font u-text u-text-default u-text-1" spellcheck="false">A TUA DISCOTECA</h2>
     <p class="u-text u-text-2">Zona VIP&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-1">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Bar&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-2">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Pistas de dança&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-3">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Hookah&nbsp;
         <span class="u-file-icon u-icon u-text-white u-icon-4">
-            <img src="./../web/assets/481037-16a84870.png" alt="">
+            <img src="././assets/481037-16a84870.png" alt="">
         </span>&nbsp;Karaoke
     </p>
   </div>
@@ -58,7 +58,7 @@
             <div class="u-container-layout u-similar-container u-container-layout-1">
               <img src="./../../backend/web/cartaz/<?=$evento->cartaz?>" alt="<?= $evento->nome?>" class="u-image u-image-default u-preserve-proportions u-image-1" data-image-width="626" data-image-height="626">
               <h2 class="u-custom-font u-text u-text-2" spellcheck="false"><?= $evento->nome?></h2>
-              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false">&nbsp;<?php setlocale(LC_ALL, 'pt_BR'); echo strftime('%B %d, %G', date_create($evento->dataevento)->getTimestamp()); ?></h5>
+              <h5 class="u-custom-font u-font-pt-sans u-text u-text-3" spellcheck="false"><?php setlocale(LC_ALL, 'Portuguese'); echo strftime('%B %d, %G', date_create($evento->dataevento)->getTimestamp()); ?></h5>
             </div>
           </div>
         <?php }?>

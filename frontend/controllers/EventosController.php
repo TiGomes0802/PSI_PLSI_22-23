@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Eventos;
+use common\models\EventosUpdate;
 use common\models\EventosSearch;
 use common\models\Pulseiras;
 use common\models\PulseirasSearch;
@@ -13,7 +14,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\EventosUpdate;
 
 /**
  * EventosController implements the CRUD actions for Eventos model.
@@ -57,7 +57,7 @@ class EventosController extends Controller
      */
     public function actionIndex()
     {
-        $eventos = Eventos::find()->where(['estado'=> 'ativo'])->all();
+        $eventos = Eventos::find()->where(['estado'=> 'ativo'])->orderby('dataevento Asc')->all();
         
         return $this->render('index', [
             'eventos' => $eventos,
@@ -73,16 +73,14 @@ class EventosController extends Controller
     public function actionView($id)
     {
         $evento = Eventos::FindOne($id);
-
+        $user = Userprofile::Find()->where(['user_id'=> Yii::$app->user->id])->one();
+        
         if (Yii::$app->user->id != null) {
-            $comprado = Pulseiras::Find()->where(['id_cliente'=> Yii::$app->user->id])->andwhere(['id_evento'=>$id])->one();
+            $comprado = Pulseiras::Find()->where(['id_cliente'=> $user->id])->andwhere(['id_evento'=>$id])->one();
         }else{
             $comprado = null;
         }
-
-        $user = Userprofile::Find()->where(['user_id'=> Yii::$app->user->id])->one();
         
-
         return $this->render('view', [
             'evento' => $evento,
             'comprado' => $comprado,

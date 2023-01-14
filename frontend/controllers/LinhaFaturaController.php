@@ -82,7 +82,7 @@ class LinhafaturaController extends Controller
             array_push($id_de_vips, $i->id_vip);
         }
 
-        if(/*$pulseira == null && !in_array($id_vip,$id_de_vips) && $evento->numbilhetesdisp > 0 && $evento2 != null && ($codigorpvalido != null or*/ $codigorp == null){
+        if($pulseira == null && !in_array($id_vip,$id_de_vips) && $evento->numbilhetesdisp > 0 && $evento2 != null && ($codigorpvalido != null or $codigorp == null)){
         
             $linhasfaturas = new LinhaFatura();
             $fatura = new Faturas();

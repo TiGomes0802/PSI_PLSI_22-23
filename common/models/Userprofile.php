@@ -61,7 +61,7 @@ class Userprofile extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nome' => 'Nome',
             'apelido' => 'Apelido',
-            'datanascimento' => 'Datanascimento',
+            'datanascimento' => 'Data de nascimento',
             'codigoRP' => 'Codigo Rp',
             'sexo' => 'Sexo',
             'user_id' => 'User ID',
