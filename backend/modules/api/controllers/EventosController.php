@@ -3,51 +3,20 @@
 namespace backend\modules\api\controllers;
 
 use Yii;
-use common\models\AuthAssignment;
 use common\models\Eventos;
-use common\models\Userprofile;
-use common\models\LoginForm;
 
 class EventosController extends \yii\web\Controller
 {
-
-    public function actionIndex()
-    {
-        echo 'this is test'; exit;
-
-        return $this->render('index');
-    }
-
-    public function actionViewalleventosdesativos()
+    public function actionViewalleventos($estado)
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $alleventos = Eventos::find()->where(['estado' => 'desativo'])->all();
+        $alleventos = Eventos::find()->where(['estado' => 'ativo'])->all();
+        
+        foreach($alleventos as $evento){
+            $evento->id_criador = $evento->criador->nome . ' ' . $evento->criador->apelido;
+            $evento->id_tipo_evento = $evento->tipoEvento->tipo;
+        };
+
         return $alleventos;
     }
-
-    public function actionLogin($username, $password)
-    {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        $model = new LoginForm();
-        $model->username = $username;
-        $model->password = $password;
-        if ($model->login()) {
-            $userprofile = Userprofile::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
-            $role = AuthAssignment::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
-            $user = (object) [
-                'id' => $userprofile->id,
-                'nome' => $userprofile->nome,
-                'apelido' => $userprofile->apelido,
-                'username' => Yii::$app->user->identity->username,
-                'email' => Yii::$app->user->identity->email,
-                'datanascimento' => $userprofile->datanascimento,
-                'sexo' => $userprofile->sexo,
-                'role' => $role->item_name,
-              ];
-            return $user;
-        };
-        return null;
-    }
-
 }
