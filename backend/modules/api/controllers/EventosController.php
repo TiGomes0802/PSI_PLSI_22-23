@@ -4,6 +4,7 @@ namespace backend\modules\api\controllers;
 
 use Yii;
 use common\models\Eventos;
+use common\models\Faturas;
 
 class EventosController extends \yii\web\Controller
 {
@@ -18,5 +19,19 @@ class EventosController extends \yii\web\Controller
         };
 
         return $alleventos;
+    }
+
+    public function actionEvento($id_fatura)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $faturas = Faturas::findOne($id_fatura);
+
+        $evento = Eventos::find()
+            ->leftJoin('pulseiras', 'pulseiras.id_evento = eventos.id')
+            ->leftJoin('faturas', 'faturas.id_pulseira = pulseiras.id')
+            ->where(['faturas.id' => $id_fatura])
+            ->all();
+
+        return $evento;
     }
 }
