@@ -25,7 +25,7 @@ class UserprofileController extends \yii\web\Controller
                 'apelido' => $userprofile->apelido,
                 'username' => Yii::$app->user->identity->username,
                 'email' => Yii::$app->user->identity->email,
-                'datanascimento' => $userprofile->datanascimento,
+                'datanascimento' => date("d-m-Y", strtotime($userprofile->datanascimento)),
                 'sexo' => $userprofile->sexo,
                 'role' => $role->item_name,
               ];

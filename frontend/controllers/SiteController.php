@@ -84,7 +84,7 @@ class SiteController extends Controller
 
         $proximoevento = Eventos::find()
         ->where(['estado' => 'ativo'])
-        ->orderBy(['dataevento'=>SORT_DESC])
+        ->orderBy(['dataevento'=>SORT_ASC])
         ->one();
 
         return $this->render('index', [
