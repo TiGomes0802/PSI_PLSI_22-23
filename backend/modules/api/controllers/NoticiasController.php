@@ -10,7 +10,7 @@ class NoticiasController extends \yii\web\Controller
     public function actionViewnoticias()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $noticias = Noticias::find()->order_by(['order'])->all();
+        $noticias = Noticias::find()->orderby(['datanoticia'=>SORT_DESC])->all();
 
         return $noticias;
     }
