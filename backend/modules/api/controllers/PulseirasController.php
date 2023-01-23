@@ -18,9 +18,9 @@ class PulseirasController extends \yii\web\Controller
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         if($estado == 'ativa'){
-            $pulseiras = Pulseiras::find()->where(['id_cliente' => $id, 'estado' => 'ativa'])->all();
+            $pulseiras = Pulseiras::find()->where(['id_cliente' => $id, 'estado' => 'ativa'])->orderby(['id_evento'=>SORT_DESC])->all();
         }else if($estado == 'naoativa'){
-            $pulseiras = Pulseiras::find()->where('id_cliente = ' . $id . ' and (estado = "desativa" or estado = "naousada")')->andwhere([])->all();
+            $pulseiras = Pulseiras::find()->where('id_cliente = ' . $id . ' and (estado = "desativa" or estado = "naousada")')->orderby(['id_evento'=>SORT_DESC])->all();
         }
 
         return $pulseiras; 

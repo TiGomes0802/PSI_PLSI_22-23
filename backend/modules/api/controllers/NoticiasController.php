@@ -7,10 +7,10 @@ use common\models\Noticias;
 
 class NoticiasController extends \yii\web\Controller
 {
-    public function actionViewnoticias($id_cliente)
+    public function actionViewnoticias()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $noticias = Noticias::find()->all();
+        $noticias = Noticias::find()->order_by(['order'])->all();
 
         return $noticias;
     }

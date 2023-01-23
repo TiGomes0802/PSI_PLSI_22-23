@@ -12,7 +12,7 @@ class EventosController extends \yii\web\Controller
     public function actionViewalleventos($estado)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $alleventos = Eventos::find()->where(['estado' => 'ativo'])->all();
+        $alleventos = Eventos::find()->where(['estado' => 'ativo'])->orderby(['dataevento'=>SORT_DESC])->all();
         
         foreach($alleventos as $evento){
             $evento->id_criador = $evento->criador->nome . ' ' . $evento->criador->apelido;

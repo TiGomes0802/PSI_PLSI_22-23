@@ -13,6 +13,7 @@ class FaturasController extends \yii\web\Controller
         $faturas = Faturas::find()
             ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
             ->where(['pulseiras.id_cliente' => $id_cliente])
+            ->orderby(['datahora_compra'=>SORT_DESC])
             ->all();
 
         return $faturas;
