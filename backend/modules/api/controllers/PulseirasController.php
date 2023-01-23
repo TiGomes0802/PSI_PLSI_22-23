@@ -23,6 +23,11 @@ class PulseirasController extends \yii\web\Controller
             $pulseiras = Pulseiras::find()->where('id_cliente = ' . $id . ' and (estado = "desativa" or estado = "naousada")')->orderby(['id_evento'=>SORT_DESC])->all();
         }
 
+        foreach($pulseiras as $pulseira){
+            $pulseira->id_cliente = $pulseira->cliente->nome . ' ' . $pulseira->cliente->apelido;
+            $pulseira->id_evento = $pulseira->evento->nome;
+        }
+
         return $pulseiras; 
     }
 
