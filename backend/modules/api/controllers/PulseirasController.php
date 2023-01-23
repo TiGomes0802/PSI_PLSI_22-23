@@ -6,6 +6,7 @@ use Yii;
 use common\models\Pulseiras;
 use common\models\Userprofile;
 use common\models\Faturas;
+use common\models\LinhaFatura;
 use common\models\EventosUpdate;
 use common\models\VipPulseira;
 
@@ -81,7 +82,42 @@ class PulseirasController extends \yii\web\Controller
         }else{
             return null;
         }
+    }
 
+    public function actionAtulizarestadopulseira()
+    {
+        Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        $resquest = Yii::$app->request;
+
+        $pulseira = Pulseiras::findOne($resquest->post('id'));
+        $pulseira->estado = $resquest->post('estado');
+        return $pulseira->save();
+    }
+
+    public function actionApagarpulseira($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            
+            $pulseira = Pulseiras::findOne($id);
+            if($pulseira != null){
+                $fatura = Faturas::find()->where(['id_pulseira' => $pulseira->id])->one();
+                if($pulseira->tipo = "vip"){
+                    $vippulseira = VipPulseira::find()->where(['id_pulseira' => $pulseira->id])->one();
+                    $linhasfatura = LinhaFatura::find()->where(['id_fatura' => $fatura->id])->all();
+                    foreach($linhasfatura as $linhafatura){
+                        $linhafatura->delete();
+                    }
+                    $vippulseira->delete();
+                }
+                $fatura ->delete();
+                $pulseira ->delete();
+    
+                $pulseira = Pulseiras::findOne($id);
+                if($pulseira== null){
+                    return "apagada com sucesso"; 
+                } 
+            }
+            return "erro";
     }
 
 }
