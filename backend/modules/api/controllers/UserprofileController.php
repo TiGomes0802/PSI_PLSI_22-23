@@ -11,7 +11,7 @@ class UserprofileController extends \yii\web\Controller
 {
     public function actionLogin($username, $password)
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $model = new LoginForm();
         $model->username = $username;
@@ -19,6 +19,7 @@ class UserprofileController extends \yii\web\Controller
         if ($model->login()) {
             $userprofile = Userprofile::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
             $role = AuthAssignment::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
+
             $user = (object) [
                 'id' => $userprofile->id,
                 'nome' => $userprofile->nome,
@@ -29,6 +30,7 @@ class UserprofileController extends \yii\web\Controller
                 'sexo' => $userprofile->sexo,
                 'role' => $role->item_name,
               ];
+              
             return $user;
         };
         return null;

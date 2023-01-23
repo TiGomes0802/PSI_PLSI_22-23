@@ -11,7 +11,7 @@ class LinhafaturaController extends \yii\web\Controller
 {
     public function actionViewlinhafatura($id_fatura)
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $fatura = Faturas::findOne($id_fatura);
         
         $pulseira = Pulseiras::find()

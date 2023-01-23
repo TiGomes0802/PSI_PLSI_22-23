@@ -9,7 +9,7 @@ class FaturasController extends \yii\web\Controller
 {
     public function actionViewfaturas($id_cliente)
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $faturas = Faturas::find()
             ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
             ->where(['pulseiras.id_cliente' => $id_cliente])

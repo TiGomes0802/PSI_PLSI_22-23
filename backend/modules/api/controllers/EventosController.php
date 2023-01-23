@@ -8,9 +8,10 @@ use common\models\Faturas;
 
 class EventosController extends \yii\web\Controller
 {
+
     public function actionViewalleventos($estado)
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $alleventos = Eventos::find()->where(['estado' => 'ativo'])->all();
         
         foreach($alleventos as $evento){
@@ -23,7 +24,7 @@ class EventosController extends \yii\web\Controller
 
     public function actionEvento($id_fatura)
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $faturas = Faturas::findOne($id_fatura);
 
         $evento = Eventos::find()
