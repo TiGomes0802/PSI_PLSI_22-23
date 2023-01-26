@@ -9,12 +9,17 @@ use common\models\Eventos;
 
 class VipController extends \yii\web\Controller
 {
-    public function actionViewvips()
+    public function actionViewvips($id)
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $vips = Vip::find()->all();
+        $vippulseira = VipPulseira::find()->where(['id_pulseira' => $id])->one();
+        $infovip = Vip::find($vippulseira->id_vip)->one();
+        
+        $vip = array();
 
-        return $vips;
+        array_push($vip,array('id' => $infovip->id,'npessoas' => $infovip->npessoas,'nbebidas' => $infovip->nbebidas,'preco' => $infovip->preco));
+        
+        return $vip;
     }
 
     public function actionVipsocupados($id_evento)
