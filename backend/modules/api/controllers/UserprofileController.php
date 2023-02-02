@@ -46,7 +46,7 @@ class UserprofileController extends \yii\web\Controller
         }else{
             return 'naovalido';
         }
-    }   
+    }
 
     public function actionAllinfocodigorp($id_rp)
     {
@@ -67,6 +67,6 @@ class UserprofileController extends \yii\web\Controller
             return $listaeventos;
         }
         return null;
-    }   
+    }
     
 }
