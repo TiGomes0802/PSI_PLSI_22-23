@@ -13,22 +13,23 @@ class LinhafaturaController extends \yii\web\Controller
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $fatura = Faturas::findOne($id_fatura);
-        
-        $pulseira = Pulseiras::find()
+        if($fatura != null){
+            $pulseira = Pulseiras::find()
             ->where(['id' => $fatura->id_pulseira])
             ->one();
-
-        if($pulseira->tipo == 'vip'){
-            $linhasfatura = LinhaFatura::find()
-                ->where(['id_fatura' => $fatura->id])
-                ->all();
             
-            foreach($linhasfatura as $linhafatura){
-                $linhafatura->id_bebida = $linhafatura->bebida->nome;
-            }
+            if($pulseira->tipo == 'vip'){
+                $linhasfatura = LinhaFatura::find()
+                    ->where(['id_fatura' => $fatura->id])
+                    ->all();
+                
+                foreach($linhasfatura as $linhafatura){
+                    $linhafatura->id_bebida = $linhafatura->bebida->nome;
+                }
 
-            return $linhasfatura;
-        }
+                return $linhasfatura;
+            }
+        } 
         
         return null;
     }

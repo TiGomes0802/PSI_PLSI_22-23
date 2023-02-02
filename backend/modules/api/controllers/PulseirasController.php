@@ -61,34 +61,34 @@ class PulseirasController extends \yii\web\Controller
             $pulseira->codigorp = null;
         }
 
-        $veripulseira = Pulseiras::find()->where(['id_evento' =>  $pulseira->id_evento])->andwhere(['id_cliente' =>  $pulseira->id_cliente])->one();
-        $codigorpvalido = Userprofile::find()->where(['codigorp' => $pulseira->codigorp])->one();
-        $evento = EventosUpdate::findOne($pulseira->id_evento);
+         $veripulseira = Pulseiras::find()->where(['id_evento' =>  $pulseira->id_evento])->andwhere(['id_cliente' =>  $pulseira->id_cliente])->one();
+         $codigorpvalido = Userprofile::find()->where(['codigorp' => $pulseira->codigorp])->one();
+         $evento = EventosUpdate::findOne($pulseira->id_evento);
 
-        if($veripulseira == null && ($codigorpvalido != null or $pulseira->codigorp == null && $evento->numbilhetesdisp > 0)){
+         if($veripulseira == null && ($codigorpvalido != null or $pulseira->codigorp == null && $evento->numbilhetesdisp > 0)){
 
-            $pulseira->save(false);
+             $pulseira->save(false);
 
-            $fatura->datahora_compra = date("Y-m-d H:i:s");
-            $fatura->preco = $evento->preco;
-            $fatura->id_pulseira = $pulseira->id;
-            
-            $reserva_vip->id_pulseira = $pulseira->id;
+             $fatura->datahora_compra = date("Y-m-d H:i:s");
+             $fatura->preco = $evento->preco;
+             $fatura->id_pulseira = $pulseira->id;
+          
+             $reserva_vip->id_pulseira = $pulseira->id;
 
-            $evento->numbilhetesdisp -= 1;
-            $date = strtotime($evento->dataevento);
-            $evento->dataevento = date('Y-m-d H:i', $date); 
+             $evento->numbilhetesdisp -= 1;
+             $date = strtotime($evento->dataevento);
+             $evento->dataevento = date('Y-m-d H:i', $date); 
 
-            if($reserva_vip->id_vip != 0){
-                $reserva_vip->save();
-            }
+             if($reserva_vip->id_vip != 0){
+                 $reserva_vip->save();
+             }
 
-            if ($evento->save() && $pulseira->save() && $fatura->save()) {    
-                return $pulseira;
-            }
-        }else{
-            return null;
-        }
+             if ($evento->save() && $pulseira->save() && $fatura->save()) {    
+                 return $pulseira;
+             }
+         }else{
+             return null;
+         }
     }
 
     public function actionAtulizarestadopulseira()

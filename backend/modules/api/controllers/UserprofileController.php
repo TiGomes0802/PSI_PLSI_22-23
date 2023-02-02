@@ -36,4 +36,15 @@ class UserprofileController extends \yii\web\Controller
         return null;
     }
 
+    public function actionVerifycodigorp($codigo)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $userprofile = Userprofile::find()->where(['codigorp' =>$codigo])->one();
+        if($userprofile != null){
+            $resposta = "valido";
+            return $resposta;
+        }else{
+            return 'naovalido';
+        }
+    }   
 }
