@@ -47,4 +47,26 @@ class UserprofileController extends \yii\web\Controller
             return 'naovalido';
         }
     }   
+
+    public function actionAllinfocodigorp($id_rp)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $user =  Userprofile::findOne($id_rp);
+
+        if($user != null){
+            $listaeventos = (new yii\db\Query())
+            ->from('eventos')
+            ->select(['eventos.id AS id_evento', 'eventos.nome AS nomeEvento', 'COUNT(pulseiras.codigorp) AS bilhetes_vendidos'])
+            ->leftJoin('pulseiras', 'pulseiras.id_evento = eventos.id')
+            ->where(['pulseiras.codigorp' => $user->codigoRP])
+            ->orderBy(['eventos.dataevento'=>SORT_DESC])
+            ->groupBy('eventos.nome')
+            ->all();
+
+            return $listaeventos;
+        }
+        return null;
+    }   
+    
 }
