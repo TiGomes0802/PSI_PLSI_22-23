@@ -50,11 +50,6 @@ class EventosController extends Controller
         );
     }
 
-    /**
-     * Lists all Eventos models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
         $eventos = Eventos::find()->where(['estado'=> 'ativo'])->orderby('dataevento Asc')->all();
@@ -64,12 +59,6 @@ class EventosController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Eventos model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         $evento = Eventos::FindOne($id);
@@ -88,13 +77,6 @@ class EventosController extends Controller
         ]);
     }
 
-    /**
-     * Finds the Eventos model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Eventos the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Eventos::findOne(['id' => $id])) !== null) {

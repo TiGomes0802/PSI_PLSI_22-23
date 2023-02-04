@@ -66,7 +66,7 @@ class LinhafaturaController extends Controller
     public function actionCreate($id_evento, $codigorp, $id_vip)
     {
         $user = Userprofile::find()->where(['user_id' => Yii::$app->user->id])->one();
-        $pulseira = Pulseiras::find()->where(['id_evento' =>  $id_evento])->andwhere([ 'id_cliente' =>  $user->id])->one();
+        $pulseira = Pulseiras::find()->where(['id_evento' =>  $id_evento])->andwhere(['id_cliente' =>  $user->id])->one();
         $evento2 = Eventos::find()->where(['estado' => 'ativo'])->where(['id' =>  $id_evento])->one();
         $evento = Eventos::findOne($id_evento);
         $codigorpvalido = Userprofile::find()->where(['codigorp' => $codigorp])->one();
@@ -93,41 +93,11 @@ class LinhafaturaController extends Controller
     
             if ($this->request->isPost && $linhasfaturas->load($this->request->post())) {
                 
-                $pulseira->estado = 'ativa';
-                $pulseira->tipo = 'vip';
-                if($codigorp != null){
-                    $pulseira->codigorp = $codigorp;
-                }
-                $pulseira->id_evento = intval($id_evento);
-                $pulseira->id_cliente = $user->id;
-                $pulseira->save(false);
+                $session = Yii::$app->session;
+                $session->set('bebidas', $linhasfaturas->bebidas);
                 
-                
-                $reserva_vip->id_pulseira = $pulseira->id;
-                $reserva_vip->id_vip = $vip->id;
-    
-                $fatura->datahora_compra = date("Y-m-d H:i:s");
-                $fatura->preco = $vip->preco;
-                $fatura->id_pulseira = $pulseira->id;
-                $fatura->save(false);
-    
-                foreach($linhasfaturas->bebidas as $bebida){
-                    $novalinha = new LinhaFatura();
-                    $novalinha->id_bebida = $bebida;
-                    $novalinha->id_fatura = $fatura->id;
-                    $novalinha->bebidas = $bebida;
-                    $novalinha->save();
-                }
-                
-                $evento->numbilhetesdisp = $evento->numbilhetesdisp - 1;
-                $input = strtotime($evento->dataevento);
-                $newdatetime = date('Y-m-d H:i', $input);
-                $evento->dataevento = $newdatetime;
-                $evento->imageFile = 'nada.png';
+                return $this->redirect(['faturas/finalizarcomprav', 'id_evento' => $id_evento, 'codigorp'=> $codigorp, 'id_vip' => $id_vip]);
 
-                if ($pulseira->save() && $fatura->save() && $reserva_vip->save() && $evento->save()) {    
-                    return $this->redirect(['eventos/view', 'id' => $id_evento]);
-                }
             } else {
                 $linhasfaturas->loadDefaultValues();
             }

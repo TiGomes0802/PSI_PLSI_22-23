@@ -12,6 +12,8 @@ use common\models\EventosUpdate;
 use frontend\models\SignupForm;
 use common\models\Userprofile;
 use common\models\UserprofileSearch;
+use common\models\Faturas;
+use common\models\FaturasSearch;
 
 /**
  * UserprofileController implements the CRUD actions for Userprofile model.
@@ -86,11 +88,17 @@ class UserprofileController extends Controller
             ->groupBy('eventos.nome')
             ->all();
 
+        $faturas = Faturas::find()
+            ->leftJoin('pulseiras', 'pulseiras.id = faturas.id_pulseira')
+            ->where(['pulseiras.id_cliente' => $userprofile->id])
+            ->all();
+
         return $this->render('view', [
             'model' => $userprofile,
             'grafico' => $grafico,
             'grafico2' => $grafico2,
             'listaeventos' => $listaeventos,
+            'faturas' => $faturas,
         ]);
     }
 
