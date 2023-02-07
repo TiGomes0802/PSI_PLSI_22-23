@@ -32,11 +32,11 @@ class PulseirasController extends \yii\web\Controller
         return $pulseiras; 
     }
 
-    public function actionViewallpulseirasevento($idevento)
+    public function actionViewallpulseirasevento()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     
-        $pulseiras = Pulseiras::find()->where(['id_evento' => $idevento])->all();
+        $pulseiras = Pulseiras::find()->all();
 
         return $pulseiras; 
     }
@@ -98,7 +98,9 @@ class PulseirasController extends \yii\web\Controller
 
         $pulseira = Pulseiras::findOne($resquest->post('id'));
         $pulseira->estado = $resquest->post('estado');
-        return $pulseira->save();
+        $pulseira->save();
+        
+        return $pulseira;
     }
 
     public function actionApagarpulseira($id)
@@ -128,4 +130,17 @@ class PulseirasController extends \yii\web\Controller
             return "erro";
     }
 
+    public function actionViewpulseira($idpulseira)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $pulseira = Pulseiras::findOne($idpulseira);
+
+        $pulseira->id_cliente = $pulseira->cliente->nome . ' ' . $pulseira->cliente->apelido;
+        
+        return $pulseira; 
+    }
+
+
+    
 }
