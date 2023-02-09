@@ -12,20 +12,20 @@ $this->title = $model->nome . " " . $model->apelido;
 
 <style>
     table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    border: 1px solid #ddd;
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
     }
 
     th, td {
-    text-align: left;
-    padding: 20px;
-    width:33.33%;
+        text-align: left;
+        padding: 20px;
+        width:33.33%;«
     }
 
     tr:nth-child(even) {
-    background-color: #f2f2f2;
+        background-color: #f2f2f2;
     }
 </style>
 
@@ -77,6 +77,35 @@ $this->title = $model->nome . " " . $model->apelido;
                     ],
                 ],
             ]) ?>
+            
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-olive">
+                        <div class="card-header">
+                            <h4 class="card-title">Pulseiras</h4>
+                        </div>
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <th style="width:40%">Nome do evento</th>
+                                    <th>Data de compra</th>
+                                    <th>Preço</th>
+                                    <th></th>
+                                </tr>
+                                <?php foreach ($faturas as $fatura) { ?>
+                                    <tr>
+                                        <td style="width:40%"><?= $fatura->pulseira->evento->nome ?></td>
+                                        <td><?= date_format(date_create($fatura->datahora_compra), "d-m-Y H:i")?></td>
+                                        <td><?= number_format( $fatura->preco, 2 ) . '€' ?></td>
+                                        <td><a href="index.php?r=faturas%2Fview&id_fatura=<?=$fatura->id?>" target="_blank"><input type="button" class="btn btn-success" value="Fatura"></a></td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <?php if(\Yii::$app->user->can('verdadosEstatisticosCodigo')) {?>
                 <script>
