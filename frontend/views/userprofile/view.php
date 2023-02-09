@@ -98,7 +98,7 @@ $this->title = $model->nome . " " . $model->apelido;
                                         <td style="width:40%"><?= $fatura->pulseira->evento->nome ?></td>
                                         <td><?= date_format(date_create($fatura->datahora_compra), "d-m-Y H:i")?></td>
                                         <td><?= number_format( $fatura->preco, 2 ) . '€' ?></td>
-                                        <td><a href='index.php?r=faturas%2Ffatura' target="_blank"><input type="button" class="btn btn-success" value="Fatura"></a></td>
+                                        <td><a href="index.php?r=faturas%2Fview&id_fatura=<?=$fatura->id?>" target="_blank"><input type="button" class="btn btn-success" value="Fatura"></a></td>
                                     </tr>
                                 <?php } ?>
                             </table>

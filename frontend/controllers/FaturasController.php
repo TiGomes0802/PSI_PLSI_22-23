@@ -8,6 +8,8 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use frontend\models\Finalizarcompra;
+use common\models\Disco;
+use common\models\DiscoUpdate;
 use common\models\Eventos;
 use common\models\EventosUpdate;
 use common\models\EventosSearch;
@@ -51,7 +53,7 @@ class FaturasController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['create', 'finalizarcompra', 'finalizarcomprav', 'fatura'],
+                            'actions' => ['view', 'create', 'finalizarcompra', 'finalizarcomprav', 'fatura'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -249,15 +251,17 @@ class FaturasController extends Controller
 
     }
 
-    public function actionFatura()
+    public function actionView($id_fatura)
     {
-        $session = Yii::$app->session;
-        $bebidas = $session->get('bebidas');
+        $disco = Disco::findOne(1);
+        $fatura = Faturas::findOne($id_fatura);
+        $linhasfatura = LinhaFatura::find()->where(['id_fatura' => $id_fatura])->all();
 
-        var_dump($bebidas[0]);
-        die;
-
-        return $this->render('fatura');
+        return $this->render('view', [
+            'disco' =>  $disco,
+            'fatura' =>  $fatura,
+            'linhasfatura' =>  $linhasfatura,
+        ]);
     }
 
     protected function findModel($id)
