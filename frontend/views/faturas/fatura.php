@@ -13,30 +13,26 @@
         background-color: lightgray
     }
 </style>
-
 <body>
     <h3> <?= $disco->nome ?></h3>
   <table>
     <tr>
-        <!--<td valign="top"><img src="././img/logo.jpg" width="150"/> </td>-->
-        <td valign="top"><img src="https://cdn.discordapp.com/attachments/775382256151035936/1061798574788194324/logo.png" width="200"/> </td>
-        <td align ="left">
+        <td valign="top">
+          <img src="C:/wamp64/www/ecstasyclub/frontend/web/ico/ecstasyclublogo.png" alt="Logo Ecstasy Club"width="200"/>
+        </td>
+        <td align="left">
             <pre>
-                Morada: <?= $disco->morada ?>, <?= $disco->localidade ?>
-                <br>
-                Codigo Postal: <?= $disco->codpostal ?>
+              Morada: <?= $disco->morada ?>, <?= $disco->localidade ?>
+              <br>
+              Codigo Postal: <?= $disco->codpostal ?>
             </pre>
         </td>
     </tr>
-
   </table>
   <br>
-
     <p><strong>From:</strong> <?= $disco->nome ?></p>
     <p><strong>To:</strong> <?= $fatura->pulseira->cliente->nome . ' ' . $fatura->pulseira->cliente->apelido ?></p>
-
   <br>
-  
   <table width="100%">
     <thead style="background-color: lightgray;">
       <tr>
@@ -46,13 +42,12 @@
         <th>Preço</th>
       </tr>
     </thead>
-
     <tbody>
         <tr>
-          <td align ="center"><?= $fatura->pulseira->evento->nome ?></td>
-          <td align ="center"><?= $fatura->datahora_compra ?></td>
-          <td align ="center"><?= $fatura->pulseira->tipo ?></td>
-          <td align ="center"><?= number_format( $fatura->preco, 2 ) . '€' ?></td>
+          <td align="center"><?= $fatura->pulseira->evento->nome ?></td>
+          <td align="center"><?= $fatura->datahora_compra ?></td>
+          <td align="center"><?= $fatura->pulseira->tipo ?></td>
+          <td align="center"><?= number_format( $fatura->preco, 2 ) . '€' ?></td>
         </tr>
     </tbody>
   </table>
@@ -61,13 +56,13 @@
     <table width="30%">
         <thead style="background-color: lightgray;">
         <tr>
-            <th>Bebida</th>
+          <th>Bebida</th>
         </tr>
         </thead>
         <tbody>
             <?php foreach ($linhasfatura as $linhafatura) { ?>
                 <tr>
-                    <td align ="center"><?= $linhafatura->bebida->nome ?></td>
+                  <td align="center"><?= $linhafatura->bebida->nome ?></td>
                 </tr>
           <?php }?>
         </tbody>
