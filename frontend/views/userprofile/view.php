@@ -79,6 +79,7 @@ $this->title = $model->nome . " " . $model->apelido;
             ]) ?>
             
             <br>
+            <?php if($faturas != null) {?>
             <div class="row">
                 <div class="col-12">
                     <div class="card card-olive">
@@ -106,6 +107,8 @@ $this->title = $model->nome . " " . $model->apelido;
                     </div>
                 </div>
             </div>
+            <br>
+            <?php } ?>
 
             <?php if(\Yii::$app->user->can('verdadosEstatisticosCodigo')) {?>
                 <script>
